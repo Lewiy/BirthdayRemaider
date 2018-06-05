@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.romanenko.lew.birthdayremaider.View.MainActivity;
+import com.romanenko.lew.birthdayremaider.View.Activities.MainActivity;
 
 /**
  * Created by Lev- on 20.03.2018.
