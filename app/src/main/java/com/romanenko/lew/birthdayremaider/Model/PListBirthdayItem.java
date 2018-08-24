@@ -1,4 +1,4 @@
-package com.romanenko.lew.birthdayremaider.Model.POJO;
+package com.romanenko.lew.birthdayremaider.Model;
 
 public class PListBirthdayItem {
     String mainText;

@@ -1,4 +1,4 @@
-package com.romanenko.lew.birthdayremaider.Model.POJO;
+package com.romanenko.lew.birthdayremaider.Model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

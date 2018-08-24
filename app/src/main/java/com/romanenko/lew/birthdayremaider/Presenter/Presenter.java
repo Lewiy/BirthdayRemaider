@@ -1,7 +1,7 @@
 package com.romanenko.lew.birthdayremaider.Presenter;
 
-import com.romanenko.lew.birthdayremaider.Model.POJO.IModel;
-import com.romanenko.lew.birthdayremaider.Model.POJO.MvpModel;
+import com.romanenko.lew.birthdayremaider.Model.IModel;
+import com.romanenko.lew.birthdayremaider.Model.MvpModel;
 import com.romanenko.lew.birthdayremaider.View.IView;
 
 public abstract class Presenter <T extends IView, M extends IModel> implements MvpPresenter<T>,MvpModel<M> {
