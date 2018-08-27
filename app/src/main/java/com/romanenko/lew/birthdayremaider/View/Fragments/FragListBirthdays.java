@@ -1,8 +1,12 @@
 package com.romanenko.lew.birthdayremaider.View.Fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,9 +40,10 @@ public class FragListBirthdays extends android.support.v4.app.Fragment implement
 
     @BindView(R.id.lv_main)
     RecyclerView recyclerViewMain;
-    @BindView(R.id.add_remind)
-    FloatingActionButton mButAddRemind;
-
+  //  @BindView(R.id.add_remind)
+  //  FloatingActionButton mButAddRemind;
+  private static final int REQUEST_WEIGHT = 1;
+    private static final int REQUEST_ANOTHER_ONE = 2;
 
     @Inject
     Presenter presenter;
@@ -62,9 +67,10 @@ public class FragListBirthdays extends android.support.v4.app.Fragment implement
         this.presenter = presenter;
     }*/
 
-    @OnClick(R.id.add_remind)
+   @OnClick(R.id.add_remind)
     public void onClickAddRemindBut(){
-        loadData();
+        //loadData();
+       openFragAddRemainder();
     }
     //TODO ArrayList Mock
     public void loadData() {
@@ -84,5 +90,30 @@ public class FragListBirthdays extends android.support.v4.app.Fragment implement
         recyclerViewMain.setAdapter(birthdayAdapterList);
         recyclerViewMain.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
+    }
+
+    public void openFragAddRemainder() {
+        DialogFragment fragment = new FragAddReminder();
+        fragment.setTargetFragment(this, REQUEST_WEIGHT);
+        fragment.show(getFragmentManager(), fragment.getClass().getName());
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_WEIGHT:
+                    int weight = data.getIntExtra(FragAddReminder.TAG_WEIGHT_SELECTED, -1);
+                    //используем полученные результаты
+                    //...
+                    break;
+                case REQUEST_ANOTHER_ONE:
+                    //...
+                    break;
+                //обработка других requestCode
+            }
+
+        }
     }
 }
