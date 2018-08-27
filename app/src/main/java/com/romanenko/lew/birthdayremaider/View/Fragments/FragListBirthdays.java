@@ -53,7 +53,7 @@ public class FragListBirthdays extends android.support.v4.app.Fragment implement
         DaggerMVPComponent.builder()
                 .mVPModule(new MVPModule(this,new PresenterListBirthday()))
                 .build()
-                .mvpinjectListBirthday(this);
+                .inject(this);
         presenter.attachView(this);
         return view;
     }

@@ -8,5 +8,5 @@ import dagger.Component;
 
 @Component(modules = MVPModule.class)
 public interface MVPComponent {
-    void mvpinjectListBirthday( FragListBirthdays viewListBirthday);
+    void inject( FragListBirthdays viewListBirthday);
 }
