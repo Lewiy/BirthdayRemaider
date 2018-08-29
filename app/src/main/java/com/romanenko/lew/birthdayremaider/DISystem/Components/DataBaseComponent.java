@@ -6,7 +6,7 @@ import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.AppDataBase;
 import dagger.Component;
 
 @DataBaseSingleScope
-@Component(modules = DataBaseModule.class)
+@Component(dependencies = AppComponent.class, modules = DataBaseModule.class)
 public interface DataBaseComponent {
     AppDataBase getAppDataBase();
 }
