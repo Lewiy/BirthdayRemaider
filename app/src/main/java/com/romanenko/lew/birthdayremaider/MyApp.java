@@ -24,6 +24,7 @@ public class MyApp extends Application {
                 .appModule(new AppModule(this))
                 .contextModule(new ContextModule(this))
                 .build();
+        component();
     }
 
     public AppComponent component() {

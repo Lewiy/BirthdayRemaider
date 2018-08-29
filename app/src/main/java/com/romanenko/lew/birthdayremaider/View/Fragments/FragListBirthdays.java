@@ -42,8 +42,8 @@ public class FragListBirthdays extends android.support.v4.app.Fragment implement
     RecyclerView recyclerViewMain;
   //  @BindView(R.id.add_remind)
   //  FloatingActionButton mButAddRemind;
-  private static final int REQUEST_WEIGHT = 1;
-    private static final int REQUEST_ANOTHER_ONE = 2;
+  private static final int REQUEST_ADD_REMAINDER = 1;
+   // private static final int REQUEST_ANOTHER_ONE = 2;
 
     @Inject
     Presenter presenter;
@@ -56,10 +56,12 @@ public class FragListBirthdays extends android.support.v4.app.Fragment implement
         loadData();
      // presenter = new PresenterListBirthday(this);
         DaggerMVPComponent.builder()
-                .mVPModule(new MVPModule(this,new PresenterListBirthday()))
+                .mVPModule(new MVPModule(this,new PresenterListBirthday(getContext())))
                 .build()
                 .inject(this);
         presenter.attachView(this);
+
+        presenter.viewIsReady();
         return view;
     }
 
@@ -94,7 +96,7 @@ public class FragListBirthdays extends android.support.v4.app.Fragment implement
 
     public void openFragAddRemainder() {
         DialogFragment fragment = new FragAddReminder();
-        fragment.setTargetFragment(this, REQUEST_WEIGHT);
+        fragment.setTargetFragment(this,REQUEST_ADD_REMAINDER);
         fragment.show(getFragmentManager(), fragment.getClass().getName());
     }
 
@@ -103,17 +105,24 @@ public class FragListBirthdays extends android.support.v4.app.Fragment implement
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
-                case REQUEST_WEIGHT:
-                    int weight = data.getIntExtra(FragAddReminder.TAG_WEIGHT_SELECTED, -1);
+                case REQUEST_ADD_REMAINDER:
+                   // int weight = data.getIntExtra(FragAddReminder.TAG_WEIGHT_SELECTED, -1);
                     //используем полученные результаты
-                    //...
+                    //.
+
+                    String name = data.getStringExtra(FragAddReminder.TAG_NAME);
+                    String surName = data.getStringExtra(FragAddReminder.TAG_SUR_NAME);
+                    String comment = data.getStringExtra(FragAddReminder.TAG_COMMENT);
+                   // String type_celebr = data.getStringExtra(FragAddReminder.TAG_TYPE_CELEBR);
+                    String date = data.getStringExtra(FragAddReminder.TAG_DATE);
+                    openFragAddRemainder();
                     break;
-                case REQUEST_ANOTHER_ONE:
-                    //...
-                    break;
+
                 //обработка других requestCode
             }
 
         }
     }
+
+
 }
