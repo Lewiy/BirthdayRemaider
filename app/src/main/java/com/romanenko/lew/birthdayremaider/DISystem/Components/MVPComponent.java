@@ -1,12 +1,11 @@
 package com.romanenko.lew.birthdayremaider.DISystem.Components;
 
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPModule;
-import com.romanenko.lew.birthdayremaider.ListBirthdayContract;
-import com.romanenko.lew.birthdayremaider.View.Fragments.FragListBirthdays;
+import com.romanenko.lew.birthdayremaider.View.Fragments.FragListCelebration;
 
 import dagger.Component;
 
 @Component(modules = MVPModule.class)
 public interface MVPComponent {
-    void inject( FragListBirthdays viewListBirthday);
+    void inject( FragListCelebration viewListCelebration);
 }

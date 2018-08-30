@@ -1,8 +1,9 @@
 package com.romanenko.lew.birthdayremaider.DISystem.Modules;
 
-import com.romanenko.lew.birthdayremaider.ListBirthdayContract;
+import com.romanenko.lew.birthdayremaider.ListCelebrationContract;
 import com.romanenko.lew.birthdayremaider.Model.IModel;
 import com.romanenko.lew.birthdayremaider.Presenter.Presenter;
+import com.romanenko.lew.birthdayremaider.Presenter.PresenterListCelebration;
 import com.romanenko.lew.birthdayremaider.View.IView;
 
 import dagger.Module;
@@ -11,25 +12,34 @@ import dagger.Provides;
 @Module
 public class MVPModule {
 
-    private ListBirthdayContract.ViewListBirthday view;
-    private Presenter presenter;
+    private ListCelebrationContract.ViewListBirthday view;
+    private ListCelebrationContract.PresenterListBirthday presenter;
+    private ListCelebrationContract.ModelListBirthday model;
 
-    public MVPModule(ListBirthdayContract.ViewListBirthday view, Presenter presenter) {
+    public MVPModule(ListCelebrationContract.ViewListBirthday view, ListCelebrationContract.PresenterListBirthday presenter) {
         this.view = view;
         this.presenter = presenter;
     }
+    public MVPModule(ListCelebrationContract.ModelListBirthday model) {
+        this.model = model;
+    }
 
     @Provides
-    ListBirthdayContract.ViewListBirthday provideViewListBirthday() {
+    ListCelebrationContract.ViewListBirthday  provideViewListBirthday() {
         return view;
     }
 
     @Provides
-    Presenter providePresenterListBirthday() {
+    ListCelebrationContract.PresenterListBirthday providePresenterListBirthday() {
 
       //  presenter.attachView(view);
      //   presenter.attachModel(model);
 
         return presenter;
+    }
+
+    @Provides
+    ListCelebrationContract.ModelListBirthday provideModel(){
+        return model;
     }
 }

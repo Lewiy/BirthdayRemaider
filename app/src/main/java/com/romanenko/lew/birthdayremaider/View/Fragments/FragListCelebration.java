@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -16,10 +15,10 @@ import android.view.ViewGroup;
 
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPComponent;
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPModule;
-import com.romanenko.lew.birthdayremaider.ListBirthdayContract;
+import com.romanenko.lew.birthdayremaider.ListCelebrationContract;
+import com.romanenko.lew.birthdayremaider.Model.ModelListCelebration;
 import com.romanenko.lew.birthdayremaider.Model.PListBirthdayItem;
-import com.romanenko.lew.birthdayremaider.Presenter.Presenter;
-import com.romanenko.lew.birthdayremaider.Presenter.PresenterListBirthday;
+import com.romanenko.lew.birthdayremaider.Presenter.PresenterListCelebration;
 import com.romanenko.lew.birthdayremaider.R;
 import com.romanenko.lew.birthdayremaider.View.Adapters.BirthdayAdapterList;
 
@@ -36,7 +35,7 @@ import butterknife.OnClick;
  * Created by Lev- on 21.03.2018.
  */
 
-public class FragListBirthdays extends android.support.v4.app.Fragment implements ListBirthdayContract.ViewListBirthday{
+public class FragListCelebration extends android.support.v4.app.Fragment implements ListCelebrationContract.ViewListBirthday{
 
     @BindView(R.id.lv_main)
     RecyclerView recyclerViewMain;
@@ -46,7 +45,7 @@ public class FragListBirthdays extends android.support.v4.app.Fragment implement
    // private static final int REQUEST_ANOTHER_ONE = 2;
 
     @Inject
-    Presenter presenter;
+    ListCelebrationContract.PresenterListBirthday presenter;
 
     @Nullable
     @Override
@@ -54,18 +53,20 @@ public class FragListBirthdays extends android.support.v4.app.Fragment implement
         View view = inflater.inflate(R.layout.fragment_list_birthday, null);
         ButterKnife.bind(this, view);
         loadData();
-     // presenter = new PresenterListBirthday(this);
+     // presenter = new PresenterListCelebration(this);
         DaggerMVPComponent.builder()
-                .mVPModule(new MVPModule(this,new PresenterListBirthday(getContext())))
+                .mVPModule(new MVPModule(this,new PresenterListCelebration(getContext())))
                 .build()
                 .inject(this);
+
         presenter.attachView(this);
+        presenter.attachModel(new ModelListCelebration());
 
         presenter.viewIsReady();
         return view;
     }
 
-    /*public void setPresenter( ListBirthdayContract.PresenterListBirthday presenter){
+    /*public void setPresenter( ListCelebrationContract.PresenterListCelebration presenter){
         this.presenter = presenter;
     }*/
 
@@ -125,4 +126,8 @@ public class FragListBirthdays extends android.support.v4.app.Fragment implement
     }
 
 
+    @Override
+    public void loadListCelebration() {
+
+    }
 }

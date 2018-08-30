@@ -4,26 +4,19 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 
 import com.romanenko.lew.birthdayremaider.R;
-import com.romanenko.lew.birthdayremaider.View.Fragments.FragListBirthdays;
-
-import java.util.Arrays;
-import java.util.List;
+import com.romanenko.lew.birthdayremaider.View.Fragments.FragListCelebration;
 
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.ButterKnife;
 
 /**
@@ -65,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
         Class fragmentClass;
         switch(menuItem.getItemId()) {
             case R.id.nav_list_birthday:
-                fragmentClass =FragListBirthdays.class;
+                fragmentClass =FragListCelebration.class;
                 break;
             default:
-                fragmentClass = FragListBirthdays.class;
+                fragmentClass = FragListCelebration.class;
         }
 
         try {
