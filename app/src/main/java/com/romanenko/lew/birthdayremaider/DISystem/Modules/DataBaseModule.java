@@ -7,6 +7,7 @@ import android.content.Context;
 import com.romanenko.lew.birthdayremaider.DISystem.Components.AppComponent;
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DataBaseSingleScope;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.AppDataBase;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.CelebrationPersonEntity;
 
 import javax.inject.Named;
 
@@ -18,9 +19,15 @@ public class DataBaseModule {
 
     @DataBaseSingleScope
     @Provides
-    public AppDataBase appDataBase ( Context context){
-        return   Room.databaseBuilder( context,AppDataBase.class, "database")
+    public AppDataBase appDataBase(Context context) {
+        return Room.databaseBuilder(context, AppDataBase.class, "database")
                 .build();
     }
+
+    @Provides
+    public CelebrationPersonEntity provideCelebPerEnt() {
+        return new CelebrationPersonEntity();
+    }
+
 
 }

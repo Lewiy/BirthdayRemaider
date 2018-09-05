@@ -2,4 +2,15 @@
     <string name="app_name">BirthdayRemaider</string>
     <string name="nav_menu_item_listBirthday">List Birthday</string>
     <string name="nav_menu_item_settings">Settings</string>
+    <string name="name">Имя</string>
+    <string name="surname">Фамилия</string>
+    <string name="comment">Комментарий</string>
+    <string name="anniversary">Годовщина свадьбы</string>
+    <string name="birthday">День Рождение</string>
+    <string name="other">Другое</string>
+    <string-array name="spin_type_celebr">
+        <item>@string/birthday</item>
+        <item>@string/anniversary</item>
+        <item>@string/other</item>
+    </string-array>
 </resources>

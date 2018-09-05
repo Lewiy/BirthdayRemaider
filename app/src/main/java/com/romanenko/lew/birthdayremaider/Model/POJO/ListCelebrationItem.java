@@ -1,6 +1,6 @@
-package com.romanenko.lew.birthdayremaider.Model;
+package com.romanenko.lew.birthdayremaider.Model.POJO;
 
-public class PListBirthdayItem {
+public class ListCelebrationItem {
     String mainText;
 
     public String getMainText() {

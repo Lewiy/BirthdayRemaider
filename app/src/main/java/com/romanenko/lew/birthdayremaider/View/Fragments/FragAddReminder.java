@@ -15,14 +15,18 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.romanenko.lew.birthdayremaider.R;
 import com.romanenko.lew.birthdayremaider.View.Activities.MainActivity;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -39,14 +43,17 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment {
     }*/
 
     @BindView(R.id.frag_add_remainder_name)
-    EditText fragAddRemaindName;
+    EditText Name;
     @BindView(R.id.frag_add_remainder_sur_name)
-    EditText fragAddRemaindSurName;
+    EditText SurName;
     @BindView(R.id.frag_add_remainder_comment)
-    EditText fragAddRemaindComment;
-
+    EditText Comment;
+    @BindView(R.id.frag_add_remainder_date_text)
+    TextView dateView;
+    @BindView(R.id.frag_add_remainder_date)
+    ImageView datePicture;
     @BindView(R.id.frag_add_remainder_spin_type)
-    Spinner fragAddRemaindSpinTypeCelebr;
+    Spinner spinTypeCelebr;
     //@BindView(R.id.frag_add_remainder_date_picker)
     //CalendarView fragAddRemaindDatePicker;
 
@@ -66,7 +73,7 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_add_remainder, null);
 
-        ButterKnife.bind(this, view);
+        init(view);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -78,19 +85,31 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment {
                         intent = loadDataIntent(intent);
 
                         getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
+
+                        //
+
                     }
                 });
         // getDialog().getWindow().setLayout(100, 100);
         return builder.create();
     }
 
+    public void init(View view) {
+        ButterKnife.bind(this, view);
+        //dateView.setVisibility(View.GONE);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.spin_type_celebr, R.layout.support_simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinTypeCelebr.setAdapter(adapter);
+
+    }
+
     private Intent loadDataIntent(Intent intent) {
-        intent.putExtra(TAG_NAME, fragAddRemaindName.getText().toString());
-        intent.putExtra(TAG_SUR_NAME, fragAddRemaindSurName.getText().toString());
-        intent.putExtra(TAG_COMMENT, fragAddRemaindComment.getText().toString());
-//        intent.putExtra(TAG_TYPE_CELEBR, fragAddRemaindSpinTypeCelebr.getSelectedItem().toString());
-      //  intent.putExtra(TAG_DATE, dateAndTime.getD.toString());
+        intent.putExtra(TAG_NAME, Name.getText().toString());
+        intent.putExtra(TAG_SUR_NAME, SurName.getText().toString());
+        intent.putExtra(TAG_COMMENT, Comment.getText().toString());
+        intent.putExtra(TAG_TYPE_CELEBR, spinTypeCelebr.getSelectedItem().toString());
         intent.putExtra(TAG_DATE, dateCelebrate);
+        //  intent.putExtra(TAG_DATE, dateCelebrate);
         return intent;
     }
 
@@ -107,11 +126,16 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment {
     DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-            dateCelebrate = dayOfMonth +"/"+ monthOfYear +"/"+ year;
+            dateCelebrate = dayOfMonth + "/" + ++monthOfYear + "/" + year;
             dateAndTime.set(Calendar.YEAR, year);
             dateAndTime.set(Calendar.MONTH, monthOfYear);
             dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            dateView.setText(dateCelebrate);
+            datePicture.setVisibility(View.GONE);
+            dateView.setVisibility(View.VISIBLE);
+
         }
     };
+
 
 }

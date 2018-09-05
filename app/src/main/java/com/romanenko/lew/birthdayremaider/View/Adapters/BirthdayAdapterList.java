@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.romanenko.lew.birthdayremaider.Model.PListBirthdayItem;
+import com.romanenko.lew.birthdayremaider.Model.POJO.ListCelebrationItem;
 import com.romanenko.lew.birthdayremaider.R;
 
 import java.util.Collection;
@@ -16,11 +16,11 @@ import java.util.List;
 
 public class BirthdayAdapterList extends RecyclerView.Adapter<BirthdayAdapterList.BirthdayViewHolder> {
     Context context;
-    List<PListBirthdayItem> listBirthdayItems;
+    List<ListCelebrationItem> listBirthdayItems;
     LayoutInflater lInflater;
 
 
-    public BirthdayAdapterList(Context context, List<PListBirthdayItem> listBirthdayItems) {
+    public BirthdayAdapterList(Context context, List<ListCelebrationItem> listBirthdayItems) {
         this.context = context;
         this.listBirthdayItems = listBirthdayItems;
      /*   lInflater = (LayoutInflater) context
@@ -44,7 +44,7 @@ public class BirthdayAdapterList extends RecyclerView.Adapter<BirthdayAdapterLis
         return listBirthdayItems.size();
     }
 
-    public void setItems(Collection<PListBirthdayItem> Birthdays) {
+    public void setItems(Collection<ListCelebrationItem> Birthdays) {
         listBirthdayItems.addAll(Birthdays);
         notifyDataSetChanged();
     }
@@ -59,8 +59,8 @@ public class BirthdayAdapterList extends RecyclerView.Adapter<BirthdayAdapterLis
         private ImageView birthdayListImageView;
         private TextView birthdayListTextView;
 
-        public void bind(PListBirthdayItem pListBirthdayItem) {
-            birthdayListTextView.setText(pListBirthdayItem.getMainText());
+        public void bind(ListCelebrationItem listCelebrationItem) {
+            birthdayListTextView.setText(listCelebrationItem.getMainText());
         }
 
         public BirthdayViewHolder(View itemView) {

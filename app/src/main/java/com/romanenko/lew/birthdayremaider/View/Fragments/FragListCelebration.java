@@ -16,8 +16,9 @@ import android.view.ViewGroup;
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPComponent;
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPModule;
 import com.romanenko.lew.birthdayremaider.ListCelebrationContract;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.ListRequirementData;
 import com.romanenko.lew.birthdayremaider.Model.ModelListCelebration;
-import com.romanenko.lew.birthdayremaider.Model.PListBirthdayItem;
+import com.romanenko.lew.birthdayremaider.Model.POJO.ListCelebrationItem;
 import com.romanenko.lew.birthdayremaider.Presenter.PresenterListCelebration;
 import com.romanenko.lew.birthdayremaider.R;
 import com.romanenko.lew.birthdayremaider.View.Adapters.BirthdayAdapterList;
@@ -35,14 +36,16 @@ import butterknife.OnClick;
  * Created by Lev- on 21.03.2018.
  */
 
-public class FragListCelebration extends android.support.v4.app.Fragment implements ListCelebrationContract.ViewListBirthday{
+public class FragListCelebration extends android.support.v4.app.Fragment implements ListCelebrationContract.ViewListBirthday {
 
     @BindView(R.id.lv_main)
     RecyclerView recyclerViewMain;
-  //  @BindView(R.id.add_remind)
-  //  FloatingActionButton mButAddRemind;
-  private static final int REQUEST_ADD_REMAINDER = 1;
-   // private static final int REQUEST_ANOTHER_ONE = 2;
+    //  @BindView(R.id.add_remind)
+    //  FloatingActionButton mButAddRemind;
+    private static final int REQUEST_ADD_REMAINDER = 1;
+    // private static final int REQUEST_ANOTHER_ONE = 2;
+
+    String name, surName, comment, type_celebr, date;
 
     @Inject
     ListCelebrationContract.PresenterListBirthday presenter;
@@ -53,9 +56,9 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
         View view = inflater.inflate(R.layout.fragment_list_birthday, null);
         ButterKnife.bind(this, view);
         loadData();
-     // presenter = new PresenterListCelebration(this);
+        // presenter = new PresenterListCelebration(this);
         DaggerMVPComponent.builder()
-                .mVPModule(new MVPModule(this,new PresenterListCelebration(getContext())))
+                .mVPModule(new MVPModule(this, new PresenterListCelebration(getContext())))
                 .build()
                 .inject(this);
 
@@ -70,20 +73,21 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
         this.presenter = presenter;
     }*/
 
-   @OnClick(R.id.add_remind)
-    public void onClickAddRemindBut(){
+    @OnClick(R.id.add_remind)
+    public void onClickAddRemindBut() {
         //loadData();
-       openFragAddRemainder();
+        openFragAddRemainder();
     }
+
     //TODO ArrayList Mock
     public void loadData() {
 
-        List<PListBirthdayItem> items = new ArrayList<>();
-        PListBirthdayItem item1 = new PListBirthdayItem();
+        List<ListCelebrationItem> items = new ArrayList<>();
+        ListCelebrationItem item1 = new ListCelebrationItem();
         item1.setMainText("Romanenko Lev");
-        PListBirthdayItem item2 = new PListBirthdayItem();
+        ListCelebrationItem item2 = new ListCelebrationItem();
         item2.setMainText("Romanenko Lev");
-        PListBirthdayItem item3 = new PListBirthdayItem();
+        ListCelebrationItem item3 = new ListCelebrationItem();
         item3.setMainText("Romanenko Lev");
         items.add(item1);
         items.add(item2);
@@ -97,7 +101,7 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
 
     public void openFragAddRemainder() {
         DialogFragment fragment = new FragAddReminder();
-        fragment.setTargetFragment(this,REQUEST_ADD_REMAINDER);
+        fragment.setTargetFragment(this, REQUEST_ADD_REMAINDER);
         fragment.show(getFragmentManager(), fragment.getClass().getName());
     }
 
@@ -107,16 +111,17 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_ADD_REMAINDER:
-                   // int weight = data.getIntExtra(FragAddReminder.TAG_WEIGHT_SELECTED, -1);
+                    // int weight = data.getIntExtra(FragAddReminder.TAG_WEIGHT_SELECTED, -1);
                     //используем полученные результаты
                     //.
 
                     String name = data.getStringExtra(FragAddReminder.TAG_NAME);
                     String surName = data.getStringExtra(FragAddReminder.TAG_SUR_NAME);
                     String comment = data.getStringExtra(FragAddReminder.TAG_COMMENT);
-                   // String type_celebr = data.getStringExtra(FragAddReminder.TAG_TYPE_CELEBR);
+                    String type_celebr = data.getStringExtra(FragAddReminder.TAG_TYPE_CELEBR);
                     String date = data.getStringExtra(FragAddReminder.TAG_DATE);
-                    openFragAddRemainder();
+                    //openFragAddRemainder();
+                    addRemainder(name, surName, comment, type_celebr,date);
                     break;
 
                 //обработка других requestCode
@@ -127,7 +132,12 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
 
 
     @Override
-    public void loadListCelebration() {
+    public void loadListCelebration(List<ListRequirementData> listRequirementData) {
+        // recyclerViewMain
+    }
 
+    public void addRemainder(String name, String serName, String comment, String date, String typeCelebration) {
+       // presenter.addRemainder(name, surName, comment, type_celebr, date);
+        presenter.addRemainder(name, serName, comment, date, typeCelebration);
     }
 }

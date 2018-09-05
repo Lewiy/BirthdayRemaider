@@ -11,22 +11,26 @@ import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+
 @Dao
 public interface CelebrationPersonDao {
 
-   // @Query("SELECT * FROM celebration_person")
+    // @Query("SELECT * FROM celebration_person")
     //List<CelebrationPersonEntity> getAll();
 
     @Query("SELECT first_name,last_name,date,foto_path FROM celebration_person")
-    List<ListRequirementData> getListCelebration();
+    Flowable<List<ListRequirementData>> getListCelebration();
 
-    @Query("SELECT comment,type_celebration from celebration_person")
-    PersonalPageRequirementData getPersonalPage();
+    @Query("SELECT comment,type_celebration from celebration_person WHERE _id = :userId ")
+    Flowable<PersonalPageRequirementData> getPersonalPage(String userId);
 
     @Insert
     void birthdayPersonInsert(CelebrationPersonEntity celebrationPersonEntity);
+
     @Update
     void birthdayPersonUpdete(CelebrationPersonEntity celebrationPersonEntity);
+
     @Delete
     void birthdayPersonDelete(CelebrationPersonEntity celebrationPersonEntity);
 
