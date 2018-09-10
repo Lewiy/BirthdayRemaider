@@ -2,7 +2,7 @@ package com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObject
 
 import android.arch.persistence.room.ColumnInfo;
 
-public class PersonalPageRequirementData {
+public class PersonalPageRequirementDataDTO {
 
     @ColumnInfo(name = "comment")
     public String comment;

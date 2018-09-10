@@ -20,13 +20,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.5"
-        android:background="@color/colorGrayLight">
+        android:background="@color/colorGrayLight" >
 
         <ImageView
+            android:id="@+id/frag_add_remainder_add_foto_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+           />
 
         <ImageButton
+            android:id="@+id/frag_add_remainder_add_foto"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_centerInParent="true"

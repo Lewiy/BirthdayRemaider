@@ -2,7 +2,7 @@ package com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObject
 
 import android.arch.persistence.room.ColumnInfo;
 
-public class ListRequirementData {
+public class DataCelebrationForListDTO {
 
     @ColumnInfo(name = "first_name")
     public String firstName;

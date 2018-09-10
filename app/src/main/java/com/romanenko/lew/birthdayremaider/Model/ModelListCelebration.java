@@ -6,32 +6,28 @@ import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerDataBaseComp
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DataBaseComponent;
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.DataBaseModule;
 import com.romanenko.lew.birthdayremaider.ListCelebrationContract;
+import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationMapper;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.AppDataBase;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.CelebrationPersonEntity;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.ListRequirementData;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.DataCelebrationForListDTO;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageRequirementDataDTO;
 import com.romanenko.lew.birthdayremaider.MyApp;
-import com.romanenko.lew.birthdayremaider.Presenter.Presenter;
-import com.romanenko.lew.birthdayremaider.Presenter.PresenterListCelebration;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
+import io.reactivex.Completable;
+
+import io.reactivex.Flowable;
+
+import io.reactivex.functions.Action;
 
 public class ModelListCelebration implements ListCelebrationContract.ModelListBirthday {
 
     @Inject
     AppDataBase appDataBase;
-    //@Inject
-    PresenterListCelebration presenterListCelebration;
-
     DataBaseComponent dataBaseComponent;
-
-    /*public ModelListCelebration(Presenter presenter) {
-        this.presenter = presenter;
-    }*/
 
 
     @Override
@@ -51,57 +47,60 @@ public class ModelListCelebration implements ListCelebrationContract.ModelListBi
 
         dataBaseComponent.inject(this);
 
-
-        //presenter.attachModel(this);
-      /*  DaggerMVPComponent.builder()
-                .mVPModule(new MVPModule(this,new PresenterListCelebration(context
-                )))
-                .build()
-                .inject(this);
-        presenter.attachModel(this);*/
-
-        // appDataBase = dataBaseComponent.getAppDataBase();
     }
 
     @Override
-    public void addCelebration(String name, String serName, String comment, String date, String typeCelebration) {
+    public Completable addCelebration(String name, String serName, String comment, String date, String typeCelebration,String pathPictureContact) {
         CelebrationPersonEntity celebrationPersonEntity = dataBaseComponent.getCelebrationPersonEntity();
         celebrationPersonEntity.firstName = name;
         celebrationPersonEntity.lastName = serName;
         celebrationPersonEntity.comment = comment;
         celebrationPersonEntity.date = date;
         celebrationPersonEntity.typeCelebration = typeCelebration;
-        /////////
-        appDataBase.celebrationPersonEntityDao().birthdayPersonInsert(celebrationPersonEntity);
+        celebrationPersonEntity.fotoPath = pathPictureContact;
+
+        return Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                appDataBase.celebrationPersonEntityDao().birthdayPersonInsert(celebrationPersonEntity);
+            }
+        });
+    }
+
+
+    @Override
+    public Completable deleteCelebration(DataCelebrationForListDTO dataCelebrationForListDTO) {
+        return Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                appDataBase.celebrationPersonEntityDao().birthdayPersonInsert(new CelebrationMapper().constructEntity(dataCelebrationForListDTO));
+            }
+        });
     }
 
     @Override
-    public void deleteCelebration() {
+    public Completable upDateCelebration(DataCelebrationForListDTO dataCelebrationForListDTO) {
+        return Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                appDataBase.celebrationPersonEntityDao().birthdayPersonInsert(new CelebrationMapper().constructEntity(dataCelebrationForListDTO));
+            }
+        });
+    }
+
+
+    @Override
+    public Flowable<List<DataCelebrationForListDTO>> pullListCelebration() {
+        return appDataBase.celebrationPersonEntityDao()
+                .getListCelebration();
 
     }
 
     @Override
-    public void upDateCelebration() {
-
+    public Flowable<PersonalPageRequirementDataDTO> pullPersonalPage(String id) {
+        return appDataBase.celebrationPersonEntityDao()
+                .getPersonalPage(id);
     }
 
-    @Override
-    public void loadData() {
-        appDataBase.celebrationPersonEntityDao()
-                .getListCelebration()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<ListRequirementData>>() {
-                    @Override
-                    public void accept(List<ListRequirementData> listRequirementData) throws Exception {
-                        //presenterListCelebration.loadListCelebration();
-
-                    }
-                });
-    }
-
-    @Override
-    public void attachPresenter(PresenterListCelebration presenter) {
-        this.presenterListCelebration = presenter;
-    }
 
 }

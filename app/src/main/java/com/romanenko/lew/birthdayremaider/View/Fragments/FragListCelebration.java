@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPComponent;
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPModule;
 import com.romanenko.lew.birthdayremaider.ListCelebrationContract;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.ListRequirementData;
+import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationVO;
 import com.romanenko.lew.birthdayremaider.Model.ModelListCelebration;
 import com.romanenko.lew.birthdayremaider.Model.POJO.ListCelebrationItem;
 import com.romanenko.lew.birthdayremaider.Presenter.PresenterListCelebration;
@@ -55,7 +55,7 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_birthday, null);
         ButterKnife.bind(this, view);
-        loadData();
+
         // presenter = new PresenterListCelebration(this);
         DaggerMVPComponent.builder()
                 .mVPModule(new MVPModule(this, new PresenterListCelebration(getContext())))
@@ -66,6 +66,7 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
         presenter.attachModel(new ModelListCelebration());
 
         presenter.viewIsReady();
+        loadData();
         return view;
     }
 
@@ -92,11 +93,12 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
         items.add(item1);
         items.add(item2);
         items.add(item3);
-        BirthdayAdapterList birthdayAdapterList = new BirthdayAdapterList(this.getContext(), items);
+       /* BirthdayAdapterList birthdayAdapterList = new BirthdayAdapterList(this.getContext(), items);
         recyclerViewMain.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewMain.setAdapter(birthdayAdapterList);
         recyclerViewMain.addItemDecoration(new DividerItemDecoration(getContext(),
-                DividerItemDecoration.VERTICAL));
+                DividerItemDecoration.VERTICAL));*/
+        presenter.pullListCelebration();
     }
 
     public void openFragAddRemainder() {
@@ -120,24 +122,48 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
                     String comment = data.getStringExtra(FragAddReminder.TAG_COMMENT);
                     String type_celebr = data.getStringExtra(FragAddReminder.TAG_TYPE_CELEBR);
                     String date = data.getStringExtra(FragAddReminder.TAG_DATE);
+                    String pathPictureContact = data.getStringExtra(FragAddReminder.TAG_PICTURE_CONTACT);
                     //openFragAddRemainder();
-                    addRemainder(name, surName, comment, type_celebr,date);
+                     addRemainder(name, surName, comment, type_celebr, date,pathPictureContact);
                     break;
 
                 //обработка других requestCode
             }
 
         }
+
     }
 
 
     @Override
-    public void loadListCelebration(List<ListRequirementData> listRequirementData) {
-        // recyclerViewMain
+    public void loadListCelebration( List<CelebrationVO> items) {
+        BirthdayAdapterList birthdayAdapterList = new BirthdayAdapterList(this.getContext(), items);
+        recyclerViewMain.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewMain.setAdapter(birthdayAdapterList);
+        recyclerViewMain.addItemDecoration(new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL));
     }
 
-    public void addRemainder(String name, String serName, String comment, String date, String typeCelebration) {
-       // presenter.addRemainder(name, surName, comment, type_celebr, date);
-        presenter.addRemainder(name, serName, comment, date, typeCelebration);
+    public void addRemainder(String name, String serName, String comment, String date, String typeCelebration,String pathPictureContact) {
+        // presenter.addRemainder(name, surName, comment, type_celebr, date);
+        presenter.addRemainder(name, serName, comment, date, typeCelebration,pathPictureContact);
     }
+
+    public void setNameList() {
+
+    }
+
+    public void setSurName() {
+
+    }
+
+    public void setDate() {
+
+    }
+
+    public void setFoto() {
+
+    }
+
+
 }

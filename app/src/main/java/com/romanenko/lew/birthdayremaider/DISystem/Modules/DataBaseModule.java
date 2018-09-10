@@ -20,7 +20,7 @@ public class DataBaseModule {
     @DataBaseSingleScope
     @Provides
     public AppDataBase appDataBase(Context context) {
-        return Room.databaseBuilder(context, AppDataBase.class, "database")
+        return Room.databaseBuilder(context, AppDataBase.class, "database.db")
                 .build();
     }
 

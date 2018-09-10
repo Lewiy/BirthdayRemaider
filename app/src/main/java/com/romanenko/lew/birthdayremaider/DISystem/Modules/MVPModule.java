@@ -29,6 +29,7 @@ public class MVPModule {
         return view;
     }
 
+
     @Provides
     ListCelebrationContract.PresenterListBirthday providePresenterListBirthday() {
 

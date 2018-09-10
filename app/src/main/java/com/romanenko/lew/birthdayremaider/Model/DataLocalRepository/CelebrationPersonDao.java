@@ -6,8 +6,8 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.ListRequirementData;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageRequirementData;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.DataCelebrationForListDTO;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageRequirementDataDTO;
 
 import java.util.List;
 
@@ -20,10 +20,10 @@ public interface CelebrationPersonDao {
     //List<CelebrationPersonEntity> getAll();
 
     @Query("SELECT first_name,last_name,date,foto_path FROM celebration_person")
-    Flowable<List<ListRequirementData>> getListCelebration();
+    Flowable<List<DataCelebrationForListDTO>> getListCelebration();
 
     @Query("SELECT comment,type_celebration from celebration_person WHERE _id = :userId ")
-    Flowable<PersonalPageRequirementData> getPersonalPage(String userId);
+    Flowable<PersonalPageRequirementDataDTO> getPersonalPage(String userId);
 
     @Insert
     void birthdayPersonInsert(CelebrationPersonEntity celebrationPersonEntity);
@@ -33,6 +33,5 @@ public interface CelebrationPersonDao {
 
     @Delete
     void birthdayPersonDelete(CelebrationPersonEntity celebrationPersonEntity);
-
 
 }
