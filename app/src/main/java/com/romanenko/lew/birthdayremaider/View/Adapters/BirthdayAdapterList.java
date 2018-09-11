@@ -83,7 +83,6 @@ public class BirthdayAdapterList extends RecyclerView.Adapter<BirthdayAdapterLis
 
         public BirthdayViewHolder(View itemView) {
             super(itemView);
-
             birthdayListImageView = itemView.findViewById(R.id.birthday_list_image_view);
             name_surname = itemView.findViewById(R.id.name_surname);
             date = itemView.findViewById(R.id.date);

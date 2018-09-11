@@ -3,6 +3,7 @@
     package="com.romanenko.lew.birthdayremaider">
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+
     <application
         android:name="MyApp"
         android:allowBackup="true"
@@ -11,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <receiver android:name=".AlarmingSystem.AlarmReceiver"/>
         <activity android:name=".View.Activities.MainActivity">
         </activity>
 

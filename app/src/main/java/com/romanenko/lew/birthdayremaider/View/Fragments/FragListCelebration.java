@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.romanenko.lew.birthdayremaider.AlarmingSystem.RemainderManager;
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPComponent;
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPModule;
 import com.romanenko.lew.birthdayremaider.ListCelebrationContract;
@@ -78,6 +79,9 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
     public void onClickAddRemindBut() {
         //loadData();
         openFragAddRemainder();
+        RemainderManager remainderManager = new RemainderManager(getActivity());
+        remainderManager.onAlarm();
+
     }
 
     //TODO ArrayList Mock
