@@ -13,7 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.romanenko.lew.birthdayremaider.AlarmingSystem.RemainderManager;
+import com.romanenko.lew.birthdayremaider.AlarmingSystem.CelebrationAlarmManager;
+import com.romanenko.lew.birthdayremaider.AlarmingSystem.MyDate;
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPComponent;
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPModule;
 import com.romanenko.lew.birthdayremaider.ListCelebrationContract;
@@ -79,8 +80,9 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
     public void onClickAddRemindBut() {
         //loadData();
         openFragAddRemainder();
-        RemainderManager remainderManager = new RemainderManager(getActivity());
-        remainderManager.onAlarm();
+        CelebrationAlarmManager celebrationAlarmManager = new CelebrationAlarmManager(getActivity());
+        MyDate myDate = new MyDate(2018, 9, 11, 20, 55);
+        celebrationAlarmManager.setDateRepiting(myDate);
 
     }
 
