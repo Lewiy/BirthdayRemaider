@@ -20,20 +20,24 @@ public class BirthdayAdapterList extends RecyclerView.Adapter<BirthdayAdapterLis
     Context context;
     List<CelebrationVO>listBirthdayItems;
     LayoutInflater lInflater;
+    private RecyclerViewClickListener mListener;
 
 
-    public BirthdayAdapterList(Context context, List<CelebrationVO> listBirthdayItems) {
+    public BirthdayAdapterList(Context context, List<CelebrationVO> listBirthdayItems,RecyclerViewClickListener listener) {
         this.context = context;
         this.listBirthdayItems = listBirthdayItems;
+        this.mListener = listener;
      /*   lInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);*/
     }
+
+
 
     @Override
     public BirthdayViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_list_birthday_item, parent, false);
 
-        return new BirthdayViewHolder(view);
+        return new BirthdayViewHolder(view,mListener);
     }
 
     @Override
@@ -56,13 +60,15 @@ public class BirthdayAdapterList extends RecyclerView.Adapter<BirthdayAdapterLis
         notifyDataSetChanged();
     }
 
-    class BirthdayViewHolder extends RecyclerView.ViewHolder {
+    class BirthdayViewHolder extends RecyclerView.ViewHolder implements  RecyclerViewClickListener{
 
         private ImageView birthdayListImageView;
         private TextView name_surname;
         private TextView date;
         private TextView type_celebration;
         private TextView years_old;
+        private RecyclerViewClickListener recyclerViewClickListener;
+
 
         public void bind(CelebrationVO celebrationVO) {
             //birthdayListImageView.setText(listCelebrationItem.getMainText());
@@ -81,13 +87,23 @@ public class BirthdayAdapterList extends RecyclerView.Adapter<BirthdayAdapterLis
            // years_old.setText(celebrationVO.getMainText());
         }
 
-        public BirthdayViewHolder(View itemView) {
+        public BirthdayViewHolder(View itemView,RecyclerViewClickListener recyclerViewClickListener) {
             super(itemView);
+            this.recyclerViewClickListener = recyclerViewClickListener;
             birthdayListImageView = itemView.findViewById(R.id.birthday_list_image_view);
             name_surname = itemView.findViewById(R.id.name_surname);
             date = itemView.findViewById(R.id.date);
             type_celebration = itemView.findViewById(R.id.type_celebration);
             years_old = itemView.findViewById(R.id.years_old);
         }
+
+        @Override
+        public void onClick(View view, int position) {
+            recyclerViewClickListener.onClick(view, getAdapterPosition());
+        }
+    }
+    public  interface RecyclerViewClickListener {
+
+        void onClick(View view, int position);
     }
 }

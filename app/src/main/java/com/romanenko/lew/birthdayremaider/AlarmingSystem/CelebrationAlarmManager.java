@@ -48,6 +48,7 @@ public class CelebrationAlarmManager implements IalarmManager {
         alarmManager.cancel(sender);//Отменяем будильник, связанный с интентом данного класса
     }
 
+
     private PendingIntent pendingBilder() {
         Intent i = new Intent(context, AlarmReceiver.class);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,8 +44,6 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
 
     @BindView(R.id.lv_main)
     RecyclerView recyclerViewMain;
-    //  @BindView(R.id.add_remind)
-    //  FloatingActionButton mButAddRemind;
     private static final int REQUEST_ADD_REMAINDER = 1;
     // private static final int REQUEST_ANOTHER_ONE = 2;
 
@@ -78,7 +78,6 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
 
     @OnClick(R.id.add_remind)
     public void onClickAddRemindBut() {
-        //loadData();
         openFragAddRemainder();
         CelebrationAlarmManager celebrationAlarmManager = new CelebrationAlarmManager(getActivity());
         MyDate myDate = new MyDate(2018, 9, 11, 20, 55);
@@ -99,11 +98,6 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
         items.add(item1);
         items.add(item2);
         items.add(item3);
-       /* BirthdayAdapterList birthdayAdapterList = new BirthdayAdapterList(this.getContext(), items);
-        recyclerViewMain.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerViewMain.setAdapter(birthdayAdapterList);
-        recyclerViewMain.addItemDecoration(new DividerItemDecoration(getContext(),
-                DividerItemDecoration.VERTICAL));*/
         presenter.pullListCelebration();
     }
 
@@ -143,7 +137,25 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
 
     @Override
     public void loadListCelebration( List<CelebrationVO> items) {
-        BirthdayAdapterList birthdayAdapterList = new BirthdayAdapterList(this.getContext(), items);
+
+        BirthdayAdapterList.RecyclerViewClickListener listener = new BirthdayAdapterList.RecyclerViewClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Fragment fragment  = null;
+                try {
+                    fragment = FragEditCelebration.class.newInstance();
+                } catch (java.lang.InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+            }
+        };
+
+
+        BirthdayAdapterList birthdayAdapterList = new BirthdayAdapterList(this.getContext(), items,listener);
         recyclerViewMain.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewMain.setAdapter(birthdayAdapterList);
         recyclerViewMain.addItemDecoration(new DividerItemDecoration(getContext(),
