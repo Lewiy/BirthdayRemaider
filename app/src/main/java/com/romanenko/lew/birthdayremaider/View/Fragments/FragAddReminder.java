@@ -1,7 +1,5 @@
 package com.romanenko.lew.birthdayremaider.View.Fragments;
 
-import android.app.Activity;
-import android.app.Application;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -13,30 +11,29 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.romanenko.lew.birthdayremaider.AddCelebrationContract;
+import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPCompAddRemain;
+import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPCompListCelebr;
+import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPMAddRemainder;
+import com.romanenko.lew.birthdayremaider.Presenter.PresenterAddRemainder;
 import com.romanenko.lew.birthdayremaider.R;
-import com.romanenko.lew.birthdayremaider.View.Activities.MainActivity;
 
 import java.io.File;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Calendar;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,14 +41,14 @@ import butterknife.OnClick;
 
 import static android.app.Activity.RESULT_OK;
 
-public class FragAddReminder extends android.support.v4.app.DialogFragment {
+public class FragAddReminder extends android.support.v4.app.DialogFragment implements AddCelebrationContract.ViewAddRemainder {
 
     @BindView(R.id.frag_add_remainder_name)
-    EditText Name;
+    EditText name;
     @BindView(R.id.frag_add_remainder_sur_name)
-    EditText SurName;
+    EditText surName;
     @BindView(R.id.frag_add_remainder_comment)
-    EditText Comment;
+    EditText comment;
     @BindView(R.id.frag_add_remainder_date_text)
     TextView dateView;
     @BindView(R.id.frag_add_remainder_date)
@@ -65,6 +62,11 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment {
     private  String pathPictureContact = null;
 
     private URI uri;
+
+    private  int year, monthOfYear, dayOfMonth;
+
+    @Inject
+    public AddCelebrationContract.PresenterAddRemainder presenter;
 
     Calendar dateAndTime = Calendar.getInstance();
     String dateCelebrate;
@@ -83,6 +85,19 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment {
         View view = inflater.inflate(R.layout.fragment_add_remainder, null);
 
         init(view);
+
+        DaggerMVPCompAddRemain.builder()
+                .mVPMAddRemainder(new MVPMAddRemainder(this, new PresenterAddRemainder()))
+                .build()
+                .inject(this);
+
+        presenter.attachView(this);
+    //    presenter.attachModel(new ModelListCelebration());
+
+         presenter.viewIsReady();
+
+
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -112,9 +127,9 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment {
     }
 
     private Intent loadDataIntent(Intent intent) {
-        intent.putExtra(TAG_NAME, Name.getText().toString());
-        intent.putExtra(TAG_SUR_NAME, SurName.getText().toString());
-        intent.putExtra(TAG_COMMENT, Comment.getText().toString());
+        intent.putExtra(TAG_NAME, name.getText().toString());
+        intent.putExtra(TAG_SUR_NAME, surName.getText().toString());
+        intent.putExtra(TAG_COMMENT, comment.getText().toString());
         intent.putExtra(TAG_TYPE_CELEBR, spinTypeCelebr.getSelectedItem().toString());
         intent.putExtra(TAG_DATE, dateCelebrate);
         intent.putExtra(TAG_PICTURE_CONTACT, pathPictureContact );
@@ -133,6 +148,8 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment {
     // установка обработчика выбора даты
     DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+
 
             dateCelebrate = dayOfMonth + "/" + ++monthOfYear + "/" + year;
             dateAndTime.set(Calendar.YEAR, year);
@@ -205,5 +222,45 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment {
             int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
             return cursor.getString(idx);
         }
+    }
+
+    @Override
+    public String getName() {
+        return name.getText().toString();
+    }
+
+    @Override
+    public String getSurname() {
+        return surName.getText().toString();
+    }
+
+    @Override
+    public int getYear() {
+        return year;
+    }
+
+    @Override
+    public int getDay() {
+        return dayOfMonth;
+    }
+
+    @Override
+    public int getMonth() {
+        return monthOfYear;
+    }
+
+    @Override
+    public String getPathImage() {
+        return  pathPictureContact;
+    }
+
+    @Override
+    public String getTypeCelebration() {
+        return spinTypeCelebr.getSelectedItem().toString();
+    }
+
+    @Override
+    public String getComment() {
+        return comment.getText().toString();
     }
 }

@@ -10,17 +10,17 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class MVPModule {
+public class MVPMListCelebration {
 
     private ListCelebrationContract.ViewListBirthday view;
     private ListCelebrationContract.PresenterListBirthday presenter;
     private ListCelebrationContract.ModelListBirthday model;
 
-    public MVPModule(ListCelebrationContract.ViewListBirthday view, ListCelebrationContract.PresenterListBirthday presenter) {
+    public MVPMListCelebration(ListCelebrationContract.ViewListBirthday view, ListCelebrationContract.PresenterListBirthday presenter) {
         this.view = view;
         this.presenter = presenter;
     }
-    public MVPModule(ListCelebrationContract.ModelListBirthday model) {
+    public MVPMListCelebration(ListCelebrationContract.ModelListBirthday model) {
         this.model = model;
     }
 

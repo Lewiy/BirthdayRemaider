@@ -17,8 +17,8 @@ import android.view.ViewGroup;
 
 import com.romanenko.lew.birthdayremaider.AlarmingSystem.CelebrationAlarmManager;
 import com.romanenko.lew.birthdayremaider.AlarmingSystem.MyDate;
-import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPComponent;
-import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPModule;
+import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPCompListCelebr;
+import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPMListCelebration;
 import com.romanenko.lew.birthdayremaider.ListCelebrationContract;
 import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationVO;
 import com.romanenko.lew.birthdayremaider.Model.ModelListCelebration;
@@ -59,8 +59,8 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
         ButterKnife.bind(this, view);
 
         // presenter = new PresenterListCelebration(this);
-        DaggerMVPComponent.builder()
-                .mVPModule(new MVPModule(this, new PresenterListCelebration(getContext())))
+        DaggerMVPCompListCelebr.builder()
+                .mVPMListCelebration(new MVPMListCelebration(this, new PresenterListCelebration(getContext())))
                 .build()
                 .inject(this);
 
