@@ -60,7 +60,7 @@ public class BirthdayAdapterList extends RecyclerView.Adapter<BirthdayAdapterLis
         notifyDataSetChanged();
     }
 
-    class BirthdayViewHolder extends RecyclerView.ViewHolder implements  RecyclerViewClickListener{
+    class BirthdayViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
 
         private ImageView birthdayListImageView;
         private TextView name_surname;
@@ -95,10 +95,12 @@ public class BirthdayAdapterList extends RecyclerView.Adapter<BirthdayAdapterLis
             date = itemView.findViewById(R.id.date);
             type_celebration = itemView.findViewById(R.id.type_celebration);
             years_old = itemView.findViewById(R.id.years_old);
+            itemView.setOnClickListener(this);
         }
 
+
         @Override
-        public void onClick(View view, int position) {
+        public void onClick(View view) {
             recyclerViewClickListener.onClick(view, getAdapterPosition());
         }
     }

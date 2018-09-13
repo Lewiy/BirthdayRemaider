@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -58,6 +59,8 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
     Spinner spinTypeCelebr;
     @BindView(R.id.frag_add_remainder_add_foto_view)
     ImageView contactPicture;
+    @BindView(R.id.frag_add_remainder_add_foto)
+    ImageButton addFotoButton;
 
     public static final int PICK_IMAGE = 1;
     private  String pathPictureContact = null;
@@ -151,8 +154,6 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
     DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-
-
             dateCelebrate = dayOfMonth + "/" + ++monthOfYear + "/" + year;
             dateAndTime.set(Calendar.YEAR, year);
             dateAndTime.set(Calendar.MONTH, monthOfYear);
@@ -194,6 +195,7 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
                     File f = new File(pathPictureContact);
                     Drawable d = Drawable.createFromPath(f.getAbsolutePath());
                     contactPicture.setBackground(d);
+                    addFotoButton.setVisibility(View.GONE);
                 } else {
                     final Uri uri_data = data.getData();
                     // Get the path from the Uri
