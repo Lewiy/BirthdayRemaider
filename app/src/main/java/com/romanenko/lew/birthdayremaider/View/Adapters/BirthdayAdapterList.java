@@ -42,7 +42,7 @@ public class BirthdayAdapterList extends RecyclerView.Adapter<BirthdayAdapterLis
 
     @Override
     public void onBindViewHolder(BirthdayViewHolder holder, int position) {
-        holder.bind(listBirthdayItems.get(position));
+        holder.bind(listBirthdayItems.get(position),mListener);
     }
 
     @Override
@@ -70,10 +70,10 @@ public class BirthdayAdapterList extends RecyclerView.Adapter<BirthdayAdapterLis
         private RecyclerViewClickListener recyclerViewClickListener;
 
 
-        public void bind(CelebrationVO celebrationVO) {
+        public void bind(CelebrationVO celebrationVO,RecyclerViewClickListener recyclerViewClickListener ) {
             //birthdayListImageView.setText(listCelebrationItem.getMainText());
 
-
+            this.recyclerViewClickListener = recyclerViewClickListener;
             name_surname.setText(celebrationVO.getFirstName()+"  "+ celebrationVO.getLastName());
             date.setText(celebrationVO.getDate());
 

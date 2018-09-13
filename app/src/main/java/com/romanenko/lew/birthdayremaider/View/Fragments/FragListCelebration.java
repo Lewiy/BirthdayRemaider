@@ -164,7 +164,7 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
 
     public void addRemainder(String name, String serName, String comment, String date, String typeCelebration,String pathPictureContact) {
         // presenter.addRemainder(name, surName, comment, type_celebr, date);
-        presenter.addRemainder(name, serName, comment, date, typeCelebration,pathPictureContact);
+       // presenter.addRemainder(name, serName, comment, date, typeCelebration,pathPictureContact);
     }
 
     public void setNameList() {

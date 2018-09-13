@@ -49,23 +49,6 @@ public class ModelListCelebration implements ListCelebrationContract.ModelListBi
 
     }
 
-    @Override
-    public Completable addCelebration(String name, String serName, String comment, String date, String typeCelebration,String pathPictureContact) {
-        CelebrationPersonEntity celebrationPersonEntity = dataBaseComponent.getCelebrationPersonEntity();
-        celebrationPersonEntity.firstName = name;
-        celebrationPersonEntity.lastName = serName;
-        celebrationPersonEntity.comment = comment;
-        celebrationPersonEntity.date = date;
-        celebrationPersonEntity.typeCelebration = typeCelebration;
-        celebrationPersonEntity.fotoPath = pathPictureContact;
-
-        return Completable.fromAction(new Action() {
-            @Override
-            public void run() throws Exception {
-                appDataBase.celebrationPersonEntityDao().birthdayPersonInsert(celebrationPersonEntity);
-            }
-        });
-    }
 
 
     @Override

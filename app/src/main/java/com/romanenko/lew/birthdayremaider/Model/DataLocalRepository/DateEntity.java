@@ -11,12 +11,12 @@ public class DateEntity {
     public long dateId;
 
     @ColumnInfo(name = "year")
-    public String year;
+    public int year;
 
     @ColumnInfo(name = "month")
-    public String month;
+    public int month;
 
     @ColumnInfo(name = "day")
-    public String day;
+    public int day;
 
 }

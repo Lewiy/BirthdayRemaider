@@ -1,18 +1,19 @@
 package com.romanenko.lew.birthdayremaider.Model.DTO;
 
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.CelebrationPersonEntity;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.DateEntity;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.DataCelebrationForListDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CelebrationMapper {
+public  class  CelebrationMapper {
 
     public CelebrationMapper() {
 
     }
 
-    public List<CelebrationVO> getVOObjects(List<DataCelebrationForListDTO> daoObjects) {
+    public static List<CelebrationVO> getVOObjects(List<DataCelebrationForListDTO> daoObjects) {
 
         List<CelebrationVO> celebrationVOS = new ArrayList<CelebrationVO>();
 
@@ -23,7 +24,7 @@ public class CelebrationMapper {
         return celebrationVOS;
     }
 
-    private CelebrationVO constructCelebrationVO(DataCelebrationForListDTO dataCelebrationForListsDTO) {
+    private static CelebrationVO constructCelebrationVO(DataCelebrationForListDTO dataCelebrationForListsDTO) {
         CelebrationVO celebrationVO = new CelebrationVO();
         celebrationVO.setFirstName(dataCelebrationForListsDTO.firstName);
         celebrationVO.setLastName(dataCelebrationForListsDTO.lastName);
@@ -32,7 +33,7 @@ public class CelebrationMapper {
         return celebrationVO;
     }
 
-    public List<DataCelebrationForListDTO> getDTOObjects(List<CelebrationVO> celebrationVOS) {
+    public static List<DataCelebrationForListDTO> getDTOObjects(List<CelebrationVO> celebrationVOS) {
 
         List<DataCelebrationForListDTO> celebrationForListDTOS = new ArrayList<DataCelebrationForListDTO>();
 
@@ -43,7 +44,7 @@ public class CelebrationMapper {
         return celebrationForListDTOS;
     }
 
-    private DataCelebrationForListDTO constructCelebrationDTO(CelebrationVO celebrationVO) {
+    private  static DataCelebrationForListDTO constructCelebrationDTO(CelebrationVO celebrationVO) {
 
         DataCelebrationForListDTO dataCelebrationForListDTO = new DataCelebrationForListDTO();
         dataCelebrationForListDTO.firstName = celebrationVO.getFirstName();
@@ -53,7 +54,7 @@ public class CelebrationMapper {
         return dataCelebrationForListDTO;
     }
 
-    public List<CelebrationPersonEntity> getEntity(List<DataCelebrationForListDTO> daoObjects) {
+    public static List<CelebrationPersonEntity> getEntity(List<DataCelebrationForListDTO> daoObjects) {
 
         List<CelebrationPersonEntity> celebrationPersonEntities = new ArrayList<CelebrationPersonEntity>();
 
@@ -63,7 +64,7 @@ public class CelebrationMapper {
         return celebrationPersonEntities;
     }
 
-    public CelebrationPersonEntity constructEntity(DataCelebrationForListDTO dataCelebrationForListsDTO) {
+    public static CelebrationPersonEntity constructEntity(DataCelebrationForListDTO dataCelebrationForListsDTO) {
 
         CelebrationPersonEntity celebrationPersonEntity = new CelebrationPersonEntity();
         celebrationPersonEntity.firstName = dataCelebrationForListsDTO.firstName;
@@ -73,4 +74,27 @@ public class CelebrationMapper {
         return celebrationPersonEntity;
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static DateEntity constructDateEntity(DateCelebrationVO dateCelebrationVO) {
+
+        DateEntity celebrationDate = new DateEntity();
+        celebrationDate.year = dateCelebrationVO.getYear();
+        celebrationDate.month = dateCelebrationVO.getMonth();
+        celebrationDate.day = dateCelebrationVO.getDay();
+
+        return celebrationDate;
+    }
+
+    public static CelebrationPersonEntity constructDateEntity(CelebrationVO celebrationVO) {
+
+        CelebrationPersonEntity celebrationPersonEntity = new  CelebrationPersonEntity();
+
+        celebrationPersonEntity.firstName = celebrationVO.getFirstName();
+        celebrationPersonEntity.lastName = celebrationVO.getLastName();
+        celebrationPersonEntity.fotoPath = celebrationVO.getFotoPath();
+        celebrationPersonEntity.comment = celebrationVO.getComment();
+
+        return celebrationPersonEntity;
+    }
 }

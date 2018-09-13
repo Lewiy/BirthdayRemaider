@@ -26,6 +26,7 @@ import com.romanenko.lew.birthdayremaider.AddCelebrationContract;
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPCompAddRemain;
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPCompListCelebr;
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPMAddRemainder;
+import com.romanenko.lew.birthdayremaider.Model.ModelAddRemainder;
 import com.romanenko.lew.birthdayremaider.Presenter.PresenterAddRemainder;
 import com.romanenko.lew.birthdayremaider.R;
 
@@ -87,12 +88,12 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
         init(view);
 
         DaggerMVPCompAddRemain.builder()
-                .mVPMAddRemainder(new MVPMAddRemainder(this, new PresenterAddRemainder()))
+                .mVPMAddRemainder(new MVPMAddRemainder(this, new PresenterAddRemainder(getActivity())))
                 .build()
                 .inject(this);
 
         presenter.attachView(this);
-    //    presenter.attachModel(new ModelListCelebration());
+        presenter.attachModel(new ModelAddRemainder());
 
          presenter.viewIsReady();
 
@@ -108,6 +109,7 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
                         // intent.putExtra(TAG_WEIGHT_SELECTED, mNpWeight.getValue());
                         intent = loadDataIntent(intent);
 
+                        presenter.addRemainder();
                         getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
 
 

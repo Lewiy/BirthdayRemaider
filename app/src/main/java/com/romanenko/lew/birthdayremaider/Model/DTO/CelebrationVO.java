@@ -7,6 +7,19 @@ public class CelebrationVO {
     private String lastName;
     private String date;
     private String fotoPath;
+    private String comment;
+
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+
+
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;

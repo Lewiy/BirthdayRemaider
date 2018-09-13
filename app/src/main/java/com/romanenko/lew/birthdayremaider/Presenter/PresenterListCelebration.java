@@ -36,30 +36,7 @@ public class PresenterListCelebration extends Presenter<ListCelebrationContract.
 
     }
 
-    public void addRemainder(String name, String serName, String comment, String date, String typeCelebration,String pathPictureContact) {
 
-        //appDataBase.celebrationPersonEntityDao();
-        getModel().addCelebration(name, serName, comment, date, typeCelebration, pathPictureContact).observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new CompletableObserver() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        System.out.print("Complite");
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        System.out.print("Complite");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        System.out.print(e.getMessage().toString());
-                    }
-                });
-
-
-    }
 
 
     public void pullListCelebration() {

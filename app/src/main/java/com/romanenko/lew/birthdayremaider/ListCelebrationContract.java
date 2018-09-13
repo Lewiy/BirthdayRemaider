@@ -24,7 +24,6 @@ public interface ListCelebrationContract {
 
     interface PresenterListBirthday extends MvpPresenter<ViewListBirthday, ModelListBirthday> {
 
-        void addRemainder(String name, String serName, String comment, String date, String typeCelebration,String pathPictureContact);
 
         void pullListCelebration();
 
@@ -38,8 +37,6 @@ public interface ListCelebrationContract {
     interface ModelListBirthday extends IModel {
 
         void initLocalReposetory(Context context);
-
-        Completable addCelebration(String name, String serName, String comment, String date, String typeCelebration,String pathPictureContact);
 
         Completable deleteCelebration(DataCelebrationForListDTO dataCelebrationForListDTO);
 

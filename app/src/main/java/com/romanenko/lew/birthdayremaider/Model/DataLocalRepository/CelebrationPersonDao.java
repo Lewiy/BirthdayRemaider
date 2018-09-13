@@ -25,10 +25,10 @@ public abstract class CelebrationPersonDao {
             "celebration_person._id, date_entity.year " +
             "FROM celebration_person,date_entity " +
             "where celebration_person._id == date_entity.dateId")
-   abstract Flowable<List<DataCelebrationForListDTO>> getListCelebration();
+    public abstract Flowable<List<DataCelebrationForListDTO>> getListCelebration();
 
     @Query("SELECT comment,type_celebration from celebration_person WHERE _id = :userId ")
-    abstract Flowable<PersonalPageRequirementDataDTO> getPersonalPage(String userId);
+    public abstract Flowable<PersonalPageRequirementDataDTO> getPersonalPage(String userId);
 
     @Query("SELECT celebration_person.first_name,celebration_person.last_name," +
             "celebration_person.date,celebration_person.foto_path," +
@@ -36,24 +36,24 @@ public abstract class CelebrationPersonDao {
             "FROM celebration_person,date_entity " +
             "where celebration_person._id == date_entity.dateId and  _id = :userId")
 
-    abstract Flowable<PersonalPageAllInformation> getPersonalPageAll(String userId);
+    public abstract Flowable<PersonalPageAllInformation> getPersonalPageAll(String userId);
 
     @Insert
-    abstract void birthdayPersonInsert(CelebrationPersonEntity celebrationPersonEntity);
+    public abstract void birthdayPersonInsert(CelebrationPersonEntity celebrationPersonEntity);
 
     @Insert
-    abstract  void birthdayPersonDateInsert(MyDate myDate);
+    public abstract void birthdayPersonDateInsert(DateEntity DateEntity);
 
     @Update
-    abstract void birthdayPersonUpdete(CelebrationPersonEntity celebrationPersonEntity);
+    public abstract void birthdayPersonUpdete(CelebrationPersonEntity celebrationPersonEntity);
 
     @Delete
-    abstract  void birthdayPersonDelete(CelebrationPersonEntity celebrationPersonEntity);
+    public abstract void birthdayPersonDelete(CelebrationPersonEntity celebrationPersonEntity);
 
     @Transaction
-     void insertPersonAndDate(CelebrationPersonEntity celebrationPersonEntity, MyDate myDate) {
+    public void insertPersonAndDate(CelebrationPersonEntity celebrationPersonEntity, DateEntity dateEntity) {
         birthdayPersonInsert(celebrationPersonEntity);
-        birthdayPersonDateInsert(myDate);
+        birthdayPersonDateInsert(dateEntity);
     }
 
 }
