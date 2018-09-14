@@ -14,14 +14,27 @@ import io.reactivex.Completable;
 public interface AddCelebrationContract {
     interface ViewAddRemainder extends IView{
 
+
         String getName();
-        String getSurname();
-        int getYear();
-        int getDay();
-        int getMonth();
-        String getPathImage();
-        String getTypeCelebration();
-        String getComment();
+
+
+      String getSurname();
+
+
+        int getYear() ;
+
+         int getDay();
+
+      int getMonth() ;
+
+
+       String getPathImage() ;
+
+
+        String getTypeCelebration() ;
+
+
+         String getComment() ;
     }
 
     interface PresenterAddRemainder extends MvpPresenter<ViewAddRemainder,ModelAddRemainder> {

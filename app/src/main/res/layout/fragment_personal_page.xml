@@ -1,104 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/frag_edit_celebr_image"
-        android:layout_width="415dp"
-        android:layout_height="355dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.166"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@color/colorAccent" />
-
-    <ImageButton
-        android:id="@+id/frag_edit_celebr_delete_but"
-        android:layout_width="148dp"
-        android:layout_height="130dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/ic_delete_black_24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frag_edit_celebr_image" />
+        android:layout_marginTop="16dp"
+        android:layout_weight="4"
+        android:background="@color/colorGrayLight" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/frag_edit_celebr_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="TextView" />
+
+        <ImageButton
+            android:id="@+id/frag_edit_celebr_edit_but"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_create_black_24dp" />
+
+        <ImageButton
+            android:id="@+id/frag_edit_celebr_delete_but"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_delete_black_24dp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@android:color/black"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_date_range_black_24dp" />
+        </FrameLayout>
+        <TextView
+            android:id="@+id/frag_edit_celebr_date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="TextView" />
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_alarm_black_24dp" />
+        </FrameLayout>
+
+
+
+        <TextView
+            android:id="@+id/frag_edit_celebr_time_to_alarm"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="TextView" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@android:color/black"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:background="@android:color/transparent"
+                android:maxHeight="12dp"
+                android:maxWidth="12dp"
+                android:src="@drawable/ic_cake_black_24dp" />
+
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/frag_edit_celebr_type"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="TextView" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@android:color/black"/>
 
     <TextView
-        android:id="@+id/frag_edit_celebr_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="188dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/frag_edit_celebr_date"
-        app:layout_constraintEnd_toStartOf="@+id/frag_edit_celebr_edit_but"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frag_edit_celebr_image"
-        app:layout_constraintVertical_bias="0.952" />
-
-    <TextView
-        android:id="@+id/frag_edit_celebr_type"
-        android:layout_width="wrap_content"
-        android:layout_height="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.644"
-        app:layout_constraintStart_toEndOf="@+id/frag_edit_celebr_edit_but"
-        app:layout_constraintTop_toBottomOf="@+id/frag_edit_celebr_image" />
-
-    <TextView
-        android:id="@+id/frag_edit_celebr_date"
-        android:layout_width="52dp"
-        android:layout_height="19dp"
-        android:layout_marginBottom="48dp"
-        android:layout_marginEnd="208dp"
-        android:layout_marginStart="8dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/frag_edit_celebr_time_to_alarm"
-        app:layout_constraintHorizontal_bias="0.947"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/frag_edit_celebr_time_to_alarm"
-        android:layout_width="57dp"
-        android:layout_height="21dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frag_edit_celebr_type"
-        app:layout_constraintVertical_bias="0.821" />
-
-    <ImageButton
-        android:id="@+id/frag_edit_celebr_edit_but"
-        android:layout_width="47dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="180dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/ic_create_black_24dp"
-        app:layout_constraintBottom_toTopOf="@+id/frag_edit_celebr_delete_but"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frag_edit_celebr_image"
-        app:layout_constraintVertical_bias="0.714" />
-</android.support.constraint.ConstraintLayout>
+        android:id="@+id/frag_edit_celebr_comment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="TextView" />
+</android.support.v7.widget.LinearLayoutCompat>
