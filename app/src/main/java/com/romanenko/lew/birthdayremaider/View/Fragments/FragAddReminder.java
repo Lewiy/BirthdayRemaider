@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -67,7 +68,10 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
 
     private URI uri;
 
-    private  int yearOfAge, monthOfYear, dayOfMonth;
+    private int yearOfAge, monthOfYear, dayOfMonth;
+    private Boolean flagAddUpdate = false;
+
+    private int userId = -1,dateId = -1;
 
     @Inject
     public AddCelebrationContract.PresenterAddRemainder presenter;
@@ -80,7 +84,9 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
             TAG_COMMENT = "comment",
             TAG_TYPE_CELEBR = "typeCelebr",
             TAG_DATE = "date",
-            TAG_PICTURE_CONTACT = "picture_contact";
+            TAG_PICTURE_CONTACT = "picture_contact",
+            TAG_USERID = "userId",
+            TAG_DATEID = "dateId";
 
     @NonNull
     @Override
@@ -99,7 +105,11 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
         presenter.attachModel(new ModelAddRemainder());
 
         presenter.viewIsReady();
-
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            // idUser = bundle.getInt("idUser", -1);
+            setFieldForUpdate(bundle);
+        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view)
@@ -111,14 +121,36 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
                         // intent.putExtra(TAG_WEIGHT_SELECTED, mNpWeight.getValue());
                         intent = loadDataIntent(intent);
 
-                        presenter.addRemainder();
-                        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                        if (flagAddUpdate == true)
+                            presenter.editCelebration();
+                        else
+                            presenter.addRemainder();
+                        //  getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
 
                     }
                 });
         // getDialog().getWindow().setLayout(100, 100);
         return builder.create();
     }
+
+    private void setFieldForUpdate(Bundle bundle) {
+        this.name.setText(bundle.get(TAG_NAME).toString());
+        this.surName.setText(bundle.get(TAG_SUR_NAME).toString());
+        this.comment.setText(bundle.get(TAG_COMMENT).toString());
+        this.dateView.setText(bundle.get(TAG_DATE).toString());
+        datePicture.setVisibility(View.GONE);
+        dateView.setVisibility(View.VISIBLE);
+
+        userId = bundle.getInt(TAG_USERID);
+        dateId = bundle.getInt(TAG_DATEID);
+        flagAddUpdate = true;
+        setSpinner(bundle.getString(TAG_TYPE_CELEBR));
+
+        if(bundle.get(TAG_PICTURE_CONTACT) != null)
+        setPictureContact(bundle.get(TAG_PICTURE_CONTACT).toString());
+
+    }
+
 
     public void init(View view) {
         ButterKnife.bind(this, view);
@@ -156,7 +188,7 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
             monthOfYear = month;
             dayOfMonth = day;
 
-            dateCelebrate =  day + "/" + ++month + "/" + year;
+            dateCelebrate = day + "/" + ++month + "/" + year;
             dateAndTime.set(Calendar.YEAR, year);
             dateAndTime.set(Calendar.MONTH, monthOfYear);
             dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -193,10 +225,7 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
                     //   contactPicture.setImageURI( contentURI);
                     //  contactPicture.setBackground(contentURI);
                     pathPictureContact = getRealPathFromURI(contentURI);
-                    File f = new File(pathPictureContact);
-                    Drawable d = Drawable.createFromPath(f.getAbsolutePath());
-                    contactPicture.setBackground(d);
-                    addFotoButton.setVisibility(View.GONE);
+                    setPictureContact(pathPictureContact);
                 } else {
                     final Uri uri_data = data.getData();
                     // Get the path from the Uri
@@ -226,6 +255,15 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
             cursor.moveToFirst();
             int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
             return cursor.getString(idx);
+        }
+    }
+
+    private void setPictureContact(String pathPictureContact) {
+        if(pathPictureContact != null){
+            File f = new File(pathPictureContact);
+            Drawable d = Drawable.createFromPath(f.getAbsolutePath());
+            contactPicture.setBackground(d);
+            addFotoButton.setVisibility(View.GONE);
         }
     }
 
@@ -270,6 +308,16 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
     }
 
     @Override
+    public int getUserId() {
+        return userId;
+    }
+
+    @Override
+    public int getDateId() {
+        return dateId;
+    }
+
+    @Override
     public void setName(String name) {
         this.name.setText(name);
     }
@@ -301,11 +349,7 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
 
     @Override
     public void seTypeCelebration(String typeCelebration) {
-        for (int i = 0; i < spinTypeCelebr.getAdapter().getCount(); i++) {
-            if (spinTypeCelebr.getAdapter().getItem(i).toString().contains(typeCelebration)) {
-                spinTypeCelebr.setSelection(i);
-            }
-        }
+        setSpinner(typeCelebration);
 
     }
 
@@ -313,6 +357,24 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
     public void seComment(String comment) {
 
         this.comment.setText(comment);
+    }
+
+    @Override
+    public void setIdUser(int userId) {
+
+    }
+
+    @Override
+    public void setIdDate(int dateId) {
+
+    }
+
+    private void setSpinner(String typeCelebration) {
+        for (int i = 0; i < spinTypeCelebr.getAdapter().getCount(); i++) {
+            if (spinTypeCelebr.getAdapter().getItem(i).toString().contains(typeCelebration)) {
+                spinTypeCelebr.setSelection(i);
+            }
+        }
     }
 
 

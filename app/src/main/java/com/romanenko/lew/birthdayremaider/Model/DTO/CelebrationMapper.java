@@ -84,6 +84,7 @@ public  class  CelebrationMapper {
         celebrationDate.year = dateCelebrationVO.getYear();
         celebrationDate.month = dateCelebrationVO.getMonth();
         celebrationDate.day = dateCelebrationVO.getDay();
+        celebrationDate.dateId = dateCelebrationVO.getDateId();
 
         return celebrationDate;
     }
@@ -97,6 +98,7 @@ public  class  CelebrationMapper {
         celebrationPersonEntity.fotoPath = celebrationVO.getFotoPath();
         celebrationPersonEntity.comment = celebrationVO.getComment();
         celebrationPersonEntity.typeCelebration = celebrationVO.getTypeCelebration();
+        celebrationPersonEntity._id = celebrationVO.getIdUser();
 
         return celebrationPersonEntity;
     }

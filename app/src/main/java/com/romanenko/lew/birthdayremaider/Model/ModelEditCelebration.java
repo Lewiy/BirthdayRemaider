@@ -38,15 +38,7 @@ public class ModelEditCelebration implements EditProfileCelebration.ModelEditCel
         dataBaseComponent.inject(this);
     }
 
-    @Override
-    public Completable upDateCelebration(CelebrationPersonEntity celebrationPersonEntity, DateEntity dateEntity) {
-        return Completable.fromAction(new Action() {
-            @Override
-            public void run() throws Exception {
-                appDataBase.celebrationPersonEntityDao().insertPersonAndDate(celebrationPersonEntity,dateEntity);
-            }
-        });
-    }
+
 
 
     @Override

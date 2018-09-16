@@ -37,6 +37,16 @@ public class ModelAddRemainder implements AddCelebrationContract.ModelAddRemaind
     }
 
     @Override
+    public Completable upDateCelebration(CelebrationPersonEntity celebrationPersonEntity, DateEntity dateEntity) {
+        return Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                appDataBase.celebrationPersonEntityDao().updateCelebrationAndDate(celebrationPersonEntity,dateEntity);
+            }
+        });
+    }
+
+    @Override
     public void initLocalReposetory(Context context) {
 
         dataBaseComponent = DaggerDataBaseComponent.builder().appComponent(MyApp.get(context).component())

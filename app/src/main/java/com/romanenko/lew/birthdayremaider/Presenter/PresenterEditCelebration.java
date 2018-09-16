@@ -29,29 +29,7 @@ public class PresenterEditCelebration extends Presenter<EditProfileCelebration.V
         getModel().initLocalRepository(context);
     }
 
-    @Override
-    public void EditCelebration() {
-      /*  getModel().upDateCelebration(CelebrationMapper
-                .constructDateEntity(createCelebration()), CelebrationMapper
-                .constructDateEntity(createDateCelebration())).observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new CompletableObserver() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        System.out.print("Complite");
-                    }
 
-                    @Override
-                    public void onComplete() {
-                        System.out.print("Complite");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        System.out.print(e.getMessage().toString());
-                    }
-                });*/
-    }
 
     @Override
     public void deleteCelebration() {
@@ -85,13 +63,15 @@ public class PresenterEditCelebration extends Presenter<EditProfileCelebration.V
                     public void accept(PersonalPageAllInformation personalPageAllInformation) throws Exception {
                         personalPageAllInfo = personalPageAllInformation;
                         //getView().loadListCelebration(new CelebrationMapper().getVOObjects(datumCelebrationForLists));
-                        getView().setName(personalPageAllInformation.firstName + " " + personalPageAllInformation.lastName);
+                        getView().setName(personalPageAllInformation.firstName,personalPageAllInformation.lastName);
                         getView().setComment(personalPageAllInformation.comment);
                         getView().setTypeCelebration(personalPageAllInformation.typeCelebration);
                         getView().setDate(personalPageAllInformation.day + "/" +
                                 personalPageAllInformation.month + "/" +
                                 personalPageAllInformation.year);
                         getView().setPictureContact(personalPageAllInformation.fotoPath);
+                        getView().setIdUser((int)personalPageAllInformation.userId);
+                        getView().setIdDate((int)personalPageAllInformation.dateId);
 
                     }
                 });

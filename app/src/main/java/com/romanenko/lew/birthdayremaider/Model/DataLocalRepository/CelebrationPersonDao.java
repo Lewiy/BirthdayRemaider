@@ -47,7 +47,8 @@ public abstract class CelebrationPersonDao {
 
     @Update
     public abstract void birthdayPersonUpdete(CelebrationPersonEntity celebrationPersonEntity);
-
+    @Update
+    public  abstract void birthdayDateUpdate(DateEntity dateEntity);
 
     @Query("DELETE FROM celebration_person WHERE _id = :userId")
     public abstract void birthdayPersonDelete(int userId);
@@ -55,6 +56,11 @@ public abstract class CelebrationPersonDao {
     @Query("DELETE FROM date_entity WHERE dateId = :dateId")
     public abstract void birthdayDateDelete(int dateId);
 
+    @Transaction
+    public void updateCelebrationAndDate(CelebrationPersonEntity celebrationPersonEntity,DateEntity dateEntity){
+        birthdayDateUpdate(dateEntity);
+        birthdayPersonUpdete(celebrationPersonEntity);
+    }
 
     @Transaction
     public void deleteCelebrationAndDate(int userId, int dateId) {

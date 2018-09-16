@@ -2,7 +2,20 @@ package com.romanenko.lew.birthdayremaider.Model.DTO;
 
 public class DateCelebrationVO {
 
-    private int year, month, day;
+    private int year;
+    private int month;
+    private int day;
+
+    public void setDateId(int dateId) {
+        this.dateId = dateId;
+    }
+
+    private int dateId;
+    public int getDateId() {
+        return dateId;
+    }
+
+
 
     public void setYear(int year) {
         this.year = year;

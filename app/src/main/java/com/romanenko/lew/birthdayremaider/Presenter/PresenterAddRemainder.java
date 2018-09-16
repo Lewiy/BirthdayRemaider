@@ -25,6 +25,7 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
         dateCelebrationVO.setDay(getView().getDay());
         dateCelebrationVO.setMonth(getView().getMonth());
         dateCelebrationVO.setYear(getView().getYear());
+        dateCelebrationVO.setDateId(getView().getDateId());
         return dateCelebrationVO;
     }
 
@@ -35,6 +36,7 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
         celebrationVO.setFotoPath(getView().getPathImage());
         celebrationVO.setTypeCelebration(getView().getTypeCelebration());
         celebrationVO.setComment(getView().getComment());
+        celebrationVO.setIdUser(getView().getUserId());
         return celebrationVO;
     }
 
@@ -69,5 +71,30 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
     @Override
     public void viewIsReady() {
         getModel().initLocalReposetory(context);
+    }
+
+    @Override
+    public void editCelebration() {
+        getModel().upDateCelebration(CelebrationMapper
+                .constructDateEntity(createCelebration()), CelebrationMapper
+                .constructDateEntity(createDateCelebration()))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        System.out.print("Complite");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        System.out.print("Complite");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.print(e.getMessage().toString());
+                    }
+                });
     }
 }

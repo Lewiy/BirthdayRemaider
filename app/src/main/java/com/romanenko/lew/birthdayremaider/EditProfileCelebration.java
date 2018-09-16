@@ -18,16 +18,18 @@ public interface EditProfileCelebration {
 
     interface ViewEditCelebration extends IView{
 
-        void setName(String name);
+        void setName(String name,String surName);
         void setTypeCelebration(String typeCelebration);
         void setComment(String comment);
         void setDate(String date);
         void setTimeToAlarm(String timeToAlarm);
         void setPictureContact(String path);
+        void setIdUser(int userId);
+        void setIdDate(int dateId);
     }
 
     interface PresenterEditCelebration extends MvpPresenter<ViewEditCelebration,ModelEditCelebration>{
-        void EditCelebration();
+
         void deleteCelebration();
         void pullPersonalPage(int idUser);
     }
@@ -35,7 +37,7 @@ public interface EditProfileCelebration {
 
     interface ModelEditCelebration extends IModel{
         void initLocalRepository(Context context);
-        Completable upDateCelebration(CelebrationPersonEntity celebrationPersonEntity, DateEntity dateEntity);
+
         Flowable<PersonalPageAllInformation> pullPersonalPage(String id);
         Completable deleteCelebration(int userId, int dateId);
     }

@@ -34,6 +34,9 @@ public interface AddCelebrationContract {
 
         String getComment();
 
+        int getUserId();
+        int getDateId();
+
 
 
         void  setName(String name);
@@ -51,15 +54,18 @@ public interface AddCelebrationContract {
         void seTypeCelebration(String typeCelebration);
 
         void seComment(String Comment);
+        void setIdUser(int userId);
+        void setIdDate(int dateId);
     }
 
     interface PresenterAddRemainder extends MvpPresenter<ViewAddRemainder, ModelAddRemainder> {
         void addRemainder();
+        void editCelebration();
     }
 
     interface ModelAddRemainder extends IModel {
         void initLocalReposetory(Context context);
-
+        Completable upDateCelebration(CelebrationPersonEntity celebrationPersonEntity, DateEntity dateEntity);
         Completable addCelebration(CelebrationPersonEntity celebrationPersonEntity, DateEntity dateEntity);
     }
 
