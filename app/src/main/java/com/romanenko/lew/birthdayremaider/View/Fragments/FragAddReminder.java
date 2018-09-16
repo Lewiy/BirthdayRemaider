@@ -63,11 +63,11 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
     ImageButton addFotoButton;
 
     public static final int PICK_IMAGE = 1;
-    private  String pathPictureContact = null;
+    private String pathPictureContact = null;
 
     private URI uri;
 
-    private  int year, monthOfYear, dayOfMonth;
+    private  int yearOfAge, monthOfYear, dayOfMonth;
 
     @Inject
     public AddCelebrationContract.PresenterAddRemainder presenter;
@@ -98,8 +98,7 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
         presenter.attachView(this);
         presenter.attachModel(new ModelAddRemainder());
 
-         presenter.viewIsReady();
-
+        presenter.viewIsReady();
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -114,7 +113,6 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
 
                         presenter.addRemainder();
                         getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
-
 
                     }
                 });
@@ -137,7 +135,7 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
         intent.putExtra(TAG_COMMENT, comment.getText().toString());
         intent.putExtra(TAG_TYPE_CELEBR, spinTypeCelebr.getSelectedItem().toString());
         intent.putExtra(TAG_DATE, dateCelebrate);
-        intent.putExtra(TAG_PICTURE_CONTACT, pathPictureContact );
+        intent.putExtra(TAG_PICTURE_CONTACT, pathPictureContact);
         return intent;
     }
 
@@ -152,9 +150,13 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
 
     // установка обработчика выбора даты
     DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        public void onDateSet(DatePicker view, int year, int month, int day) {
 
-            dateCelebrate = dayOfMonth + "/" + ++monthOfYear + "/" + year;
+            yearOfAge = year;
+            monthOfYear = month;
+            dayOfMonth = day;
+
+            dateCelebrate =  day + "/" + ++month + "/" + year;
             dateAndTime.set(Calendar.YEAR, year);
             dateAndTime.set(Calendar.MONTH, monthOfYear);
             dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -166,7 +168,7 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
     };
 
     @OnClick(R.id.frag_add_remainder_add_foto)
-    public void OnClickAddFoto(){
+    public void OnClickAddFoto() {
         Intent intent = new Intent();
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
@@ -176,8 +178,7 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
 
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             if (resultCode == RESULT_OK) {
                 if (requestCode == PICK_IMAGE) {
@@ -185,13 +186,13 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
                     //uri = data.getParcelableExtra("file");
                     Uri contentURI = data.getData();
 
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), contentURI);
-                        //String path = saveImage(bitmap);
-                       // Toast.makeText(MainActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), contentURI);
+                    //String path = saveImage(bitmap);
+                    // Toast.makeText(MainActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
                     //contactPicture.setImageBitmap(bitmap);
-                 //   contactPicture.setImageURI( contentURI);
-                  //  contactPicture.setBackground(contentURI);
-                     pathPictureContact = getRealPathFromURI(contentURI);
+                    //   contactPicture.setImageURI( contentURI);
+                    //  contactPicture.setBackground(contentURI);
+                    pathPictureContact = getRealPathFromURI(contentURI);
                     File f = new File(pathPictureContact);
                     Drawable d = Drawable.createFromPath(f.getAbsolutePath());
                     contactPicture.setBackground(d);
@@ -205,7 +206,7 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
                         //uri = Uri.fromFile(f);
                     }
                     // Set the image in
-                   // ImageView((ImageView) findViewById(R.id.imgView)).setImageURI(selectedImageUri);
+                    // ImageView((ImageView) findViewById(R.id.imgView)).setImageURI(selectedImageUri);
 
 
                 }
@@ -240,7 +241,7 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
 
     @Override
     public int getYear() {
-        return year;
+        return yearOfAge;
     }
 
     @Override
@@ -255,7 +256,7 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
 
     @Override
     public String getPathImage() {
-        return  pathPictureContact;
+        return pathPictureContact;
     }
 
     @Override
@@ -267,4 +268,52 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
     public String getComment() {
         return comment.getText().toString();
     }
+
+    @Override
+    public void setName(String name) {
+        this.name.setText(name);
+    }
+
+    @Override
+    public void setSurname(String surName) {
+        this.surName.setText(surName);
+    }
+
+    @Override
+    public void seYear(int year) {
+        this.yearOfAge = year;
+    }
+
+    @Override
+    public void seDay(int day) {
+        this.dayOfMonth = day;
+    }
+
+    @Override
+    public void setMonth(int month) {
+        this.monthOfYear = month;
+    }
+
+    @Override
+    public void sePathImage(String pathName) {
+        this.pathPictureContact = pathName;
+    }
+
+    @Override
+    public void seTypeCelebration(String typeCelebration) {
+        for (int i = 0; i < spinTypeCelebr.getAdapter().getCount(); i++) {
+            if (spinTypeCelebr.getAdapter().getItem(i).toString().contains(typeCelebration)) {
+                spinTypeCelebr.setSelection(i);
+            }
+        }
+
+    }
+
+    @Override
+    public void seComment(String comment) {
+
+        this.comment.setText(comment);
+    }
+
+
 }

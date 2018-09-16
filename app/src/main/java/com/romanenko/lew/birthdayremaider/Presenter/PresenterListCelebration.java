@@ -52,22 +52,6 @@ public class PresenterListCelebration extends Presenter<ListCelebrationContract.
                 });
     }
 
-    @Override
-    public void deleteCelebration() {
-        DataCelebrationForListDTO dataCelebrationForListDTO = new DataCelebrationForListDTO();
-       // dataCelebrationForListDTO.firstName = getView().
-        //getModel().deleteCelebration()
-    }
-
-    @Override
-    public void upDateCelebration() {
-
-    }
-
-    @Override
-    public void pullPersonalPage() {
-
-    }
 
 
 }

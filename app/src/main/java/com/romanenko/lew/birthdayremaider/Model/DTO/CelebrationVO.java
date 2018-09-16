@@ -7,7 +7,26 @@ public class CelebrationVO {
     private String lastName;
     private String date;
     private String fotoPath;
+    private long idUser;
+    private String typeCelebration;
+
+
+    public String getTypeCelebration() {
+        return typeCelebration;
+    }
+
+    public void setTypeCelebration(String typeCelebration) {
+        this.typeCelebration = typeCelebration;
+    }
+    public void setIdUser(long idUser) {
+        this.idUser = idUser;
+    }
+
     private String comment;
+
+    public long getIdUser() {
+        return idUser;
+    }
 
 
     public String getComment() {
@@ -17,8 +36,6 @@ public class CelebrationVO {
     public void setComment(String comment) {
         this.comment = comment;
     }
-
-
 
 
     public void setFirstName(String firstName) {

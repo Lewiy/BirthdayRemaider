@@ -30,6 +30,8 @@ public  class  CelebrationMapper {
         celebrationVO.setLastName(dataCelebrationForListsDTO.lastName);
         celebrationVO.setDate(dataCelebrationForListsDTO.date);
         celebrationVO.setFotoPath(dataCelebrationForListsDTO.fotoPath);
+        celebrationVO.setIdUser(dataCelebrationForListsDTO.userId);
+
         return celebrationVO;
     }
 
@@ -94,6 +96,7 @@ public  class  CelebrationMapper {
         celebrationPersonEntity.lastName = celebrationVO.getLastName();
         celebrationPersonEntity.fotoPath = celebrationVO.getFotoPath();
         celebrationPersonEntity.comment = celebrationVO.getComment();
+        celebrationPersonEntity.typeCelebration = celebrationVO.getTypeCelebration();
 
         return celebrationPersonEntity;
     }

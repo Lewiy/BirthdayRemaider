@@ -140,7 +140,7 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
 
         BirthdayAdapterList.RecyclerViewClickListener listener = new BirthdayAdapterList.RecyclerViewClickListener() {
             @Override
-            public void onClick(View view, int position) {
+            public void onClick(View view, int position,CelebrationVO celebrationVO) {
                 Fragment fragment  = null;
                 try {
                     fragment = FragEditCelebration.class.newInstance();
@@ -149,6 +149,10 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("idUser",(int)celebrationVO.getIdUser());
+                fragment.setArguments(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
             }

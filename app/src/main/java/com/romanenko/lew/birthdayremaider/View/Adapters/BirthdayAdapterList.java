@@ -60,6 +60,10 @@ public class BirthdayAdapterList extends RecyclerView.Adapter<BirthdayAdapterLis
         notifyDataSetChanged();
     }
 
+    public CelebrationVO getItem(int position) {
+        return listBirthdayItems.get(position);
+    }
+
     class BirthdayViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
 
         private ImageView birthdayListImageView;
@@ -101,11 +105,11 @@ public class BirthdayAdapterList extends RecyclerView.Adapter<BirthdayAdapterLis
 
         @Override
         public void onClick(View view) {
-            recyclerViewClickListener.onClick(view, getAdapterPosition());
+            recyclerViewClickListener.onClick(view, getAdapterPosition(), getItem(getAdapterPosition()));
         }
     }
     public  interface RecyclerViewClickListener {
 
-        void onClick(View view, int position);
+        void onClick(View view, int position,CelebrationVO celebrationVO);
     }
 }

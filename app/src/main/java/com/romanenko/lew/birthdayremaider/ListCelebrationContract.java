@@ -26,24 +26,14 @@ public interface ListCelebrationContract {
 
 
         void pullListCelebration();
-
-        void deleteCelebration();
-
-        void upDateCelebration();
-
-        void pullPersonalPage();
     }
 
     interface ModelListBirthday extends IModel {
 
         void initLocalReposetory(Context context);
 
-        Completable deleteCelebration(DataCelebrationForListDTO dataCelebrationForListDTO);
-
-        Completable upDateCelebration(DataCelebrationForListDTO dataCelebrationForListDTO);
-
         Flowable<List<DataCelebrationForListDTO>> pullListCelebration();
 
-        Flowable<PersonalPageRequirementDataDTO> pullPersonalPage(String id);
+
     }
 }

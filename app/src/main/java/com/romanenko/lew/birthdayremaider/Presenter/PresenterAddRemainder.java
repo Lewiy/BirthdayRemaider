@@ -33,7 +33,7 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
         celebrationVO.setFirstName(getView().getName());
         celebrationVO.setLastName(getView().getSurname());
         celebrationVO.setFotoPath(getView().getPathImage());
-        // celebrationVO.setDate(getView().);
+        celebrationVO.setTypeCelebration(getView().getTypeCelebration());
         celebrationVO.setComment(getView().getComment());
         return celebrationVO;
     }

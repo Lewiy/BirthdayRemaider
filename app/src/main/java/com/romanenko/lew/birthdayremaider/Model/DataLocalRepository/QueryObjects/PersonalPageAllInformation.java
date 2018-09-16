@@ -6,6 +6,10 @@ public class PersonalPageAllInformation {
 
     @ColumnInfo(name = "_id")
     public long userId;
+
+    @ColumnInfo(name = "dateId")
+    public long dateId;
+
     @ColumnInfo(name = "first_name")
     public String firstName;
 
@@ -23,4 +27,10 @@ public class PersonalPageAllInformation {
 
     @ColumnInfo(name = "day")
     public String day;
+
+    @ColumnInfo(name = "comment")
+    public String comment;
+
+    @ColumnInfo(name = "type_celebration")
+    public String typeCelebration;
 }

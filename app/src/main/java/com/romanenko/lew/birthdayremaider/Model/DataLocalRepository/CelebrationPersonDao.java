@@ -31,8 +31,9 @@ public abstract class CelebrationPersonDao {
     public abstract Flowable<PersonalPageRequirementDataDTO> getPersonalPage(String userId);
 
     @Query("SELECT celebration_person.first_name,celebration_person.last_name," +
-            "celebration_person.date,celebration_person.foto_path," +
-            "celebration_person._id, date_entity.year, date_entity.month, date_entity.day " +
+            "celebration_person.date,celebration_person.foto_path,celebration_person.comment," +
+            "celebration_person._id, date_entity.year, date_entity.month, date_entity.day," +
+            "celebration_person.type_celebration,date_entity.dateId " +
             "FROM celebration_person,date_entity " +
             "where celebration_person._id == date_entity.dateId and  _id = :userId")
 
@@ -47,8 +48,19 @@ public abstract class CelebrationPersonDao {
     @Update
     public abstract void birthdayPersonUpdete(CelebrationPersonEntity celebrationPersonEntity);
 
-    @Delete
-    public abstract void birthdayPersonDelete(CelebrationPersonEntity celebrationPersonEntity);
+
+    @Query("DELETE FROM celebration_person WHERE _id = :userId")
+    public abstract void birthdayPersonDelete(int userId);
+
+    @Query("DELETE FROM date_entity WHERE dateId = :dateId")
+    public abstract void birthdayDateDelete(int dateId);
+
+
+    @Transaction
+    public void deleteCelebrationAndDate(int userId, int dateId) {
+        birthdayDateDelete(userId);
+        birthdayPersonDelete(dateId);
+    }
 
     @Transaction
     public void insertPersonAndDate(CelebrationPersonEntity celebrationPersonEntity, DateEntity dateEntity) {
