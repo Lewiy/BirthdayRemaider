@@ -25,6 +25,7 @@ import com.romanenko.lew.birthdayremaider.Model.ModelListCelebration;
 import com.romanenko.lew.birthdayremaider.Presenter.PresenterHomeScreen;
 import com.romanenko.lew.birthdayremaider.R;
 import com.romanenko.lew.birthdayremaider.View.Adapters.CelebrationAdapterGridView;
+import com.romanenko.lew.birthdayremaider.View.Fragments.FragAddReminder;
 import com.romanenko.lew.birthdayremaider.View.Fragments.FragHomeScreen;
 import com.romanenko.lew.birthdayremaider.View.Fragments.FragListCelebration;
 import com.romanenko.lew.birthdayremaider.View.Fragments.FragmentSettings;
@@ -40,7 +41,7 @@ import butterknife.ButterKnife;
  * Created by Lev- on 20.03.2018.
  */
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -48,8 +49,6 @@ public class MainActivity extends AppCompatActivity  {
     NavigationView mNavigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-
-
 
 
     @Override
@@ -66,12 +65,15 @@ public class MainActivity extends AppCompatActivity  {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        mNavigationView.setNavigationItemSelectedListener((MenuItem menuItem) -> {selectDrawerItem(menuItem); return true;} );
-       // mNavigationView.setCheckedItem(R.id.nav_home_screen);
+        mNavigationView.setNavigationItemSelectedListener((MenuItem menuItem) -> {
+            selectDrawerItem(menuItem);
+            return true;
+        });
+        // mNavigationView.setCheckedItem(R.id.nav_home_screen);
         setDefaultFragment();
     }
 
-    private void setDefaultFragment(){
+    private void setDefaultFragment() {
         Fragment fragment = null;
         Class fragmentClass = FragHomeScreen.class;
         try {
@@ -85,19 +87,22 @@ public class MainActivity extends AppCompatActivity  {
         //menuItem.setChecked(true);
     }
 
-    public void selectDrawerItem(MenuItem menuItem){
+    public void selectDrawerItem(MenuItem menuItem) {
         Fragment fragment = null;
         Class fragmentClass;
-        switch(menuItem.getItemId()) {
+        switch (menuItem.getItemId()) {
 
             case R.id.nav_home_screen:
                 fragmentClass = FragHomeScreen.class;
                 break;
+            case R.id.nav_add_celebration:
+                fragmentClass = FragAddReminder.class;
+                break;
             case R.id.nav_list_birthday:
-                fragmentClass =FragListCelebration.class;
+                fragmentClass = FragListCelebration.class;
                 break;
             case R.id.nav_settings:
-                fragmentClass =FragmentSettings.class;
+                fragmentClass = FragmentSettings.class;
                 break;
             default:
                 fragmentClass = FragHomeScreen.class;
@@ -118,7 +123,7 @@ public class MainActivity extends AppCompatActivity  {
         // Set action bar title
         setTitle(menuItem.getTitle());
         // Close the navigation drawer
-         mDrawerLayout.closeDrawers();
+        mDrawerLayout.closeDrawers();
 
     }
 

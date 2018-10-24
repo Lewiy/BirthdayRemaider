@@ -22,6 +22,10 @@ import io.reactivex.Flowable;
 public abstract class CelebrationPersonDao {
 
 
+    @Query("SELECT COUNT(_id) FROM celebration_person")
+    public abstract Flowable<Integer> getNumberOfRows();
+
+
     @Query("SELECT celebration_person.first_name,celebration_person.last_name," +
             "celebration_person.date,celebration_person.foto_path," +
             "celebration_person._id, date_entity.year " +

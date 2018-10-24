@@ -40,7 +40,7 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
 
     @BindView(R.id.lv_main)
     RecyclerView recyclerViewMain;
-    private static final int REQUEST_ADD_REMAINDER = 1;
+    public static final int REQUEST_ADD_REMAINDER = 1;
     // private static final int REQUEST_ANOTHER_ONE = 2;
 
     String name, surName, comment, type_celebr, date;
@@ -48,7 +48,7 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
     @Inject
     ListCelebrationContract.PresenterListBirthday presenter;
 
-    private CelebrationVO celebrationVO1;
+    //private CelebrationVO celebrationVO1;
 
     @Nullable
     @Override
@@ -88,10 +88,6 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
     public void openFragAddRemainder() {
         DialogFragment fragment = new FragAddReminder();
         fragment.setTargetFragment(this, REQUEST_ADD_REMAINDER);
-        Bundle bundle = new Bundle();
-        if(celebrationVO1 != null)
-        bundle.putInt("idUser",(int)celebrationVO1.getIdUser());
-        fragment.setArguments(bundle);
         fragment.show(getFragmentManager(), fragment.getClass().getName());
     }
 
@@ -145,9 +141,6 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
             }
         };
-
-        if(celebrationVO1 != null)
-        celebrationVO1 = items.get(items.size() - 1);
 
         CelebrationAdapterList celebrationAdapterList = new CelebrationAdapterList(this.getContext(), items,listener);
         recyclerViewMain.setLayoutManager(new LinearLayoutManager(getContext()));

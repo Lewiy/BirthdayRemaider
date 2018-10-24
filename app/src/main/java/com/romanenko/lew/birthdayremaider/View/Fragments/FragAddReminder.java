@@ -35,6 +35,7 @@ import com.romanenko.lew.birthdayremaider.R;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.util.Calendar;
 
@@ -65,17 +66,14 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
     @BindView(R.id.frag_add_remainder_add_foto)
     ImageButton addFotoButton;
 
-    public static final int PICK_IMAGE = 1;
     private String pathPictureContact = null;
-
-    private URI uri;
 
     private int yearOfAge, monthOfYear, dayOfMonth;
     private Boolean flagAddUpdate = false;
 
     private int userId = -1, dateId = -1;
-    private Bundle updatBundle;
-    private int idUserFoto = -1;
+
+    private Integer numberOfRows;
 
     @Inject
     public AddCelebrationContract.PresenterAddRemainder presenter;
@@ -91,8 +89,7 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
             TAG_PICTURE_CONTACT = "picture_contact",
             TAG_USERID = "userId",
             TAG_DATEID = "dateId",
-            TAG_CELEBR_IMAGE = "celebrImageTmp",
-            TAG_DIRECTORY_APP_PATH = "/sdcard/Remainder/";
+            TAG_CELEBR_IMAGE = "celebrImageTmp";
 
     @NonNull
     @Override
@@ -101,12 +98,6 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
         View view = inflater.inflate(R.layout.fragment_add_remainder, null);
 
         init(view);
-
-        updatBundle = new Bundle();
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            idUserFoto = bundle.getInt("idUser", -1);
-        }
 
         DaggerMVPCompAddRemain.builder()
                 .mVPMAddRemainder(new MVPMAddRemainder(this, new PresenterAddRemainder(getActivity())))
@@ -117,12 +108,7 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
         presenter.attachModel(new ModelAddRemainder());
 
         presenter.viewIsReady();
-
-        /*Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            // idUser = bundle.getInt("idUser", -1);
-            setFieldForUpdate(bundle);
-        }*/
+        presenter.getNumberOfRows();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view)
@@ -142,14 +128,13 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
                                 e.printStackTrace();
                             }
                             getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
-                        }
-                        else
+                        } else
                             presenter.addRemainder();
-                          //  getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                        //  getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
 
                     }
                 });
-        // getDialog().getWindow().setLayout(100, 100);
+
         return builder.create();
     }
 
@@ -166,8 +151,8 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
         flagAddUpdate = true;
         setSpinner(bundle.getString(TAG_TYPE_CELEBR));
 
-        if(bundle.get(TAG_PICTURE_CONTACT) != null)
-        setPictureContact(bundle.get(TAG_PICTURE_CONTACT).toString());
+        if (bundle.get(TAG_PICTURE_CONTACT) != null)
+            setPictureContact(bundle.get(TAG_PICTURE_CONTACT).toString());
 
     }
 
@@ -277,9 +262,8 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
     }
 
     private void beginCrop(Uri source) {
-
-        Uri destination = Uri.fromFile(new File(getActivity().getCacheDir(),TAG_CELEBR_IMAGE +  idUserFoto));
-        Crop.of(source, destination).asSquare().start(getActivity(),this);
+        Uri destination = Uri.fromFile(new File(getActivity().getCacheDir(), TAG_CELEBR_IMAGE + numberOfRows));
+        Crop.of(source, destination).asSquare().start(getActivity(), this);
     }
 
     private void handleCrop(int resultCode, Intent result) {
@@ -304,7 +288,7 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
     }
 
     private void setPictureContact(String pathPictureContact) {
-        if(pathPictureContact != null){
+        if (pathPictureContact != null) {
             File f = new File(pathPictureContact);
             Drawable d = Drawable.createFromPath(f.getAbsolutePath());
             contactPicture.setBackground(d);
@@ -412,6 +396,11 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
     @Override
     public void setIdDate(int dateId) {
 
+    }
+
+    @Override
+    public void setNumberOfRows(Integer numberOfRows) {
+        this.numberOfRows = numberOfRows;
     }
 
     private void setSpinner(String typeCelebration) {

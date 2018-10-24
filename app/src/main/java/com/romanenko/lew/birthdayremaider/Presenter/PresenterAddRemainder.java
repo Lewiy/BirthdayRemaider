@@ -1,17 +1,18 @@
 package com.romanenko.lew.birthdayremaider.Presenter;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.romanenko.lew.birthdayremaider.AddCelebrationContract;
 import com.romanenko.lew.birthdayremaider.AlarmingSystem.CelebrationAlarmManager;
-import com.romanenko.lew.birthdayremaider.AlarmingSystem.MyDate;
 import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationMapper;
 import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationVO;
 import com.romanenko.lew.birthdayremaider.Model.DTO.DateCelebrationVO;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageAllInformation;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.DataCelebrationForListDTO;
+
+import java.util.List;
 
 import io.reactivex.CompletableObserver;
+import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -58,6 +59,21 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
         celebrationVO.setIdUser(getView().getUserId());
 
         return celebrationVO;
+    }
+
+    @Override
+    public void getNumberOfRows() {
+                 getModel()
+                .getNumberOfRows()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Consumer <Integer> () {
+                    @Override
+                    public void accept(Integer numberOfRows) throws Exception {
+                        getView().setNumberOfRows(numberOfRows);
+
+                    }
+                });
     }
 
     public void addRemainder() {

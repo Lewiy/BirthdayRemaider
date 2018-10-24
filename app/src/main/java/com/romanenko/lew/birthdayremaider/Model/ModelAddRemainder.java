@@ -27,6 +27,8 @@ public class ModelAddRemainder implements AddCelebrationContract.ModelAddRemaind
     DataBaseComponent dataBaseComponent;
 
 
+
+
     @Override
     public Completable addCelebration(CelebrationPersonEntity celebrationPersonEntity, DateEntity dateEntity) {
 
@@ -54,6 +56,11 @@ public class ModelAddRemainder implements AddCelebrationContract.ModelAddRemaind
         return appDataBase.celebrationPersonEntityDao().updateAndShowCelebrationAndDate(celebrationPersonEntity,dateEntity);
     }*/
 
+
+    @Override
+    public Flowable<Integer> getNumberOfRows() {
+        return appDataBase.celebrationPersonEntityDao().getNumberOfRows();
+    }
 
     @Override
     public void initLocalReposetory(Context context) {
