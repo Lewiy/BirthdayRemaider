@@ -9,11 +9,11 @@
 
     <ImageView
         android:id="@+id/birthday_list_image_view"
-        android:layout_width="92dp"
-        android:layout_height="106dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
+        android:background="@android:drawable/ic_menu_camera"/>
 
     <TextView
         android:id="@+id/name_surname"

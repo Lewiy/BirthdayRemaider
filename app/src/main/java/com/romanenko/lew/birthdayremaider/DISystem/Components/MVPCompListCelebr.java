@@ -12,5 +12,4 @@ import dagger.Component;
 public interface MVPCompListCelebr {
     void inject( FragListCelebration viewListCelebration);
     void inject(ListCelebrationContract.ModelListBirthday modelListBirthday);
-
 }

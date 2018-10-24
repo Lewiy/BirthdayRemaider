@@ -8,6 +8,8 @@ import android.arch.persistence.room.Transaction;
 import android.arch.persistence.room.Update;
 
 import com.romanenko.lew.birthdayremaider.AlarmingSystem.MyDate;
+import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrListNameDateFotoVO;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.CelebrListNameDateFotoDTO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.DataCelebrationForListDTO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageAllInformation;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageRequirementDataDTO;
@@ -26,6 +28,17 @@ public abstract class CelebrationPersonDao {
             "FROM celebration_person,date_entity " +
             "where celebration_person._id == date_entity.dateId")
     public abstract Flowable<List<DataCelebrationForListDTO>> getListCelebration();
+
+
+
+    @Query("SELECT celebration_person.first_name,celebration_person.last_name," +
+            "celebration_person.foto_path," +
+            "celebration_person._id, date_entity.year, date_entity.day, date_entity.month " +
+            "FROM celebration_person,date_entity " +
+            "where celebration_person._id == date_entity.dateId")
+    public abstract Flowable<List<CelebrListNameDateFotoDTO>> getListCelebrDateNameFoto();
+
+
 
     @Query("SELECT comment,type_celebration from celebration_person WHERE _id = :userId ")
     public abstract Flowable<PersonalPageRequirementDataDTO> getPersonalPage(String userId);
@@ -72,6 +85,13 @@ public abstract class CelebrationPersonDao {
     public void insertPersonAndDate(CelebrationPersonEntity celebrationPersonEntity, DateEntity dateEntity) {
         birthdayPersonInsert(celebrationPersonEntity);
         birthdayPersonDateInsert(dateEntity);
+    }
+
+    @Transaction
+    public Flowable<PersonalPageAllInformation> updateAndShowCelebrationAndDate(CelebrationPersonEntity celebrationPersonEntity,DateEntity dateEntity){
+        birthdayDateUpdate(dateEntity);
+        birthdayPersonUpdete(celebrationPersonEntity);
+        return  getPersonalPageAll(String.valueOf(celebrationPersonEntity._id));
     }
 
 }

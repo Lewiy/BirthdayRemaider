@@ -6,16 +6,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/frag_edit_celebr_image"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_weight="4"
-        android:background="@color/colorGrayLight" />
+        android:layout_weight="4">
+
+
+        <ImageView
+            android:id="@+id/frag_edit_celebr_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/colorGrayLight" />
+
+        <ImageButton
+            android:id="@+id/frag_edit_celebr_done"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_done_black_24dp"
+            android:background="@android:color/transparent"/>
+
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,9 +47,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
             android:layout_weight="3"
             android:gravity="center_vertical"
-            android:layout_marginLeft="10dp"
             android:text="TextView" />
 
         <ImageButton
@@ -55,7 +74,7 @@
         android:layout_height="1dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@android:color/black"/>
+        android:background="@android:color/black" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -67,13 +86,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_date_range_black_24dp" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_date_range_black_24dp" />
         </FrameLayout>
+
         <TextView
             android:id="@+id/frag_edit_celebr_date"
             android:layout_width="0dp"
@@ -81,10 +102,12 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="TextView" />
+
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
+
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -95,7 +118,6 @@
         </FrameLayout>
 
 
-
         <TextView
             android:id="@+id/frag_edit_celebr_time_to_alarm"
             android:layout_width="0dp"
@@ -104,12 +126,13 @@
             android:gravity="center_vertical"
             android:text="TextView" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@android:color/black"/>
+        android:background="@android:color/black" />
 
 
     <LinearLayout
@@ -150,14 +173,14 @@
         android:layout_height="1dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@android:color/black"/>
+        android:background="@android:color/black" />
 
     <TextView
         android:id="@+id/frag_edit_celebr_comment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_marginLeft="10dp"
+        android:layout_weight="1"
         android:gravity="center_vertical"
         android:text="TextView" />
 </android.support.v7.widget.LinearLayoutCompat>

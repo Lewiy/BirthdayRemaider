@@ -23,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.romanenko.lew.birthdayremaider.AddCelebrationContract;
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPCompAddRemain;
@@ -31,6 +32,7 @@ import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPMAddRemainder;
 import com.romanenko.lew.birthdayremaider.Model.ModelAddRemainder;
 import com.romanenko.lew.birthdayremaider.Presenter.PresenterAddRemainder;
 import com.romanenko.lew.birthdayremaider.R;
+import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
 import java.net.URI;
@@ -71,7 +73,9 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
     private int yearOfAge, monthOfYear, dayOfMonth;
     private Boolean flagAddUpdate = false;
 
-    private int userId = -1,dateId = -1;
+    private int userId = -1, dateId = -1;
+    private Bundle updatBundle;
+    private int idUserFoto = -1;
 
     @Inject
     public AddCelebrationContract.PresenterAddRemainder presenter;
@@ -86,7 +90,9 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
             TAG_DATE = "date",
             TAG_PICTURE_CONTACT = "picture_contact",
             TAG_USERID = "userId",
-            TAG_DATEID = "dateId";
+            TAG_DATEID = "dateId",
+            TAG_CELEBR_IMAGE = "celebrImageTmp",
+            TAG_DIRECTORY_APP_PATH = "/sdcard/Remainder/";
 
     @NonNull
     @Override
@@ -95,6 +101,12 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
         View view = inflater.inflate(R.layout.fragment_add_remainder, null);
 
         init(view);
+
+        updatBundle = new Bundle();
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            idUserFoto = bundle.getInt("idUser", -1);
+        }
 
         DaggerMVPCompAddRemain.builder()
                 .mVPMAddRemainder(new MVPMAddRemainder(this, new PresenterAddRemainder(getActivity())))
@@ -105,11 +117,12 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
         presenter.attachModel(new ModelAddRemainder());
 
         presenter.viewIsReady();
-        Bundle bundle = this.getArguments();
+
+        /*Bundle bundle = this.getArguments();
         if (bundle != null) {
             // idUser = bundle.getInt("idUser", -1);
             setFieldForUpdate(bundle);
-        }
+        }*/
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view)
@@ -121,11 +134,18 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
                         // intent.putExtra(TAG_WEIGHT_SELECTED, mNpWeight.getValue());
                         intent = loadDataIntent(intent);
 
-                        if (flagAddUpdate == true)
+                        if (flagAddUpdate == true) {
                             presenter.editCelebration();
+                            try {
+                                Thread.sleep(50);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                        }
                         else
                             presenter.addRemainder();
-                        //  getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                          //  getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
 
                     }
                 });
@@ -201,33 +221,37 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
 
     @OnClick(R.id.frag_add_remainder_add_foto)
     public void OnClickAddFoto() {
-        Intent intent = new Intent();
+       /* Intent intent = new Intent();
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);*/
+
+        Crop.pickImage(this.getActivity(), this);
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
-            if (resultCode == RESULT_OK) {
+           /* if (resultCode == RESULT_OK) {
                 if (requestCode == PICK_IMAGE) {
                     // Get the url from data
                     //uri = data.getParcelableExtra("file");
-                    Uri contentURI = data.getData();
+                  //  Uri contentURI = data.getData();
 
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), contentURI);
+                //    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), contentURI);
                     //String path = saveImage(bitmap);
                     // Toast.makeText(MainActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
                     //contactPicture.setImageBitmap(bitmap);
                     //   contactPicture.setImageURI( contentURI);
                     //  contactPicture.setBackground(contentURI);
-                    pathPictureContact = getRealPathFromURI(contentURI);
-                    setPictureContact(pathPictureContact);
+               //     pathPictureContact = getRealPathFromURI(contentURI);
+              //      Uri destination = Uri.fromFile(new File(getActivity().getCacheDir(), "cropped"));
+              //      Crop.of(contentURI, destination).asSquare().start(getActivity());
+                  //  setPictureContact(pathPictureContact);
                 } else {
-                    final Uri uri_data = data.getData();
+                  /*  final Uri uri_data = data.getData();
                     // Get the path from the Uri
                     final String path = getRealPathFromURI(uri_data);
                     if (path != null) {
@@ -236,16 +260,37 @@ public class FragAddReminder extends android.support.v4.app.DialogFragment imple
                     }
                     // Set the image in
                     // ImageView((ImageView) findViewById(R.id.imgView)).setImageURI(selectedImageUri);
-
-
                 }
+
+
                 //datePicture.setImageURI(  android.net.Uri.parse(uri.toString()));
+            }*/
+
+            if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {
+                beginCrop(data.getData());
+            } else if (requestCode == Crop.REQUEST_CROP) {
+                handleCrop(resultCode, data);
             }
         } catch (Exception e) {
             Log.e("FileSelectorActivity", "File select error", e);
         }
     }
 
+    private void beginCrop(Uri source) {
+
+        Uri destination = Uri.fromFile(new File(getActivity().getCacheDir(),TAG_CELEBR_IMAGE +  idUserFoto));
+        Crop.of(source, destination).asSquare().start(getActivity(),this);
+    }
+
+    private void handleCrop(int resultCode, Intent result) {
+        if (resultCode == RESULT_OK) {
+            //resultView.setImageURI(Crop.getOutput(result));
+            pathPictureContact = getRealPathFromURI(Crop.getOutput(result));
+            setPictureContact(pathPictureContact);
+        } else if (resultCode == Crop.RESULT_ERROR) {
+            Toast.makeText(getActivity(), Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private String getRealPathFromURI(Uri contentURI) {
         Cursor cursor = getActivity().getContentResolver().query(contentURI, null, null, null, null);

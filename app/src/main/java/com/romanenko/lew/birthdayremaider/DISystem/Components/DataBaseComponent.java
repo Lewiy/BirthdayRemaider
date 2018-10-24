@@ -4,6 +4,7 @@ import com.romanenko.lew.birthdayremaider.DISystem.Modules.DataBaseModule;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.CelebrationPersonEntity;
 import com.romanenko.lew.birthdayremaider.Model.ModelAddRemainder;
 import com.romanenko.lew.birthdayremaider.Model.ModelEditCelebration;
+import com.romanenko.lew.birthdayremaider.Model.ModelHomeScreen;
 import com.romanenko.lew.birthdayremaider.Model.ModelListCelebration;
 
 import dagger.Component;
@@ -15,5 +16,6 @@ public interface DataBaseComponent {
     void inject(ModelListCelebration modelListCelebration);
     void inject(ModelAddRemainder modelAddRemainder);
     void inject(ModelEditCelebration modelEditCelebration);
+    void inject(ModelHomeScreen modelHomeScreen);
     CelebrationPersonEntity getCelebrationPersonEntity();
 }

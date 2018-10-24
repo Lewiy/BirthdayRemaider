@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGrayLight">
+
+    <RelativeLayout
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/gridViewImagePerson"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:src="@android:drawable/ic_menu_camera" />
+
+        <TextView
+            android:id="@+id/gridViewNamePerson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/gridViewImagePerson"
+            android:layout_alignStart="@+id/gridViewImagePerson"
+            android:text="@string/birthday"
+            android:textColor="@color/colorGrayLight"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/gridViewTimeToCelebrationPerson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/gridViewImagePerson"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf= "@+id/gridViewNamePerson"
+            android:text="2sdfsdf"
+            android:textColor="@color/colorGrayLight"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

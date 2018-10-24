@@ -11,11 +11,13 @@ import com.romanenko.lew.birthdayremaider.Model.DTO.DateCelebrationVO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.AppDataBase;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.CelebrationPersonEntity;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.DateEntity;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageAllInformation;
 import com.romanenko.lew.birthdayremaider.MyApp;
 
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.functions.Action;
 
 public class ModelAddRemainder implements AddCelebrationContract.ModelAddRemainder {
@@ -45,6 +47,13 @@ public class ModelAddRemainder implements AddCelebrationContract.ModelAddRemaind
             }
         });
     }
+
+
+   /* @Override
+    public Flowable<PersonalPageAllInformation> upDateCelebrationAndShow(CelebrationPersonEntity celebrationPersonEntity, DateEntity dateEntity) {
+        return appDataBase.celebrationPersonEntityDao().updateAndShowCelebrationAndDate(celebrationPersonEntity,dateEntity);
+    }*/
+
 
     @Override
     public void initLocalReposetory(Context context) {

@@ -6,4 +6,8 @@
     <color name="colorLight">#BEF781</color>
     <color name="colorWhite">#F2FBEF</color>
     <color name="colorGrayLight">#F2F2F2</color>
+
+
+
+    <color name="colorGrayL">#797D7F</color>
 </resources>

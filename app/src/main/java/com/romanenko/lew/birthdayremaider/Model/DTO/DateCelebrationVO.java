@@ -22,7 +22,7 @@ public class DateCelebrationVO {
     }
 
     public void setMonth(int month) {
-        this.month = month;
+        this.month = month + 1;
     }
 
     public void setDay(int day) {

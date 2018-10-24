@@ -15,19 +15,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.romanenko.lew.birthdayremaider.AlarmingSystem.CelebrationAlarmManager;
-import com.romanenko.lew.birthdayremaider.AlarmingSystem.MyDate;
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPCompListCelebr;
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPMListCelebration;
 import com.romanenko.lew.birthdayremaider.ListCelebrationContract;
 import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationVO;
 import com.romanenko.lew.birthdayremaider.Model.ModelListCelebration;
-import com.romanenko.lew.birthdayremaider.Model.POJO.ListCelebrationItem;
 import com.romanenko.lew.birthdayremaider.Presenter.PresenterListCelebration;
 import com.romanenko.lew.birthdayremaider.R;
-import com.romanenko.lew.birthdayremaider.View.Adapters.BirthdayAdapterList;
+import com.romanenko.lew.birthdayremaider.View.Adapters.CelebrationAdapterList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -52,6 +48,8 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
     @Inject
     ListCelebrationContract.PresenterListBirthday presenter;
 
+    private CelebrationVO celebrationVO1;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -68,6 +66,7 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
         presenter.attachModel(new ModelListCelebration());
 
         presenter.viewIsReady();
+
         loadData();
         return view;
     }
@@ -79,31 +78,20 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
     @OnClick(R.id.add_remind)
     public void onClickAddRemindBut() {
         openFragAddRemainder();
-        CelebrationAlarmManager celebrationAlarmManager = new CelebrationAlarmManager(getActivity());
-        MyDate myDate = new MyDate(2018, 9, 11, 20, 55);
-        celebrationAlarmManager.setDateRepiting(myDate);
-
     }
 
     //TODO ArrayList Mock
     public void loadData() {
-
-        List<ListCelebrationItem> items = new ArrayList<>();
-        ListCelebrationItem item1 = new ListCelebrationItem();
-        item1.setMainText("Romanenko Lev");
-        ListCelebrationItem item2 = new ListCelebrationItem();
-        item2.setMainText("Romanenko Lev");
-        ListCelebrationItem item3 = new ListCelebrationItem();
-        item3.setMainText("Romanenko Lev");
-        items.add(item1);
-        items.add(item2);
-        items.add(item3);
         presenter.pullListCelebration();
     }
 
     public void openFragAddRemainder() {
         DialogFragment fragment = new FragAddReminder();
         fragment.setTargetFragment(this, REQUEST_ADD_REMAINDER);
+        Bundle bundle = new Bundle();
+        if(celebrationVO1 != null)
+        bundle.putInt("idUser",(int)celebrationVO1.getIdUser());
+        fragment.setArguments(bundle);
         fragment.show(getFragmentManager(), fragment.getClass().getName());
     }
 
@@ -138,7 +126,7 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
     @Override
     public void loadListCelebration( List<CelebrationVO> items) {
 
-        BirthdayAdapterList.RecyclerViewClickListener listener = new BirthdayAdapterList.RecyclerViewClickListener() {
+        CelebrationAdapterList.RecyclerViewClickListener listener = new CelebrationAdapterList.RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position,CelebrationVO celebrationVO) {
                 Fragment fragment  = null;
@@ -158,10 +146,12 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
             }
         };
 
+        if(celebrationVO1 != null)
+        celebrationVO1 = items.get(items.size() - 1);
 
-        BirthdayAdapterList birthdayAdapterList = new BirthdayAdapterList(this.getContext(), items,listener);
+        CelebrationAdapterList celebrationAdapterList = new CelebrationAdapterList(this.getContext(), items,listener);
         recyclerViewMain.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerViewMain.setAdapter(birthdayAdapterList);
+        recyclerViewMain.setAdapter(celebrationAdapterList);
         recyclerViewMain.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
     }

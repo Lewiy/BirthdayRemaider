@@ -32,6 +32,7 @@ public interface EditProfileCelebration {
 
         void deleteCelebration();
         void pullPersonalPage(int idUser);
+        void updatePageSync(int idUser);
     }
 
 

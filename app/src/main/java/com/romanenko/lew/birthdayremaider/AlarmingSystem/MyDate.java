@@ -41,11 +41,9 @@ public class MyDate {
     }
 
     public MyDate(int year, int month, int mDate) {
-
         this.year = year;
         this.month = month;
         this.mDate = mDate;
-
     }
 
     public Date getDate() {
@@ -60,5 +58,10 @@ public class MyDate {
 
         return dateStr;
         //  return
+    }
+
+    @Override
+    public String toString() {
+        return "Time"+this.year+" "+this.month+" "+this.mDate+" "+this.hrs+" "+this.min;
     }
 }

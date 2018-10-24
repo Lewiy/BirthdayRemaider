@@ -27,8 +27,6 @@ public class ModelEditCelebration implements EditProfileCelebration.ModelEditCel
     AppDataBase appDataBase;
     DataBaseComponent dataBaseComponent;
 
-
-
     @Override
     public void initLocalRepository(Context context) {
         dataBaseComponent = DaggerDataBaseComponent.builder().appComponent(MyApp.get(context).component())
@@ -37,8 +35,6 @@ public class ModelEditCelebration implements EditProfileCelebration.ModelEditCel
                 .build();
         dataBaseComponent.inject(this);
     }
-
-
 
 
     @Override
@@ -56,5 +52,7 @@ public class ModelEditCelebration implements EditProfileCelebration.ModelEditCel
             }
         });
     }
+
+
 
 }

@@ -16,14 +16,14 @@ import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
-public class BirthdayAdapterList extends RecyclerView.Adapter<BirthdayAdapterList.BirthdayViewHolder> {
+public class CelebrationAdapterList extends RecyclerView.Adapter<CelebrationAdapterList.BirthdayViewHolder> {
     Context context;
     List<CelebrationVO>listBirthdayItems;
     LayoutInflater lInflater;
     private RecyclerViewClickListener mListener;
 
 
-    public BirthdayAdapterList(Context context, List<CelebrationVO> listBirthdayItems,RecyclerViewClickListener listener) {
+    public CelebrationAdapterList(Context context, List<CelebrationVO> listBirthdayItems, RecyclerViewClickListener listener) {
         this.context = context;
         this.listBirthdayItems = listBirthdayItems;
         this.mListener = listener;

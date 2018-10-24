@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.romanenko.lew.birthdayremaider">
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
 
     <application
@@ -15,6 +16,7 @@
         <receiver android:name=".AlarmingSystem.AlarmReceiver"/>
         <activity android:name=".View.Activities.MainActivity">
         </activity>
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
 
         <activity android:name=".MainClass">
             <intent-filter>
