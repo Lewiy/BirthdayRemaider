@@ -23,12 +23,11 @@
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp">
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp">
 
         </FrameLayout>
     </LinearLayout>
-
 
     <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
     <android.support.design.widget.NavigationView
@@ -39,6 +38,5 @@
         app:headerLayout="@layout/navigation_drawer_header"
         app:itemTextColor="@color/colorGrayL"
         app:menu="@menu/navigation_drawer_menu" />
-
 
 </android.support.v4.widget.DrawerLayout>

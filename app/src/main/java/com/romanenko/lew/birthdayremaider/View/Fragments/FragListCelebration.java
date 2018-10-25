@@ -86,9 +86,9 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
     }
 
     public void openFragAddRemainder() {
-        DialogFragment fragment = new FragAddReminder();
+        /*DialogFragment fragment = new FragAddReminder();
         fragment.setTargetFragment(this, REQUEST_ADD_REMAINDER);
-        fragment.show(getFragmentManager(), fragment.getClass().getName());
+        fragment.show(getFragmentManager(), fragment.getClass().getName());*/
     }
 
     @Override

@@ -124,11 +124,11 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
 
     public void openFragAddRemainder() {
         //updatBundle.putInt("idUser",(int)celebrationVO.getIdUser());
-        DialogFragment fragment = new FragAddReminder();
+       /* DialogFragment fragment = new FragAddReminder();
         fragment.setArguments(updatBundle);
         fragment.setTargetFragment(this,REQUEST_WEIGHT);
         // fragment.setTargetFragment(this, REQUEST_ADD_REMAINDER);
-        fragment.show(getFragmentManager(), fragment.getClass().getName());
+        fragment.show(getFragmentManager(), fragment.getClass().getName());*/
     }
 
     @Override

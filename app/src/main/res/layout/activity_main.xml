@@ -5,7 +5,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.romanenko.lew.birthdayremaider.View.Activities.MainActivity">
-
-
-
 </android.support.constraint.ConstraintLayout>
