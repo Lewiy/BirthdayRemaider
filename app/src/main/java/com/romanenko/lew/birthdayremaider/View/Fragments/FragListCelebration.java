@@ -89,6 +89,21 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
         /*DialogFragment fragment = new FragAddReminder();
         fragment.setTargetFragment(this, REQUEST_ADD_REMAINDER);
         fragment.show(getFragmentManager(), fragment.getClass().getName());*/
+
+        /*try {
+          Fragment  fragment = (Fragment) FragAddReminder.class.newInstance();
+        } catch (java.lang.InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }*/
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.content_frame_main_activity, new FragAddReminder(), "FragAddReminder")
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
@@ -108,7 +123,7 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
                     String date = data.getStringExtra(FragAddReminder.TAG_DATE);
                     String pathPictureContact = data.getStringExtra(FragAddReminder.TAG_PICTURE_CONTACT);
                     //openFragAddRemainder();
-                     addRemainder(name, surName, comment, type_celebr, date,pathPictureContact);
+                    addRemainder(name, surName, comment, type_celebr, date, pathPictureContact);
                     break;
 
                 //обработка других requestCode
@@ -120,12 +135,12 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
 
 
     @Override
-    public void loadListCelebration( List<CelebrationVO> items) {
+    public void loadListCelebration(List<CelebrationVO> items) {
 
         CelebrationAdapterList.RecyclerViewClickListener listener = new CelebrationAdapterList.RecyclerViewClickListener() {
             @Override
-            public void onClick(View view, int position,CelebrationVO celebrationVO) {
-                Fragment fragment  = null;
+            public void onClick(View view, int position, CelebrationVO celebrationVO) {
+                Fragment fragment = null;
                 try {
                     fragment = FragEditCelebration.class.newInstance();
                 } catch (java.lang.InstantiationException e) {
@@ -135,23 +150,23 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
                 }
 
                 Bundle bundle = new Bundle();
-                bundle.putInt("idUser",(int)celebrationVO.getIdUser());
+                bundle.putInt("idUser", (int) celebrationVO.getIdUser());
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
             }
         };
 
-        CelebrationAdapterList celebrationAdapterList = new CelebrationAdapterList(this.getContext(), items,listener);
+        CelebrationAdapterList celebrationAdapterList = new CelebrationAdapterList(this.getContext(), items, listener);
         recyclerViewMain.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewMain.setAdapter(celebrationAdapterList);
         recyclerViewMain.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
     }
 
-    public void addRemainder(String name, String serName, String comment, String date, String typeCelebration,String pathPictureContact) {
+    public void addRemainder(String name, String serName, String comment, String date, String typeCelebration, String pathPictureContact) {
         // presenter.addRemainder(name, surName, comment, type_celebr, date);
-       // presenter.addRemainder(name, serName, comment, date, typeCelebration,pathPictureContact);
+        // presenter.addRemainder(name, serName, comment, date, typeCelebration,pathPictureContact);
     }
 
     public void setNameList() {
