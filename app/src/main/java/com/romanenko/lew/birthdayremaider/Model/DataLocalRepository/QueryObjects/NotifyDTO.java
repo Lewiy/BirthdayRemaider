@@ -1,11 +1,8 @@
 package com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects;
 
 import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.TypeConverters;
 
-import java.util.Date;
-public class DataCelebrationForListDTO {
-
+public class NotifyDTO {
     @ColumnInfo(name = "_id")
     public long userId;
 
@@ -15,6 +12,12 @@ public class DataCelebrationForListDTO {
     @ColumnInfo(name = "last_name")
     public String lastName;
 
+    @ColumnInfo(name = "foto_path")
+    public String fotoPath;
+
+    @ColumnInfo(name = "type_celebration")
+    public String typeCelebr;
+
     @ColumnInfo(name = "year")
     public int year;
 
@@ -23,11 +26,4 @@ public class DataCelebrationForListDTO {
 
     @ColumnInfo(name = "day")
     public int day;
-
-    @ColumnInfo(name = "foto_path")
-    public String fotoPath;
-
-    @ColumnInfo(name = "type_celebration")
-    public String typeCelebration;
-
 }

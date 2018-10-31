@@ -1,23 +1,15 @@
 package com.romanenko.lew.birthdayremaider.View.Fragments;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.FragmentManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -37,7 +28,6 @@ import android.widget.Toast;
 
 import com.romanenko.lew.birthdayremaider.AddCelebrationContract;
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPCompAddRemain;
-import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPCompListCelebr;
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPMAddRemainder;
 import com.romanenko.lew.birthdayremaider.Model.ModelAddRemainder;
 import com.romanenko.lew.birthdayremaider.Presenter.PresenterAddRemainder;
@@ -45,8 +35,6 @@ import com.romanenko.lew.birthdayremaider.R;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URI;
 import java.util.Calendar;
 
 import javax.inject.Inject;
@@ -75,9 +63,6 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
     ImageView contactPicture;
     @BindView(R.id.frag_add_remainder_add_foto)
     ImageButton addFotoButton;
-   /* @BindView(R.id.my_toolbar)
-    Toolbar toolbar;*/
-
     @BindView(R.id.add_frag_done_button)
     ImageButton doneButton;
     @BindView(R.id.add_frag_back_button)
@@ -86,9 +71,9 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
     private String pathPictureContact = null;
 
     private int yearOfAge, monthOfYear, dayOfMonth;
-    private Boolean flagAddUpdate = false;
+    private Boolean flagUpdateCelebr = false;
 
-    private int userId = -1, dateId = -1;
+    private int userId = -1, dateId = -1, userIdForUpdate = -1;
 
     private Integer numberOfRows;
 
@@ -115,7 +100,6 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
 
         View view = inflater.inflate(R.layout.fragment_add_remainder, null);
 
-        init(view);
 
         DaggerMVPCompAddRemain.builder()
                 .mVPMAddRemainder(new MVPMAddRemainder(this, new PresenterAddRemainder(getActivity())))
@@ -124,79 +108,55 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
 
         presenter.attachView(this);
         presenter.attachModel(new ModelAddRemainder());
-
         presenter.viewIsReady();
-        presenter.getNumberOfRows();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(view)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
 
-                        Intent intent = new Intent();
-                        // intent.putExtra(TAG_WEIGHT_SELECTED, mNpWeight.getValue());
-                        intent = loadDataIntent(intent);
-
-                        if (flagAddUpdate == true) {
-                            presenter.editCelebration();
-                            try {
-                                Thread.sleep(50);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
-                        } else
-                            presenter.addRemainder();
-                        //  getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
-
-                    }
-                });
+        if (init(view))
+            actionForEditCelebr();
+        else
+            actionForAddCelebr();
 
         return view;
     }
 
-   /* private void setFieldForUpdate(Bundle bundle) {
-        this.name.setText(bundle.get(TAG_NAME).toString());
-        this.surName.setText(bundle.get(TAG_SUR_NAME).toString());
-        this.comment.setText(bundle.get(TAG_COMMENT).toString());
-        this.dateView.setText(bundle.get(TAG_DATE).toString());
-        datePicture.setVisibility(View.GONE);
-        dateView.setVisibility(View.VISIBLE);
+    private void actionForAddCelebr() {
+        presenter.getNumberOfRows();
+    }
 
-        userId = bundle.getInt(TAG_USERID);
-        dateId = bundle.getInt(TAG_DATEID);
-        flagAddUpdate = true;
-        setSpinner(bundle.getString(TAG_TYPE_CELEBR));
+    private void actionForEditCelebr() {
+        if (userIdForUpdate != -1) {
+            presenter.pullPersonalPage(userIdForUpdate);
+            flagUpdateCelebr = true;
+        }
+    }
 
-        if (bundle.get(TAG_PICTURE_CONTACT) != null)
-            setPictureContact(bundle.get(TAG_PICTURE_CONTACT).toString());
-
-    }*/
+    private boolean init(View view) {
+        ButterKnife.bind(this, view);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.spin_type_celebr, R.layout.support_simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinTypeCelebr.setAdapter(adapter);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            userIdForUpdate = bundle.getInt("idUser", -1);
+            if (userIdForUpdate != -1)
+                return true;
+            else
+                return false;
+        } else
+            return false;
+    }
 
     @OnClick(R.id.add_frag_done_button)
     public void onCklickDone() {
-        Intent intent = new Intent();
-        // intent.putExtra(TAG_WEIGHT_SELECTED, mNpWeight.getValue());
-        intent = loadDataIntent(intent);
-
-        if (flagAddUpdate == true) {
+        if (flagUpdateCelebr == true) {
             presenter.editCelebration();
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
         } else
             presenter.addRemainder();
-          getFragmentManager().popBackStack();
-        //  getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+        getFragmentManager().popBackStack();
     }
 
     @OnClick(R.id.add_frag_back_button)
     public void onClickBack() {
-
         getFragmentManager().popBackStack();
     }
 
@@ -206,23 +166,6 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    private void init(View view) {
-        ButterKnife.bind(this, view);
-        //dateView.setVisibility(View.GONE);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.spin_type_celebr, R.layout.support_simple_spinner_dropdown_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinTypeCelebr.setAdapter(adapter);
-
-
-       /* ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ActionBar actionbar =   ((AppCompatActivity)getActivity()).getSupportActionBar();
-
-        actionbar.setDisplayHomeAsUpEnabled(true);
-
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);*/
-
-
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -241,19 +184,9 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
         return super.onOptionsItemSelected(item);
     }
 
-    private Intent loadDataIntent(Intent intent) {
-        intent.putExtra(TAG_NAME, name.getText().toString());
-        intent.putExtra(TAG_SUR_NAME, surName.getText().toString());
-        intent.putExtra(TAG_COMMENT, comment.getText().toString());
-        intent.putExtra(TAG_TYPE_CELEBR, spinTypeCelebr.getSelectedItem().toString());
-        intent.putExtra(TAG_DATE, dateCelebrate);
-        intent.putExtra(TAG_PICTURE_CONTACT, pathPictureContact);
-        return intent;
-    }
-
     @OnClick(R.id.frag_add_set_date)
     public void OnClickDatePicker() {
-        new DatePickerDialog(getContext(), d,
+        new DatePickerDialog(getContext(),R.style.DialogTheme,d,
                 dateAndTime.get(Calendar.YEAR),
                 dateAndTime.get(Calendar.MONTH),
                 dateAndTime.get(Calendar.DAY_OF_MONTH))
@@ -281,12 +214,6 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
 
     @OnClick(R.id.frag_add_remainder_add_foto)
     public void OnClickAddFoto() {
-       /* Intent intent = new Intent();
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);*/
-
         Crop.pickImage(this.getActivity(), this);
     }
 
@@ -294,37 +221,6 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
-           /* if (resultCode == RESULT_OK) {
-                if (requestCode == PICK_IMAGE) {
-                    // Get the url from data
-                    //uri = data.getParcelableExtra("file");
-                  //  Uri contentURI = data.getData();
-
-                //    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), contentURI);
-                    //String path = saveImage(bitmap);
-                    // Toast.makeText(FragNavDraw.this, "Image Saved!", Toast.LENGTH_SHORT).show();
-                    //contactPicture.setImageBitmap(bitmap);
-                    //   contactPicture.setImageURI( contentURI);
-                    //  contactPicture.setBackground(contentURI);
-               //     pathPictureContact = getRealPathFromURI(contentURI);
-              //      Uri destination = Uri.fromFile(new File(getActivity().getCacheDir(), "cropped"));
-              //      Crop.of(contentURI, destination).asSquare().start(getActivity());
-                  //  setPictureContact(pathPictureContact);
-                } else {
-                  /*  final Uri uri_data = data.getData();
-                    // Get the path from the Uri
-                    final String path = getRealPathFromURI(uri_data);
-                    if (path != null) {
-                        File f = new File(path);
-                        //uri = Uri.fromFile(f);
-                    }
-                    // Set the image in
-                    // ImageView((ImageView) findViewById(R.id.imgView)).setImageURI(selectedImageUri);
-                }
-
-
-                //datePicture.setImageURI(  android.net.Uri.parse(uri.toString()));
-            }*/
 
             if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {
                 beginCrop(data.getData());
@@ -343,7 +239,6 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
 
     private void handleCrop(int resultCode, Intent result) {
         if (resultCode == RESULT_OK) {
-            //resultView.setImageURI(Crop.getOutput(result));
             pathPictureContact = getRealPathFromURI(Crop.getOutput(result));
             setPictureContact(pathPictureContact);
         } else if (resultCode == Crop.RESULT_ERROR) {
@@ -367,7 +262,7 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
             File f = new File(pathPictureContact);
             Drawable d = Drawable.createFromPath(f.getAbsolutePath());
             contactPicture.setBackground(d);
-            addFotoButton.setVisibility(View.GONE);
+            addFotoButton.setBackgroundColor(Color.TRANSPARENT);
         }
     }
 
@@ -432,12 +327,12 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
     }
 
     @Override
-    public void seYear(int year) {
+    public void setYear(int year) {
         this.yearOfAge = year;
     }
 
     @Override
-    public void seDay(int day) {
+    public void setDay(int day) {
         this.dayOfMonth = day;
     }
 
@@ -447,30 +342,30 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
     }
 
     @Override
-    public void sePathImage(String pathName) {
-        this.pathPictureContact = pathName;
+    public void setPathImage(String path) {
+        this.pathPictureContact = path;
+        setPictureContact(pathPictureContact);
     }
 
     @Override
-    public void seTypeCelebration(String typeCelebration) {
+    public void setTypeCelebration(String typeCelebration) {
         setSpinner(typeCelebration);
 
     }
 
     @Override
-    public void seComment(String comment) {
-
+    public void setComment(String comment) {
         this.comment.setText(comment);
     }
 
     @Override
     public void setIdUser(int userId) {
-
+        this.userId = userId;
     }
 
     @Override
     public void setIdDate(int dateId) {
-
+        this.dateId = dateId;
     }
 
     @Override

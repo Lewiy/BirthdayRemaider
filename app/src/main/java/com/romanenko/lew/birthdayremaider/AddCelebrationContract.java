@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.CelebrationPersonEntity;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.DateEntity;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageAllInformation;
 import com.romanenko.lew.birthdayremaider.Model.IModel;
 import com.romanenko.lew.birthdayremaider.Presenter.MvpPresenter;
 import com.romanenko.lew.birthdayremaider.View.IView;
@@ -43,17 +44,17 @@ public interface AddCelebrationContract {
 
         void setSurname(String surName);
 
-        void seYear(int year);
+        void setYear(int year);
 
-        void seDay(int day);
+        void setDay(int day);
 
         void setMonth(int month);
 
-        void sePathImage(String pathName);
+        void setPathImage(String pathName);
 
-        void seTypeCelebration(String typeCelebration);
+        void setTypeCelebration(String typeCelebration);
 
-        void seComment(String Comment);
+        void setComment(String Comment);
 
         void setIdUser(int userId);
 
@@ -69,9 +70,12 @@ public interface AddCelebrationContract {
 
         void editCelebration();
         // void editCelebrationAndShow();
+        void pullPersonalPage(int idUser);
     }
 
     interface ModelAddRemainder extends IModel {
+
+        Flowable<PersonalPageAllInformation> pullPersonalPage(String id);
 
         Flowable<Integer> getNumberOfRows();
 

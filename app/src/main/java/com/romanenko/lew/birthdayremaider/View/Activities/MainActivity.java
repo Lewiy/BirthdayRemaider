@@ -10,41 +10,77 @@ import android.view.MenuItem;
 import com.romanenko.lew.birthdayremaider.BaseFragments;
 import com.romanenko.lew.birthdayremaider.R;
 import com.romanenko.lew.birthdayremaider.View.Fragments.FragAddReminder;
+import com.romanenko.lew.birthdayremaider.View.Fragments.FragEditCelebration;
 import com.romanenko.lew.birthdayremaider.View.Fragments.FragNavDraw;
 
 
 public class MainActivity extends AppCompatActivity {
+
+
+    //private Bundle bundleInform;
+    private  int dfg=0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setFragment(BaseFragments.NAV_DRAW_FRAGMENT);
+
+        Bundle   bundleInform = getIntent().getExtras();
+        String typeFragment = null;
+
+        if (bundleInform != null)
+            typeFragment = bundleInform.getString("FragmentType", null);
+
+        startFragment(typeFragment, bundleInform);
+
     }
 
-    public void setFragment(BaseFragments baseFragments) {
+    private void startFragment(String fragmentStr,Bundle  bundleInform ) {
+
+        if (fragmentStr != null) {
+            if (fragmentStr.matches("EditFragment")) {
+                setFragment(BaseFragments.EDIT_CELEBR_FRAGMENT, bundleInform);
+            }
+        } else setFragment(BaseFragments.NAV_DRAW_FRAGMENT, bundleInform);
+
+
+    }
+
+
+    public void setFragment(BaseFragments baseFragments,Bundle  bundleInform) {
         Fragment fragment = null;
         Class fragmentClass;
         switch (baseFragments) {
             case NAV_DRAW_FRAGMENT:
                 fragmentClass = FragNavDraw.class;
-                replaceFragment(fragment, fragmentClass);
+                replaceFragment(fragment, fragmentClass, bundleInform);
                 break;
             case ADD_CELEBR_FRAGMENT:
                 fragmentClass = FragAddReminder.class;
-                replaceFragment(fragment, fragmentClass);
+                replaceFragment(fragment, fragmentClass, bundleInform);
+                break;
+            case EDIT_CELEBR_FRAGMENT:
+                fragmentClass = FragEditCelebration.class;
+                replaceFragment(fragment, fragmentClass, bundleInform);
                 break;
             default:
                 fragmentClass = FragNavDraw.class;
-                replaceFragment(fragment, fragmentClass);
+                replaceFragment(fragment, fragmentClass, bundleInform);
         }
     }
 
-    private void replaceFragment(Fragment fragment, Class fragmentClass) {
+    private void replaceFragment(Fragment fragment, Class fragmentClass,Bundle  bundleInform) {
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        /*if (bundleInform != null)
+            dfg = bundleInform.getInt("idUser");*/
+
+        fragment.setArguments(bundleInform);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager

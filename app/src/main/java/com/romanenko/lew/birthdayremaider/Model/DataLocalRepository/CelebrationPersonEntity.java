@@ -18,9 +18,6 @@ public class CelebrationPersonEntity {
     @ColumnInfo(name = "type_celebration")
     public String typeCelebration;
 
-    @ColumnInfo(name = "date")
-    public String date;
-
     @ColumnInfo(name = "comment")
     public String comment;
 

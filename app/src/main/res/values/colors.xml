@@ -10,4 +10,12 @@
 
 
     <color name="colorGrayL">#797D7F</color>
+    <color name="colorGrayM">#626567</color>
+    <color name="colorGrayS">#545657</color>
+    
+    <color name="colorRedS">#E71D19</color>
+    <color name="colorRedM">#F74242</color>
+    <color name="colorRedL">#F45F5F</color>
+
+    <color name="colorRedDark">#C51A1A</color>
 </resources>

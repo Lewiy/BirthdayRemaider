@@ -48,8 +48,6 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
     @Inject
     ListCelebrationContract.PresenterListBirthday presenter;
 
-    //private CelebrationVO celebrationVO1;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -71,10 +69,6 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
         return view;
     }
 
-    /*public void setPresenter( ListCelebrationContract.PresenterListCelebration presenter){
-        this.presenter = presenter;
-    }*/
-
     @OnClick(R.id.add_remind)
     public void onClickAddRemindBut() {
         openFragAddRemainder();
@@ -86,17 +80,6 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
     }
 
     public void openFragAddRemainder() {
-        /*DialogFragment fragment = new FragAddReminder();
-        fragment.setTargetFragment(this, REQUEST_ADD_REMAINDER);
-        fragment.show(getFragmentManager(), fragment.getClass().getName());*/
-
-        /*try {
-          Fragment  fragment = (Fragment) FragAddReminder.class.newInstance();
-        } catch (java.lang.InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }*/
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager
@@ -116,14 +99,14 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
                     //используем полученные результаты
                     //.
 
-                    String name = data.getStringExtra(FragAddReminder.TAG_NAME);
+                    /*String name = data.getStringExtra(FragAddReminder.TAG_NAME);
                     String surName = data.getStringExtra(FragAddReminder.TAG_SUR_NAME);
                     String comment = data.getStringExtra(FragAddReminder.TAG_COMMENT);
                     String type_celebr = data.getStringExtra(FragAddReminder.TAG_TYPE_CELEBR);
                     String date = data.getStringExtra(FragAddReminder.TAG_DATE);
                     String pathPictureContact = data.getStringExtra(FragAddReminder.TAG_PICTURE_CONTACT);
                     //openFragAddRemainder();
-                    addRemainder(name, surName, comment, type_celebr, date, pathPictureContact);
+                    addRemainder(name, surName, comment, type_celebr, date, pathPictureContact);*/
                     break;
 
                 //обработка других requestCode

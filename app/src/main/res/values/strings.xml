@@ -2,7 +2,7 @@
     <string name="app_name">Поздравить</string>
     <string name="nav_menu_item_listBirthday">Список праздников</string>
     <string name="nav_menu_item_settings">Настройки</string>
-    <string name="nav_menu_item_add_celebration">Создать праздник</string>
+    <string name="nav_menu_item_add_celebration">Добавить праздник</string>
     <string name="nav_home_screen">Главная</string>
     <string name="name">Имя</string>
     <string name="surname">Фамилия</string>
@@ -10,6 +10,9 @@
     <string name="anniversary">Годовщина свадьбы</string>
     <string name="birthday">День Рождение</string>
     <string name="other">Другое</string>
+    <string name="day">Дней</string>
+    <string name="year_celebration">Исполняеться </string>
+    <string name="year">Год</string>
     <string-array name="spin_type_celebr">
         <item>@string/birthday</item>
         <item>@string/anniversary</item>

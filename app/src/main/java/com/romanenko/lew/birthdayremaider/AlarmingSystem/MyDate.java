@@ -2,16 +2,29 @@ package com.romanenko.lew.birthdayremaider.AlarmingSystem;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class MyDate {
 
-    private int year, month, mDate, hrs = 0, min = 0;
+    private int year;
+    private int month;
+    private int day;
+    private int hrs = 0;
+    private int min = 0;
     private int reapiting;
     private int countReapiting;
 
+    public int getYear() {
+        return year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getDay() {
+        return day;
+    }
 
     public void setReapiting(int reapiting) {
         this.reapiting = reapiting;
@@ -30,25 +43,39 @@ public class MyDate {
         return countReapiting;
     }
 
-    public MyDate(int year, int month, int mDate, int hrs, int min) {
+    public MyDate(int year, int month, int day, int hrs, int min) {
 
         this.year = year;
         this.month = month;
-        this.mDate = mDate;
+        this.day = day;
         this.hrs = hrs;
         this.min = min;
 
     }
 
-    public MyDate(int year, int month, int mDate) {
+    public MyDate(int year, int month, int day) {
         this.year = year;
         this.month = month;
-        this.mDate = mDate;
+        this.day = day;
+    }
+
+    public Date getDateTime() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        String str = new String(day + "/" + month + "/" + year + " " + hrs + ":" + min + ":" + "00");
+        Date dateStr = null;
+        try {
+            dateStr = formatter.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return dateStr;
+        //  return
     }
 
     public Date getDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-        String str = new String(mDate + "/" + month + "/" + year + " " + hrs + ":" + min + ":" + "00");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String str = new String(day + "/" + month + "/" + year);
         Date dateStr = null;
         try {
             dateStr = formatter.parse(str);
@@ -62,6 +89,6 @@ public class MyDate {
 
     @Override
     public String toString() {
-        return "Time"+this.year+" "+this.month+" "+this.mDate+" "+this.hrs+" "+this.min;
+        return this.day+"/"+this.month+"/"+this.year +"/"+this.hrs+"/"+this.min;
     }
 }

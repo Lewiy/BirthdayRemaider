@@ -38,8 +38,6 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
     DrawerLayout mDrawerLayout;
 
 
-
-
     @NonNull
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,8 +66,6 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
             selectDrawerItem(menuItem);
             return true;
         });
-
-        // mNavigationView.setCheckedItem(R.id.nav_home_screen);
         setDefaultFragment();
     }
 
@@ -81,10 +77,9 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager =   ((AppCompatActivity)getActivity()).getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-        //menuItem.setChecked(true);
+
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
@@ -97,9 +92,7 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
                 startFragmentNavDrawMenu(fragment, fragmentClass, menuItem);
                 break;
             case R.id.nav_add_celebration:
-              /*  fragmentClass = FragAddReminder.class;
-                startFragmentSeparated(fragment, fragmentClass);*/
-                ((MainActivity)getActivity()).setFragment(BaseFragments.ADD_CELEBR_FRAGMENT);
+                ((MainActivity)getActivity()).setFragment(BaseFragments.ADD_CELEBR_FRAGMENT,new Bundle());
                 break;
             case R.id.nav_list_birthday:
                 fragmentClass = FragListCelebration.class;
@@ -124,18 +117,18 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
             e.printStackTrace();
         }
 
-        // Insert the fragment by replacing any existing fragment
+
         FragmentManager fragmentManager =   ((AppCompatActivity)getActivity()).getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.content_frame, fragment)
                 .commit();
 
-        // Highlight the selected item has been done by NavigationView
+
         menuItem.setChecked(true);
-        // Set action bar title
+
         mToolbar.setTitle(menuItem.getTitle());
-        // Close the navigation drawer
+
 
     }
 

@@ -10,7 +10,7 @@ import java.util.Calendar;
 
 public class CelebrationAlarmManager implements IalarmManager {
 
-    private static final String ID_ALARM = "ID_ALARM";
+    public static final String ID_ALARM = "ID_ALARM";
     private Context context;
     final public static String ONE_TIME = "onetime";
     private android.app.AlarmManager am;
@@ -77,7 +77,7 @@ public class CelebrationAlarmManager implements IalarmManager {
 
     private PendingIntent pendingBuilder(int id, String time) {
         Intent i = new Intent(context, AlarmReceiver.class);
-        i.putExtra(ID_ALARM, id + time);
+        i.putExtra(ID_ALARM,  time);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
         return pi;
     }
@@ -90,7 +90,7 @@ public class CelebrationAlarmManager implements IalarmManager {
 
         calendar.clear();
 
-        calendar.setTime(myDate.getDate());
+        calendar.setTime(myDate.getDateTime());
         // calendar.set(2018,9,17,20,22);
         Log.e("tiiiiiiiiiiiiiime", calendar.getTime().toString());
         return calendar;

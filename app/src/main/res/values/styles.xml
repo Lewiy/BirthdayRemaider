@@ -5,9 +5,17 @@
 
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
 
-        <item name="colorPrimary">#673AB7</item>
-        <item name="colorPrimaryDark">#512DA8</item>
-        <item name="colorAccent">#00BCD4</item>
-
     </style>
+
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#C51A1A</item>
+    </style>
+
+    <style name="MyEditTextTheme">
+        <item name="colorControlNormal">#797D7F</item>
+        <item name="colorControlActivated">#C51A1A</item>
+        <item name="colorControlHighlight">#797D7F</item>
+    </style>
+
 </resources>

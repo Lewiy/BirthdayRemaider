@@ -4,11 +4,16 @@ import android.content.Context;
 
 import com.romanenko.lew.birthdayremaider.AddCelebrationContract;
 import com.romanenko.lew.birthdayremaider.AlarmingSystem.CelebrationAlarmManager;
+import com.romanenko.lew.birthdayremaider.AlarmingSystem.MyDate;
 import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationMapper;
 import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationVO;
 import com.romanenko.lew.birthdayremaider.Model.DTO.DateCelebrationVO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.DataCelebrationForListDTO;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageAllInformation;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import io.reactivex.CompletableObserver;
@@ -27,13 +32,6 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
     }
 
 
-
-
-    public void setAlarm(String date ){
-
-        CelebrationAlarmManager celebrationAlarmManager = new CelebrationAlarmManager(context);
-      //  celebrationAlarmManager.setDateOnce();
-    }
 
     private DateCelebrationVO createDateCelebration() {
         DateCelebrationVO dateCelebrationVO = new DateCelebrationVO();
@@ -54,11 +52,14 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
         celebrationVO.setFotoPath(getView().getPathImage());
         celebrationVO.setTypeCelebration(getView().getTypeCelebration());
         celebrationVO.setComment(getView().getComment());
-
         if(getView().getUserId()>0)
         celebrationVO.setIdUser(getView().getUserId());
-
         return celebrationVO;
+    }
+
+    private String createDateCelebrForIdentification(CelebrationVO celebrationVO,DateCelebrationVO dateCelebrationVO){
+        Calendar myCalendar = new GregorianCalendar(dateCelebrationVO.getYear(), dateCelebrationVO.getMonth(), dateCelebrationVO.getDay());
+       return myCalendar.toString();
     }
 
     @Override
@@ -71,19 +72,19 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
                     @Override
                     public void accept(Integer numberOfRows) throws Exception {
                         getView().setNumberOfRows(numberOfRows);
-
                     }
                 });
     }
 
     public void addRemainder() {
-
         //appDataBase.celebrationPersonEntityDao();
         DateCelebrationVO dateCelebrationVO = createDateCelebration();
         CelebrationVO celebrationVO = createCelebration();
-       /* CelebrationAlarmManager celebrationAlarmManager = new CelebrationAlarmManager(context);
-        MyDate myDate = new MyDate(dateCelebrationVO.getYear(), dateCelebrationVO.getMonth(), dateCelebrationVO.getDay(), 20, 31);
-        celebrationAlarmManager.setDateOnce(dateCelebrationVO.getDateId(),myDate);*/
+
+        CelebrationAlarmManager celebrationAlarmManager = new CelebrationAlarmManager(context);
+        MyDate myDate = new MyDate(dateCelebrationVO.getYear(), dateCelebrationVO.getMonth(), dateCelebrationVO.getDay(), 11, 51);
+        celebrationAlarmManager.setDateOnce(dateCelebrationVO.getDateId(),myDate);
+
 
         //celebrationAlarmManager.setDateRepeating(myDate);
         getModel().addCelebration(CelebrationMapper
@@ -169,4 +170,33 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
                     }
                 });
     }*/
+
+    @Override
+    public void pullPersonalPage(int idUser) {
+        getModel().pullPersonalPage(String.valueOf(idUser))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<PersonalPageAllInformation>() {
+                    @Override
+                    public void accept(PersonalPageAllInformation personalPageAllInformation) throws Exception {
+                      //  personalPageAllInfo = personalPageAllInformation;
+                        //getView().loadListCelebration(new CelebrationMapper().getVOObjects(datumCelebrationForLists));
+                        getView().setName(personalPageAllInformation.firstName);
+                        getView().setSurname(personalPageAllInformation.lastName);
+                       /* Toast toast = Toast.makeText(context,
+                                personalPageAllInformation.firstName, Toast.LENGTH_SHORT);
+                        toast.show();*/
+                        getView().setComment(personalPageAllInformation.comment);
+                        getView().setTypeCelebration(personalPageAllInformation.typeCelebration);
+
+                        getView().setDay(Integer.parseInt(personalPageAllInformation.day));
+                        getView().setMonth(Integer.parseInt(personalPageAllInformation.month));
+                        getView().setYear(Integer.parseInt(personalPageAllInformation.year));
+
+                        getView().setPathImage(personalPageAllInformation.fotoPath);
+                        getView().setIdUser((int)personalPageAllInformation.userId);
+                        getView().setIdDate((int)personalPageAllInformation.dateId);
+                    }
+                });
+    }
 }

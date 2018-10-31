@@ -50,6 +50,12 @@ public class ModelAddRemainder implements AddCelebrationContract.ModelAddRemaind
         });
     }
 
+    @Override
+    public Flowable<PersonalPageAllInformation> pullPersonalPage(String id) {
+        return appDataBase.celebrationPersonEntityDao()
+                .getPersonalPageAll(id);
+    }
+
 
    /* @Override
     public Flowable<PersonalPageAllInformation> upDateCelebrationAndShow(CelebrationPersonEntity celebrationPersonEntity, DateEntity dateEntity) {

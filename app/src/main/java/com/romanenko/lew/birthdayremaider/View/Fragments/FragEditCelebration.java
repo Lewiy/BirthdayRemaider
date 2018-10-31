@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.romanenko.lew.birthdayremaider.BaseFragments;
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPCompAddRemain;
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPCompEditCelebr;
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPMAddRemainder;
@@ -28,6 +29,7 @@ import com.romanenko.lew.birthdayremaider.Model.ModelEditCelebration;
 import com.romanenko.lew.birthdayremaider.Presenter.PresenterAddRemainder;
 import com.romanenko.lew.birthdayremaider.Presenter.PresenterEditCelebration;
 import com.romanenko.lew.birthdayremaider.R;
+import com.romanenko.lew.birthdayremaider.View.Activities.MainActivity;
 
 import java.io.File;
 
@@ -52,8 +54,6 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
     TextView comment;
     @BindView(R.id.frag_edit_celebr_image)
     ImageView picture;
-   /* @BindView(R.id.frag_edit_celebr_done)
-    ImageButton buttonDone;*/
    private static final int REQUEST_WEIGHT = 1;
     private static final int REQUEST_ANOTHER_ONE = 2;
     private int idUser;
@@ -100,7 +100,6 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
     @OnClick(R.id.frag_edit_celebr_edit_but)
     public void onClickEdit() {
         openFragAddRemainder();
-        int a =4;
     }
 
     @OnClick(R.id.frag_edit_celebr_done)
@@ -123,12 +122,8 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
     }
 
     public void openFragAddRemainder() {
-        //updatBundle.putInt("idUser",(int)celebrationVO.getIdUser());
-       /* DialogFragment fragment = new FragAddReminder();
-        fragment.setArguments(updatBundle);
-        fragment.setTargetFragment(this,REQUEST_WEIGHT);
-        // fragment.setTargetFragment(this, REQUEST_ADD_REMAINDER);
-        fragment.show(getFragmentManager(), fragment.getClass().getName());*/
+        updatBundle.putInt("idUser",idUser);
+        ((MainActivity)getActivity()).setFragment(BaseFragments.ADD_CELEBR_FRAGMENT,updatBundle);
     }
 
     @Override

@@ -20,7 +20,9 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +32,7 @@ public class CelebrationAdapterGridView extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private List<CelebrListNameDateFotoDTO> listPersons;
 
-    public CelebrationAdapterGridView(Context mContext,List<CelebrListNameDateFotoDTO> listPersons) {
+    public CelebrationAdapterGridView(Context mContext, List<CelebrListNameDateFotoDTO> listPersons) {
         this.mContext = mContext;
         this.layoutInflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
         this.listPersons = listPersons;
@@ -61,7 +63,7 @@ public class CelebrationAdapterGridView extends BaseAdapter {
             // if it's not recycled, initialize some attributes
             viewHolder = new ViewHolder();
             view = layoutInflater.inflate(R.layout.fragment_grid_view_item, viewGroup, false);
-            viewHolder. imageView = (ImageView) view.findViewById(R.id.gridViewImagePerson);
+            viewHolder.imageView = (ImageView) view.findViewById(R.id.gridViewImagePerson);
             viewHolder.name = (TextView) view.findViewById(R.id.gridViewNamePerson);
             viewHolder.timeToCelebration = (TextView) view.findViewById(R.id.gridViewTimeToCelebrationPerson);
             view.setTag(viewHolder);
@@ -71,34 +73,32 @@ public class CelebrationAdapterGridView extends BaseAdapter {
 
 
         viewHolder.name.setText(listPersons.get(i).firstName + " " + listPersons.get(i).lastName);
-        viewHolder.timeToCelebration.setText(String.valueOf(countTimeToCelebration(listPersons.get(i).day,listPersons.get(i).month,listPersons.get(i).year)));
-        if(listPersons.get(i).fotoPath != null)
-        viewHolder.imageView.setImageURI(Uri.parse(new File(listPersons.get(i).fotoPath).toString()));
+        String days = String.valueOf(countTimeToCelebration(listPersons.get(i).day, listPersons.get(i).month, listPersons.get(i).year));
+        viewHolder.timeToCelebration.setText(days + " " + mContext.getResources().getString(R.string.day));
 
-        // imageView.setImageResource(mThumbIds[position]);
-
-
+        if (listPersons.get(i).fotoPath != null)
+            viewHolder.imageView.setImageURI(Uri.parse(new File(listPersons.get(i).fotoPath).toString()));
         return view;
     }
 
-    private long countTimeToCelebration(int day,int month, int year ){
+    private long countTimeToCelebration(int day, int month, int year) {
+        Date celebrDay;
+        Calendar myCalendar;
+        long diff;
 
-        Date date = new Date();
-        SimpleDateFormat myFormat = new SimpleDateFormat("dd MM yyyy");
-        String inputString1 = day +" " + month + " "+ year;
-        String inputString2 = myFormat.format(date);
+        Date currentDay = new Date();
+        myCalendar = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), month - 1, day);
+        celebrDay = myCalendar.getTime();
 
-        long diff = 0;
-        try {
-            Date date1 = myFormat.parse(inputString1);
-            Date date2 = myFormat.parse(inputString2);
-            diff = date2.getTime() - date1.getTime();
-          //  System.out.println ("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if (currentDay.after(celebrDay)) {
+            myCalendar = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR) + 1, month - 1, day);
+            celebrDay = myCalendar.getTime();
+            diff = TimeUnit.DAYS.convert(currentDay.getTime() - celebrDay.getTime(), TimeUnit.MILLISECONDS);
+        } else {
+            diff = TimeUnit.DAYS.convert(currentDay.getTime() - celebrDay.getTime(), TimeUnit.MILLISECONDS);
         }
 
-        return 25;
+        return Math.abs((int) diff);
     }
 
     static class ViewHolder {

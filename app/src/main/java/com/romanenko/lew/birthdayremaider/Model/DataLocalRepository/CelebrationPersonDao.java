@@ -1,19 +1,19 @@
 package com.romanenko.lew.birthdayremaider.Model.DataLocalRepository;
 
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Transaction;
+import android.arch.persistence.room.TypeConverters;
 import android.arch.persistence.room.Update;
 
-import com.romanenko.lew.birthdayremaider.AlarmingSystem.MyDate;
-import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrListNameDateFotoVO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.CelebrListNameDateFotoDTO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.DataCelebrationForListDTO;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.NotifyDTO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageAllInformation;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageRequirementDataDTO;
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Flowable;
@@ -21,19 +21,23 @@ import io.reactivex.Flowable;
 @Dao
 public abstract class CelebrationPersonDao {
 
+    @Query("SELECT _id, first_name,last_name," +
+            "year,month,day,foto_path,type_celebration " +
+            "FROM celebration_person, date_entity WHERE year = :year " +
+            "and month = :month " +
+            "and day = :day " +
+            "and celebration_person._id == date_entity.dateId")
+    public abstract Flowable<List<NotifyDTO>> getCelebrsDate(int year,int month, int day);
 
     @Query("SELECT COUNT(_id) FROM celebration_person")
     public abstract Flowable<Integer> getNumberOfRows();
 
-
     @Query("SELECT celebration_person.first_name,celebration_person.last_name," +
-            "celebration_person.date,celebration_person.foto_path," +
-            "celebration_person._id, date_entity.year " +
+            "celebration_person.foto_path,celebration_person.type_celebration," +
+            "celebration_person._id, date_entity.year, date_entity.month, date_entity.day " +
             "FROM celebration_person,date_entity " +
             "where celebration_person._id == date_entity.dateId")
     public abstract Flowable<List<DataCelebrationForListDTO>> getListCelebration();
-
-
 
     @Query("SELECT celebration_person.first_name,celebration_person.last_name," +
             "celebration_person.foto_path," +
@@ -48,12 +52,11 @@ public abstract class CelebrationPersonDao {
     public abstract Flowable<PersonalPageRequirementDataDTO> getPersonalPage(String userId);
 
     @Query("SELECT celebration_person.first_name,celebration_person.last_name," +
-            "celebration_person.date,celebration_person.foto_path,celebration_person.comment," +
+            "celebration_person.foto_path,celebration_person.comment," +
             "celebration_person._id, date_entity.year, date_entity.month, date_entity.day," +
             "celebration_person.type_celebration,date_entity.dateId " +
             "FROM celebration_person,date_entity " +
             "where celebration_person._id == date_entity.dateId and  _id = :userId")
-
     public abstract Flowable<PersonalPageAllInformation> getPersonalPageAll(String userId);
 
     @Insert

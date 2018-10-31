@@ -28,9 +28,12 @@ public  class  CelebrationMapper {
         CelebrationVO celebrationVO = new CelebrationVO();
         celebrationVO.setFirstName(dataCelebrationForListsDTO.firstName);
         celebrationVO.setLastName(dataCelebrationForListsDTO.lastName);
-        celebrationVO.setDate(dataCelebrationForListsDTO.date);
+        celebrationVO.setDay(dataCelebrationForListsDTO.day);
+        celebrationVO.setMonth(dataCelebrationForListsDTO.month);
+        celebrationVO.setYear(dataCelebrationForListsDTO.year);
         celebrationVO.setFotoPath(dataCelebrationForListsDTO.fotoPath);
         celebrationVO.setIdUser(dataCelebrationForListsDTO.userId);
+        celebrationVO.setTypeCelebration(dataCelebrationForListsDTO.typeCelebration);
 
         return celebrationVO;
     }
@@ -51,7 +54,9 @@ public  class  CelebrationMapper {
         DataCelebrationForListDTO dataCelebrationForListDTO = new DataCelebrationForListDTO();
         dataCelebrationForListDTO.firstName = celebrationVO.getFirstName();
         dataCelebrationForListDTO.lastName = celebrationVO.getLastName();
-        dataCelebrationForListDTO.date = celebrationVO.getDate();
+        dataCelebrationForListDTO.day = celebrationVO.getDay();
+        dataCelebrationForListDTO.month = celebrationVO.getMonth();
+        dataCelebrationForListDTO.year = celebrationVO.getYear();
         dataCelebrationForListDTO.fotoPath = celebrationVO.getFotoPath();
         return dataCelebrationForListDTO;
     }
@@ -71,7 +76,6 @@ public  class  CelebrationMapper {
         CelebrationPersonEntity celebrationPersonEntity = new CelebrationPersonEntity();
         celebrationPersonEntity.firstName = dataCelebrationForListsDTO.firstName;
         celebrationPersonEntity.lastName = dataCelebrationForListsDTO.lastName;
-        celebrationPersonEntity.date = dataCelebrationForListsDTO.date;
         celebrationPersonEntity.fotoPath = dataCelebrationForListsDTO.fotoPath;
         return celebrationPersonEntity;
     }
