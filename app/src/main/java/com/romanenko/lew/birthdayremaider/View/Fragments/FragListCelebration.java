@@ -1,6 +1,8 @@
 package com.romanenko.lew.birthdayremaider.View.Fragments;
 
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,12 +10,20 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPCompListCelebr;
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPMListCelebration;
@@ -23,6 +33,7 @@ import com.romanenko.lew.birthdayremaider.Model.ModelListCelebration;
 import com.romanenko.lew.birthdayremaider.Presenter.PresenterListCelebration;
 import com.romanenko.lew.birthdayremaider.R;
 import com.romanenko.lew.birthdayremaider.View.Adapters.CelebrationAdapterList;
+import com.romanenko.lew.birthdayremaider.View.Adapters.PaginationScrollListener;
 
 import java.util.List;
 
@@ -40,10 +51,31 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
 
     @BindView(R.id.lv_main)
     RecyclerView recyclerViewMain;
+   /* @BindView((R.id.lv_prog_bar))
+    ProgressBar progressBar;*/
+
+    private SearchView searchView;
+    private CelebrationAdapterList celebrationAdapterList;
+
+
     public static final int REQUEST_ADD_REMAINDER = 1;
     // private static final int REQUEST_ANOTHER_ONE = 2;
 
     String name, surName, comment, type_celebr, date;
+
+
+    // Index from which pagination should start (0 is 1st page in our case)
+    private static final int PAGE_START = 0;
+    // Indicates if footer ProgressBar is shown (i.e. next page is loading)
+    private boolean isLoading = false;
+    // If current page is the last page (Pagination will stop after this page load)
+    private boolean isLastPage = false;
+    // total no. of pages to load. Initial load is page 0, after which 2 more pages will load.
+    private int TOTAL_PAGES = 3;
+    // indicates the current page which Pagination is fetching.
+    private int currentPage = PAGE_START;
+
+    private LinearLayoutManager linearLayoutManager;
 
     @Inject
     ListCelebrationContract.PresenterListBirthday presenter;
@@ -53,7 +85,7 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_birthday, null);
         ButterKnife.bind(this, view);
-
+        setHasOptionsMenu(true);
         // presenter = new PresenterListCelebration(this);
         DaggerMVPCompListCelebr.builder()
                 .mVPMListCelebration(new MVPMListCelebration(this, new PresenterListCelebration(getContext())))
@@ -66,60 +98,11 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
         presenter.viewIsReady();
 
         loadData();
+        initList();
         return view;
     }
 
-    @OnClick(R.id.add_remind)
-    public void onClickAddRemindBut() {
-        openFragAddRemainder();
-    }
-
-    //TODO ArrayList Mock
-    public void loadData() {
-        presenter.pullListCelebration();
-    }
-
-    public void openFragAddRemainder() {
-
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        fragmentManager
-                .beginTransaction()
-                .replace(R.id.content_frame_main_activity, new FragAddReminder(), "FragAddReminder")
-                .addToBackStack(null)
-                .commit();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            switch (requestCode) {
-                case REQUEST_ADD_REMAINDER:
-                    // int weight = data.getIntExtra(FragAddReminder.TAG_WEIGHT_SELECTED, -1);
-                    //используем полученные результаты
-                    //.
-
-                    /*String name = data.getStringExtra(FragAddReminder.TAG_NAME);
-                    String surName = data.getStringExtra(FragAddReminder.TAG_SUR_NAME);
-                    String comment = data.getStringExtra(FragAddReminder.TAG_COMMENT);
-                    String type_celebr = data.getStringExtra(FragAddReminder.TAG_TYPE_CELEBR);
-                    String date = data.getStringExtra(FragAddReminder.TAG_DATE);
-                    String pathPictureContact = data.getStringExtra(FragAddReminder.TAG_PICTURE_CONTACT);
-                    //openFragAddRemainder();
-                    addRemainder(name, surName, comment, type_celebr, date, pathPictureContact);*/
-                    break;
-
-                //обработка других requestCode
-            }
-
-        }
-
-    }
-
-
-    @Override
-    public void loadListCelebration(List<CelebrationVO> items) {
-
+    private void initList() {
         CelebrationAdapterList.RecyclerViewClickListener listener = new CelebrationAdapterList.RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position, CelebrationVO celebrationVO) {
@@ -140,33 +123,110 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
             }
         };
 
-        CelebrationAdapterList celebrationAdapterList = new CelebrationAdapterList(this.getContext(), items, listener);
-        recyclerViewMain.setLayoutManager(new LinearLayoutManager(getContext()));
+        linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+
+
+        celebrationAdapterList = new CelebrationAdapterList(this.getContext(), listener);
+        recyclerViewMain.setLayoutManager(linearLayoutManager);
         recyclerViewMain.setAdapter(celebrationAdapterList);
+        recyclerViewMain.setItemAnimator(new DefaultItemAnimator());
         recyclerViewMain.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
+
+        /*recyclerViewMain.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
+
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+                currentPage += 1;
+                loadData();
+                isLoading = false;
+            }
+
+            @Override
+            public int getTotalPageCount() {
+                return TOTAL_PAGES;
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+        });*/
     }
 
-    public void addRemainder(String name, String serName, String comment, String date, String typeCelebration, String pathPictureContact) {
-        // presenter.addRemainder(name, surName, comment, type_celebr, date);
-        // presenter.addRemainder(name, serName, comment, date, typeCelebration,pathPictureContact);
+    @OnClick(R.id.add_remind)
+    public void onClickAddRemindBut() {
+        openFragAddRemainder();
     }
 
-    public void setNameList() {
-
+    //TODO ArrayList Mock
+    public void loadData() {
+        presenter.pullListCelebration();
     }
 
-    public void setSurName() {
-
+    public void openFragAddRemainder() {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.content_frame_main_activity, new FragAddReminder(), "FragAddReminder")
+                .addToBackStack(null)
+                .commit();
     }
 
-    public void setDate() {
-
+    @Override
+    public void loadListCelebration(List<CelebrationVO> items) {
+        celebrationAdapterList.setItems(items);
     }
 
-    public void setFoto() {
 
+    @Override
+    public void loadListCelebrationSearch(List<CelebrationVO> items) {
+        celebrationAdapterList.clearItems();
+        celebrationAdapterList.setItems(items);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.tool_bar_menu, menu);
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search)
+                .getActionView();
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(getActivity().getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        // listening to search query text change
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                presenter.pullListCelebrationSearch(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                presenter.pullListCelebrationSearch(query);
+                return false;
+            }
+        });
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                Log.i("item id ", item.getItemId() + "");
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }

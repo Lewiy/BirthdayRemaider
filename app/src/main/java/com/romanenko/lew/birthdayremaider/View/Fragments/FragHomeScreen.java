@@ -1,16 +1,26 @@
 package com.romanenko.lew.birthdayremaider.View.Fragments;
 
+import android.Manifest;
+import android.content.ContentResolver;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPHomeScreen;
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPMHomeScreen;
 import com.romanenko.lew.birthdayremaider.HomeScreenContract;
+import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationVO;
+import com.romanenko.lew.birthdayremaider.Model.DTO.DateCelebrationVO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.CelebrListNameDateFotoDTO;
 import com.romanenko.lew.birthdayremaider.Model.ModelHomeScreen;
 import com.romanenko.lew.birthdayremaider.Presenter.PresenterHomeScreen;
@@ -31,6 +41,10 @@ public class FragHomeScreen extends android.support.v4.app.Fragment implements H
 
     @Inject
     HomeScreenContract.PresenterCelebrations presenter;
+
+    private static final int REQUEST_CODE_READ_CONTACTS=1;
+    private static boolean READ_CONTACTS_GRANTED =false;
+    private int hasReadContactPermission;
 
     @Nullable
     @Override
@@ -58,4 +72,5 @@ public class FragHomeScreen extends android.support.v4.app.Fragment implements H
         CelebrationAdapterGridView celebrationAdapterGridView = new  CelebrationAdapterGridView(getContext(),datumCelebrationForLists);
         gridViewHomeScreen.setAdapter(celebrationAdapterGridView);
     }
+
 }

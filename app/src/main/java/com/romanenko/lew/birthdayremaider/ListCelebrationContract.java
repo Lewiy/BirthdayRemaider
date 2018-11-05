@@ -19,21 +19,19 @@ public interface ListCelebrationContract {
     interface ViewListBirthday extends IView {
         void loadListCelebration(List<CelebrationVO> items);
 
-
+        void loadListCelebrationSearch(List<CelebrationVO> items);
     }
 
     interface PresenterListBirthday extends MvpPresenter<ViewListBirthday, ModelListBirthday> {
-
-
+        Flowable<Integer> getNumbersOfRows();
         void pullListCelebration();
+        void pullListCelebrationSearch(String pattern);
     }
 
     interface ModelListBirthday extends IModel {
-
         void initLocalReposetory(Context context);
-
+        Flowable<Integer> getNumbersOfRows();
         Flowable<List<DataCelebrationForListDTO>> pullListCelebration();
-
-
+        Flowable<List<DataCelebrationForListDTO>> pullListCelebrationSearch(String pattern);
     }
 }

@@ -11,15 +11,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/colorGrayL"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:menu="@menu/navigation_drawer_menu"/>
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme">
 
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorGrayL"
+                android:elevation="4dp"
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                app:menu="@menu/tool_bar_menu" />
+        </android.support.design.widget.AppBarLayout>
         <!-- Layout to contain contents of main body of screen (drawer will slide over this) -->
         <FrameLayout
             android:id="@+id/content_frame"
@@ -39,6 +44,6 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/navigation_drawer_header"
         app:itemTextColor="@color/colorGrayL"
-        app:menu="@menu/navigation_drawer_menu"/>
+        app:menu="@menu/navigation_drawer_menu" />
 
 </android.support.v4.widget.DrawerLayout>

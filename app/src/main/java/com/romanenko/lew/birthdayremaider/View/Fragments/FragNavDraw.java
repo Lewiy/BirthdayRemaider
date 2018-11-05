@@ -12,6 +12,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +43,7 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
     @NonNull
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-      //  super.onCreate(savedInstanceState);
+        //  super.onCreate(savedInstanceState);
 
         View view = inflater.inflate(R.layout.navigation_drawer_main, null);
         initInterfaceComponent(view);
@@ -52,11 +54,11 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
 
     public void initInterfaceComponent(View view) {
 
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
 
-        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
 
-        ActionBar actionbar =   ((AppCompatActivity)getActivity()).getSupportActionBar();
+        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
         actionbar.setDisplayHomeAsUpEnabled(true);
 
@@ -77,7 +79,7 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        FragmentManager fragmentManager =   ((AppCompatActivity)getActivity()).getSupportFragmentManager();
+        FragmentManager fragmentManager = ((AppCompatActivity) getActivity()).getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
     }
@@ -92,7 +94,7 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
                 startFragmentNavDrawMenu(fragment, fragmentClass, menuItem);
                 break;
             case R.id.nav_add_celebration:
-                ((MainActivity)getActivity()).setFragment(BaseFragments.ADD_CELEBR_FRAGMENT,new Bundle());
+                ((MainActivity) getActivity()).setFragment(BaseFragments.ADD_CELEBR_FRAGMENT, new Bundle());
                 break;
             case R.id.nav_list_birthday:
                 fragmentClass = FragListCelebration.class;
@@ -118,7 +120,7 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
         }
 
 
-        FragmentManager fragmentManager =   ((AppCompatActivity)getActivity()).getSupportFragmentManager();
+        FragmentManager fragmentManager = ((AppCompatActivity) getActivity()).getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.content_frame, fragment)
@@ -138,10 +140,10 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        FragmentManager fragmentManager =   ((AppCompatActivity)getActivity()).getSupportFragmentManager();
+        FragmentManager fragmentManager = ((AppCompatActivity) getActivity()).getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
-                .add(R.id.content_frame_main_activity,fragment, "lol")
+                .add(R.id.content_frame_main_activity, fragment, "lol")
                 .addToBackStack(null)
                 .commit();
     }
@@ -161,4 +163,5 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

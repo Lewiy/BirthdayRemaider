@@ -32,13 +32,6 @@ public class ModelListCelebration implements ListCelebrationContract.ModelListBi
 
     @Override
     public void initLocalReposetory(Context context) {
-        //DataBaseComponent dataBaseComponent =
-        /*DaggerDataBaseComponent
-                .builder().appComponent(MyApp.get(context).component())
-                .dataBaseModule(new DataBaseModule())
-                //.contextModule(new ContextModule(context))
-                .build().inject(this);*/
-
 
         dataBaseComponent = DaggerDataBaseComponent.builder().appComponent(MyApp.get(context).component())
                 .dataBaseModule(new DataBaseModule())
@@ -58,6 +51,15 @@ public class ModelListCelebration implements ListCelebrationContract.ModelListBi
 
     }
 
+    @Override
+    public Flowable<List<DataCelebrationForListDTO>> pullListCelebrationSearch(String pattern) {
+        return appDataBase.celebrationPersonEntityDao()
+                .getListCelebrationSearch(pattern);
+    }
+
+    public Flowable<Integer> getNumbersOfRows(){
+        return appDataBase.celebrationPersonEntityDao().getNumberOfRows();
+    }
 
 
 

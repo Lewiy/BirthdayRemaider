@@ -13,6 +13,7 @@
     <string name="day">Дней</string>
     <string name="year_celebration">Исполняеться </string>
     <string name="year">Год</string>
+    <string name="search">Поиск</string>
     <string-array name="spin_type_celebr">
         <item>@string/birthday</item>
         <item>@string/anniversary</item>

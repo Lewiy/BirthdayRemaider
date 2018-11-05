@@ -27,7 +27,7 @@ public abstract class CelebrationPersonDao {
             "and month = :month " +
             "and day = :day " +
             "and celebration_person._id == date_entity.dateId")
-    public abstract Flowable<List<NotifyDTO>> getCelebrsDate(int year,int month, int day);
+    public abstract Flowable<List<NotifyDTO>> getCelebrsDate(int year, int month, int day);
 
     @Query("SELECT COUNT(_id) FROM celebration_person")
     public abstract Flowable<Integer> getNumberOfRows();
@@ -35,17 +35,29 @@ public abstract class CelebrationPersonDao {
     @Query("SELECT celebration_person.first_name,celebration_person.last_name," +
             "celebration_person.foto_path,celebration_person.type_celebration," +
             "celebration_person._id, date_entity.year, date_entity.month, date_entity.day " +
-            "FROM celebration_person,date_entity " +
-            "where celebration_person._id == date_entity.dateId")
+            "FROM celebration_person " +
+            "INNER JOIN  date_entity ON celebration_person._id == date_entity.dateId ")
     public abstract Flowable<List<DataCelebrationForListDTO>> getListCelebration();
 
+
     @Query("SELECT celebration_person.first_name,celebration_person.last_name," +
+            "celebration_person.foto_path,celebration_person.type_celebration," +
+            "celebration_person._id, date_entity.year, date_entity.month, date_entity.day " +
+            "FROM celebration_person " +
+            "INNER JOIN  date_entity ON celebration_person._id == date_entity.dateId " +
+            "WHERE first_name LIKE :pattern OR last_name LIKE :pattern")
+    public abstract Flowable<List<DataCelebrationForListDTO>> getListCelebrationSearch(String pattern);
+
+    @Query("SELECT  celebration_person.first_name,celebration_person.last_name," +
             "celebration_person.foto_path," +
             "celebration_person._id, date_entity.year, date_entity.day, date_entity.month " +
-            "FROM celebration_person,date_entity " +
-            "where celebration_person._id == date_entity.dateId")
+            "FROM celebration_person " +
+            "INNER JOIN  date_entity ON celebration_person._id == date_entity.dateId " +
+            "WHERE  date_entity.month = strftime('%m','now')  AND date_entity.day > strftime('%d','now')" +
+            "OR date_entity.month = (strftime('%m','now') + 1)" +
+            "OR date_entity.month = (strftime('%m','now') + 2)" +
+            "ORDER BY date_entity.month ASC, date_entity.day ASC LIMIT 6")
     public abstract Flowable<List<CelebrListNameDateFotoDTO>> getListCelebrDateNameFoto();
-
 
 
     @Query("SELECT comment,type_celebration from celebration_person WHERE _id = :userId ")
@@ -67,8 +79,9 @@ public abstract class CelebrationPersonDao {
 
     @Update
     public abstract void birthdayPersonUpdete(CelebrationPersonEntity celebrationPersonEntity);
+
     @Update
-    public  abstract void birthdayDateUpdate(DateEntity dateEntity);
+    public abstract void birthdayDateUpdate(DateEntity dateEntity);
 
     @Query("DELETE FROM celebration_person WHERE _id = :userId")
     public abstract void birthdayPersonDelete(int userId);
@@ -77,7 +90,7 @@ public abstract class CelebrationPersonDao {
     public abstract void birthdayDateDelete(int dateId);
 
     @Transaction
-    public void updateCelebrationAndDate(CelebrationPersonEntity celebrationPersonEntity,DateEntity dateEntity){
+    public void updateCelebrationAndDate(CelebrationPersonEntity celebrationPersonEntity, DateEntity dateEntity) {
         birthdayDateUpdate(dateEntity);
         birthdayPersonUpdete(celebrationPersonEntity);
     }
@@ -95,10 +108,10 @@ public abstract class CelebrationPersonDao {
     }
 
     @Transaction
-    public Flowable<PersonalPageAllInformation> updateAndShowCelebrationAndDate(CelebrationPersonEntity celebrationPersonEntity,DateEntity dateEntity){
+    public Flowable<PersonalPageAllInformation> updateAndShowCelebrationAndDate(CelebrationPersonEntity celebrationPersonEntity, DateEntity dateEntity) {
         birthdayDateUpdate(dateEntity);
         birthdayPersonUpdete(celebrationPersonEntity);
-        return  getPersonalPageAll(String.valueOf(celebrationPersonEntity._id));
+        return getPersonalPageAll(String.valueOf(celebrationPersonEntity._id));
     }
 
 }
