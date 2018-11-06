@@ -14,6 +14,15 @@
     <string name="year_celebration">Исполняеться </string>
     <string name="year">Год</string>
     <string name="search">Поиск</string>
+
+    <string name="day_1">1 День</string>
+    <string name="day_2">2 День</string>
+    <string name="day_7">7 День</string>
+    <string name="time_alarm">Время оповещения</string>
+
+    <string name="time">Время</string>
+    <string name="notify">Оповестить за</string>
+
     <string-array name="spin_type_celebr">
         <item>@string/birthday</item>
         <item>@string/anniversary</item>
