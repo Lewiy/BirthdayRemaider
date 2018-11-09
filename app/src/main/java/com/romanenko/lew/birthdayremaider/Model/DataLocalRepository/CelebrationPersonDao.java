@@ -53,7 +53,7 @@ public abstract class CelebrationPersonDao {
             "celebration_person._id, date_entity.year, date_entity.day, date_entity.month " +
             "FROM celebration_person " +
             "INNER JOIN  date_entity ON celebration_person._id == date_entity.dateId " +
-            "WHERE  date_entity.month = strftime('%m','now')  AND date_entity.day > strftime('%d','now')" +
+            "WHERE  date_entity.month = strftime('%m','now')  AND date_entity.day >= strftime('%d','now')" +
             "OR date_entity.month = (strftime('%m','now') + 1)" +
             "OR date_entity.month = (strftime('%m','now') + 2)" +
             "ORDER BY date_entity.month ASC, date_entity.day ASC LIMIT 6")

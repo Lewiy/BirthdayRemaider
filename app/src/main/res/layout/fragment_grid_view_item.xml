@@ -7,22 +7,30 @@
     <RelativeLayout
         android:layout_width="190dp"
         android:layout_height="190dp"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        android:background="@color/colorRedDark">
 
         <ImageView
             android:id="@+id/gridViewImagePerson"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_person_black_24dp"
-            android:background="@color/colorGrayL"/>
+            android:background="@android:color/transparent"/>
+
+        <ImageView
+            android:id="@+id/grid_view_image_person_litle"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_person_white_24dp"/>
+
 
         <TextView
             android:id="@+id/gridViewNamePerson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/gridViewTimeToCelebrationPerson"
-            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
             android:text="@string/birthday"
             android:textColor="@color/colorGrayLight" />
 
@@ -31,7 +39,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/gridViewImagePerson"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10dp"
             android:text="2sdfsdf"
             android:textColor="@color/colorGrayLight" />
     </RelativeLayout>

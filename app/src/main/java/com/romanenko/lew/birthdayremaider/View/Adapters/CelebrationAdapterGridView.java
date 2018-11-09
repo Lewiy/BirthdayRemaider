@@ -6,25 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.CelebrListNameDateFotoDTO;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.DataCelebrationForListDTO;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageAllInformation;
 import com.romanenko.lew.birthdayremaider.R;
 
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
+
 import java.io.File;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class CelebrationAdapterGridView extends BaseAdapter {
 
@@ -74,7 +66,9 @@ public class CelebrationAdapterGridView extends BaseAdapter {
 
         viewHolder.name.setText(listPersons.get(i).firstName + " " + listPersons.get(i).lastName);
         String days = String.valueOf(countTimeToCelebration(listPersons.get(i).day, listPersons.get(i).month, listPersons.get(i).year));
-        viewHolder.timeToCelebration.setText(days + " " + mContext.getResources().getString(R.string.day));
+
+        viewHolder.timeToCelebration.setText(DaysYearsSignAdapter.adapterSignLeftDays(mContext,
+                (int)countTimeToCelebration(listPersons.get(i).day, listPersons.get(i).month, listPersons.get(i).year)));
 
         if (listPersons.get(i).fotoPath != null)
             viewHolder.imageView.setImageURI(Uri.parse(new File(listPersons.get(i).fotoPath).toString()));
@@ -82,23 +76,10 @@ public class CelebrationAdapterGridView extends BaseAdapter {
     }
 
     private long countTimeToCelebration(int day, int month, int year) {
-        Date celebrDay;
-        Calendar myCalendar;
-        long diff;
-
-        Date currentDay = new Date();
-        myCalendar = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), month - 1, day);
-        celebrDay = myCalendar.getTime();
-
-        if (currentDay.after(celebrDay)) {
-            myCalendar = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR) + 1, month - 1, day);
-            celebrDay = myCalendar.getTime();
-            diff = TimeUnit.DAYS.convert(currentDay.getTime() - celebrDay.getTime(), TimeUnit.MILLISECONDS);
-        } else {
-            diff = TimeUnit.DAYS.convert(currentDay.getTime() - celebrDay.getTime(), TimeUnit.MILLISECONDS);
-        }
-
-        return Math.abs((int) diff);
+        LocalDate dateNow = new LocalDate();
+        LocalDate celebrDate = new LocalDate(dateNow.getYear(),month,day);
+        Days days = Days.daysBetween(dateNow,celebrDate);
+        return days.getDays();
     }
 
     static class ViewHolder {

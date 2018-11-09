@@ -3,6 +3,7 @@ package com.romanenko.lew.birthdayremaider.Presenter;
 import android.content.Context;
 
 import com.romanenko.lew.birthdayremaider.AddCelebrationContract;
+import com.romanenko.lew.birthdayremaider.AlarmingSystem.AlarmCreator;
 import com.romanenko.lew.birthdayremaider.AlarmingSystem.CelebrationAlarmManager;
 import com.romanenko.lew.birthdayremaider.AlarmingSystem.MyDate;
 import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationMapper;
@@ -81,9 +82,8 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
         DateCelebrationVO dateCelebrationVO = createDateCelebration();
         CelebrationVO celebrationVO = createCelebration();
 
-        CelebrationAlarmManager celebrationAlarmManager = new CelebrationAlarmManager(context);
-        MyDate myDate = new MyDate(dateCelebrationVO.getYear(), dateCelebrationVO.getMonth(), dateCelebrationVO.getDay(), 11, 51);
-        celebrationAlarmManager.setDateOnce(dateCelebrationVO.getDateId(),myDate);
+        AlarmCreator alarmCreator = new AlarmCreator(context);
+        alarmCreator.createAlarm(dateCelebrationVO);
 
 
         //celebrationAlarmManager.setDateRepeating(myDate);

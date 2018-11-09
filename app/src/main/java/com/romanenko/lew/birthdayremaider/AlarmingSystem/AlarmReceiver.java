@@ -1,26 +1,12 @@
 package com.romanenko.lew.birthdayremaider.AlarmingSystem;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 
-import com.romanenko.lew.birthdayremaider.Notification.CelebrNotificationManager;
 import com.romanenko.lew.birthdayremaider.Notification.DataNotifReceiver;
-import com.romanenko.lew.birthdayremaider.Notification.NotificationChannels;
-import com.romanenko.lew.birthdayremaider.R;
-import com.romanenko.lew.birthdayremaider.businessLogic.DateParser;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import static android.content.Context.NOTIFICATION_SERVICE;
+import com.romanenko.lew.birthdayremaider.util.DateParser;
 
 public class AlarmReceiver extends BroadcastReceiver {
     @Override

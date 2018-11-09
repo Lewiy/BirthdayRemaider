@@ -7,8 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.2"
+        android:layout_height="50dp"
         android:background="@color/colorGrayL"
         android:elevation="4dp">
 
@@ -20,6 +19,13 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="15dp"
             android:background="@drawable/ic_done_black_24dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nav_menu_item_add_celebration"
+            android:layout_toRightOf="@+id/add_frag_back_button"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"/>
 
         <ImageButton
             android:id="@+id/add_frag_back_button"
@@ -56,27 +62,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.3"
-        android:orientation="horizontal">
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+      >
 
         <EditText
             android:id="@+id/frag_add_remainder_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:hint="@string/name"
             android:textColorHint="@color/colorGrayL"
-            android:theme="@style/MyEditTextTheme"/>
+            android:theme="@style/MyEditTextTheme"
+            android:layout_marginBottom="5dp"/>
 
         <EditText
             android:id="@+id/frag_add_remainder_sur_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:hint="@string/surname"
             android:textColorHint="@color/colorGrayL"
-            android:theme="@style/MyEditTextTheme"/>
+            android:theme="@style/MyEditTextTheme" />
     </LinearLayout>
 
     <LinearLayout
@@ -159,11 +166,6 @@
             android:hint="@string/comment"
             android:inputType="textPersonName"
             android:textColorHint="@color/colorGrayL"
-            android:theme="@style/MyEditTextTheme"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frag_add_remainder_spin_type"
-            app:layout_constraintVertical_bias="0.68" />
+            android:theme="@style/MyEditTextTheme" />
     </LinearLayout>
 </android.support.v7.widget.LinearLayoutCompat>

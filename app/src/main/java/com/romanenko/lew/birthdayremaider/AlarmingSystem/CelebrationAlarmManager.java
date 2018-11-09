@@ -36,6 +36,14 @@ public class CelebrationAlarmManager implements IalarmManager {
     }
 
     @Override
+    public void setDateOnce(MyDate date) {
+        // pendingBuilder(date.toString());
+        //long ml = setCalendar(date).getTimeInMillis();
+        am.set(android.app.AlarmManager.RTC_WAKEUP, setCalendar(date).getTimeInMillis(), pendingBuilder(0, date.toString()));
+        ///    setAndAllowWhileIdle
+    }
+
+    @Override
     public void setDateRepeating(int id, MyDate date) {
         am.setRepeating(android.app.AlarmManager.RTC_WAKEUP, setCalendar(date).getTimeInMillis(), 10000, pendingBuilder(id, date.toString()));
 

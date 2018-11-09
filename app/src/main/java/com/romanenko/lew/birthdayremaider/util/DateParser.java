@@ -1,8 +1,6 @@
-package com.romanenko.lew.birthdayremaider.businessLogic;
+package com.romanenko.lew.birthdayremaider.util;
 
 import com.romanenko.lew.birthdayremaider.AlarmingSystem.MyDate;
-
-import java.text.ParseException;
 
 public class DateParser {
 

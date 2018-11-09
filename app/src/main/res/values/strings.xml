@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Поздравить</string>
+    <string name="app_name">Поздравька</string>
     <string name="nav_menu_item_listBirthday">Список праздников</string>
     <string name="nav_menu_item_settings">Настройки</string>
     <string name="nav_menu_item_add_celebration">Добавить праздник</string>
@@ -20,8 +20,25 @@
     <string name="day_7">7 День</string>
     <string name="time_alarm">Время оповещения</string>
 
+
+    <string name="left_1_day">Остался </string>
+    <string name="left_number_days">Осталось </string>
+
+
+    <string name="days_0">Сегодня</string>
+    <string name="days_1"> день</string>
+    <string name="days_2_3_4_44"> дня</string>
+    <string name="days"> дней</string>
+
     <string name="time">Время</string>
     <string name="notify">Оповестить за</string>
+
+
+    <string name="in_this_year">До года</string>
+    <string name="year_1">Год</string>
+    <string name="year_2_3_4_44">Года</string>
+    <string name="years_other">Лет</string>
+
 
     <string-array name="spin_type_celebr">
         <item>@string/birthday</item>

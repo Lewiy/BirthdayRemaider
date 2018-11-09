@@ -1,5 +1,7 @@
 package com.romanenko.lew.birthdayremaider.View.Fragments;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 
 import com.romanenko.lew.birthdayremaider.BaseFragments;
@@ -48,8 +51,24 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.navigation_drawer_main, null);
         initInterfaceComponent(view);
 
+
+
         return view;
     }
+
+  /*  private void makeStatusBArTransporent(){
+        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
+            getActivity().setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
+        }
+        if (Build.VERSION.SDK_INT >= 19) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
+        //make fully Android Transparent Status bar
+        if (Build.VERSION.SDK_INT >= 21) {
+            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+    }*/
 
 
     public void initInterfaceComponent(View view) {
@@ -80,7 +99,11 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
             e.printStackTrace();
         }
         FragmentManager fragmentManager = ((AppCompatActivity) getActivity()).getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.content_frame, fragment,fragmentClass.toString())
+                .addToBackStack(fragmentClass.toString())
+                .commit();
 
     }
 
@@ -94,6 +117,7 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
                 startFragmentNavDrawMenu(fragment, fragmentClass, menuItem);
                 break;
             case R.id.nav_add_celebration:
+                 stopLastFragment();
                 ((MainActivity) getActivity()).setFragment(BaseFragments.ADD_CELEBR_FRAGMENT, new Bundle());
                 break;
             case R.id.nav_list_birthday:
@@ -119,19 +143,32 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
             e.printStackTrace();
         }
 
-
         FragmentManager fragmentManager = ((AppCompatActivity) getActivity()).getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.content_frame, fragment)
+                .replace(R.id.content_frame, fragment,fragmentClass.toString())
+                .addToBackStack(fragmentClass.toString())
                 .commit();
-
 
         menuItem.setChecked(true);
 
         mToolbar.setTitle(menuItem.getTitle());
 
+    }
 
+    private void stopLastFragment() {
+
+        FragmentManager  fragmentManager = ((AppCompatActivity) getActivity()).getSupportFragmentManager();
+
+        int index = fragmentManager.getBackStackEntryCount() -1;
+
+        FragmentManager.BackStackEntry backEntry = fragmentManager.getBackStackEntryAt(index);
+
+        String tag = backEntry.getName();
+
+        Fragment fragment = fragmentManager.findFragmentByTag(tag);
+
+        fragment.onStop();
     }
 
     private void startFragmentSeparated(Fragment fragment, Class fragmentClass) {
@@ -143,7 +180,7 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
         FragmentManager fragmentManager = ((AppCompatActivity) getActivity()).getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
-                .add(R.id.content_frame_main_activity, fragment, "lol")
+                .add(R.id.content_frame_main_activity, fragment, fragmentClass.toString())
                 .addToBackStack(null)
                 .commit();
     }
@@ -163,5 +200,17 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+
+        super.onStop();
+    }
+
 
 }

@@ -17,9 +17,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.romanenko.lew.birthdayremaider.R;
 import com.romanenko.lew.birthdayremaider.SettingsContract;
+import com.romanenko.lew.birthdayremaider.util.PreferencesManager;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -69,14 +73,14 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
     @OnClick(R.id.time_picker_text_view)
     public void onClickTimePicker() {
         //Toast.makeText(getContext(), "lol", Toast.LENGTH_LONG).show();
-        new TimePickerDialog(getContext(), myCallBack, myHour, myMinute, true).show();
+        new TimePickerDialog(getContext(), R.style.DialogTheme,myCallBack, myHour, myMinute, true).show();
     }
 
     TimePickerDialog.OnTimeSetListener myCallBack = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             myHour = hourOfDay;
             myMinute = minute;
-            timeShower.setText(myHour + ":" + myMinute);
+            timeShower.setText(correctTimeForShow(myHour,myMinute));
         }
     };
 
@@ -92,7 +96,7 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
         myHour = 8;
         myMinute = 00;
 
-        timeShower.setText(myHour + ":" + myMinute);
+        timeShower.setText(correctTimeForShow(myHour,myMinute));
 
         setNewSettings();
 
@@ -118,8 +122,8 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
 
     private void loadSettings() {
 
-        HashMap<Integer, Boolean> listChekBox = getSettingsPrefDay();
-        HashMap<Integer, Integer> listTime = getSettingsPrefTime();
+        HashMap<Integer, Boolean> listChekBox = PreferencesManager.getSettingsPrefDay(mSettings);
+        HashMap<Integer, Integer> listTime = PreferencesManager.getSettingsPrefTime(mSettings);
 
         day1.setChecked(listChekBox.get(INDEX_1));
         day2.setChecked(listChekBox.get(INDEX_2));
@@ -128,8 +132,8 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
         myHour = listTime.get(INDEX_1);
         myMinute = listTime.get(INDEX_2);
 
-        timeShower.setText(myHour + ":" + myMinute);
-
+        timeShower.setText(correctTimeForShow(myHour,myMinute));
+       // correctTimeForShow(myHour,myMinute);
 
     }
 
@@ -149,27 +153,7 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
 
     }
 
-    private HashMap<Integer, Boolean> getSettingsPrefDay() {
 
-        Gson gson = new Gson();
-
-        String jsonChekBox = mSettings.getString(APP_PREFERENCES_ALARM_DAY, null);
-
-        Type type = new TypeToken<HashMap<Integer, Boolean>>() {
-        }.getType();
-        return gson.fromJson(jsonChekBox, type);
-    }
-
-    private HashMap<Integer, Integer> getSettingsPrefTime() {
-
-        Gson gson = new Gson();
-
-        String jsonTime = mSettings.getString(APP_PREFERENCES_ALARM_TIME, null);
-
-        Type type = new TypeToken<HashMap<Integer, Integer>>() {
-        }.getType();
-        return gson.fromJson(jsonTime, type);
-    }
 
     private void firstSettingsSet() {
         SharedPreferences.Editor e = mSettings.edit();
@@ -181,10 +165,25 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
         return mSettings.getBoolean("hasVisited", false);
     }
 
+    private String correctTimeForShow(int myHour,int myMinute){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY,myHour);
+        calendar.set(Calendar.MINUTE,myMinute);
+      //  System.out.println("Date : " + sdf.format(calendar.getTime()));
+        return sdf.format(calendar.getTime());
+    }
 
     @Override
     public void onPause() {
-        setNewSettings();
+
         super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        setNewSettings();
+        super.onStop();
     }
 }

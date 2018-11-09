@@ -76,18 +76,19 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        //String str = fragmentClass.toString();
 
-        /*if (bundleInform != null)
-            dfg = bundleInform.getInt("idUser");*/
+            fragment.setArguments(bundleInform);
 
-        fragment.setArguments(bundleInform);
+
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.content_frame_main_activity, fragment)
-                .addToBackStack(null)
+                .replace(R.id.content_frame_main_activity, fragment,fragmentClass.toString())
+                .addToBackStack(fragmentClass.toString())
                 .commit();
+
     }
 
     @Override

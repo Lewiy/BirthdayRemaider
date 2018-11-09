@@ -4,7 +4,19 @@
 
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="searchViewStyle">@style/MySearchViewStyle</item>
+        <item name="colorPrimary">@color/colorGrayS</item>
+        <item name="colorPrimaryDark">@color/colorGrayS</item>
+        <item name="colorAccent">@color/colorGrayS</item>
+    </style>
 
+
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.Light.SearchView">
+        <item name="colorPrimary">@color/colorRedM</item>
+        <item name="colorPrimaryDark">@color/colorRedM</item>
+        <item name="colorAccent">@color/colorRedM</item>
     </style>
 
 
@@ -16,6 +28,16 @@
         <item name="colorControlNormal">#797D7F</item>
         <item name="colorControlActivated">#C51A1A</item>
         <item name="colorControlHighlight">#797D7F</item>
+    </style>
+
+    <style name="AppTheme.TransparentTheme">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="checkBoxStyle" parent="Base.Theme.AppCompat">
+        <item name="colorAccent">@color/colorRedM</item>
+        <item name="android:textColorSecondary">@color/colorGrayL</item>
     </style>
 
 </resources>

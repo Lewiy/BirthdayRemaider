@@ -1,7 +1,7 @@
 package com.romanenko.lew.birthdayremaider.View.Adapters;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,17 +80,18 @@ public class CelebrationAdapterList extends RecyclerView.Adapter<CelebrationAdap
             this.recyclerViewClickListener = recyclerViewClickListener;
             name_surname.setText(celebrationVO.getFirstName() + "  " + celebrationVO.getLastName());
             type_celebration.setText(celebrationVO.getTypeCelebration());
-            years_old.setText(countYearCelebr(celebrationVO.getYear()) + context.getResources().getText(R.string.year));
-            // date.setText(celebrationVO.getDate().toString());
+            years_old.setText(DaysYearsSignAdapter.adapterSignLeftYears(context,countYearCelebr(celebrationVO.getYear())));
 
             if (celebrationVO.getFotoPath() != null) {
                 File f = new File(celebrationVO.getFotoPath());
-                Drawable d = Drawable.createFromPath(f.getAbsolutePath());
-                birthdayListImageView.setBackground(d);
+               // Drawable d = Drawable.createFromPath(f.getAbsolutePath());
+                //birthdayListImageView.setBackground(d);
+
+                birthdayListImageView.setImageURI(Uri.fromFile(f));
+            }else{
+                birthdayListImageView.setImageResource(R.drawable.ic_person_black_24dp);
             }
 
-            //  type_celebration.setText(celebrationVO.);
-            // years_old.setText(celebrationVO.getMainText());
         }
 
         public BirthdayViewHolder(View itemView, RecyclerViewClickListener recyclerViewClickListener) {
@@ -116,9 +117,9 @@ public class CelebrationAdapterList extends RecyclerView.Adapter<CelebrationAdap
     }
 
 
-    private String countYearCelebr(int year) {
+    private int countYearCelebr(int year) {
 
-        return String.valueOf(Calendar.getInstance().get(Calendar.YEAR) - year);
+        return(Calendar.getInstance().get(Calendar.YEAR) - year);
 
     }
 
