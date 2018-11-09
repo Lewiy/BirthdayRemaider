@@ -41,20 +41,24 @@ import butterknife.OnClick;
 
 public class FragEditCelebration extends android.support.v4.app.Fragment implements EditProfileCelebration.ViewEditCelebration {
 
-
     @BindView(R.id.frag_edit_celebr_name)
     TextView name;
     @BindView(R.id.frag_edit_celebr_type)
     TextView typeCelebration;
-    @BindView(R.id.frag_edit_celebr_time_to_alarm)
-    TextView timeToAlarm;
+    //@BindView(R.id.frag_edit_celebr_time_to_alarm)
+    //TextView timeToAlarm;
     @BindView(R.id.frag_edit_celebr_date)
     TextView date;
     @BindView(R.id.frag_edit_celebr_comment)
     TextView comment;
     @BindView(R.id.frag_edit_celebr_image)
     ImageView picture;
-   private static final int REQUEST_WEIGHT = 1;
+    @BindView(R.id.frag_edit_celebr_done)
+    ImageButton imgButton;
+
+    @BindView(R.id.frag_edit_celebr_mok)
+    ImageView pictureMock;
+    private static final int REQUEST_WEIGHT = 1;
     private static final int REQUEST_ANOTHER_ONE = 2;
     private int idUser;
 
@@ -122,8 +126,8 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
     }
 
     public void openFragAddRemainder() {
-        updatBundle.putInt("idUser",idUser);
-        ((MainActivity)getActivity()).setFragment(BaseFragments.ADD_CELEBR_FRAGMENT,updatBundle);
+        updatBundle.putInt("idUser", idUser);
+        ((MainActivity) getActivity()).setFragment(BaseFragments.ADD_CELEBR_FRAGMENT, updatBundle);
     }
 
     @Override
@@ -174,13 +178,15 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
 
     @Override
     public void setTimeToAlarm(String timeToAlarm) {
-        this.timeToAlarm.setText(timeToAlarm);
+        //  this.timeToAlarm.setText(timeToAlarm);
 
     }
 
     @Override
     public void setPictureContact(String path) {
         if (path != null) {
+            pictureMock.setVisibility(View.GONE);
+            imgButton.setBackground(getActivity().getResources().getDrawable(R.drawable.ic_done_white_24dp));
             File f = new File(path);
             Drawable d = Drawable.createFromPath(f.getAbsolutePath());
             picture.setBackground(d);
