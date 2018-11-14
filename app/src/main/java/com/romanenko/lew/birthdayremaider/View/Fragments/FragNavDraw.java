@@ -52,7 +52,6 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
         initInterfaceComponent(view);
 
 
-
         return view;
     }
 
@@ -101,7 +100,7 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
         FragmentManager fragmentManager = ((AppCompatActivity) getActivity()).getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.content_frame, fragment,fragmentClass.toString())
+                .replace(R.id.content_frame, fragment, fragmentClass.toString())
                 .addToBackStack(fragmentClass.toString())
                 .commit();
 
@@ -117,7 +116,8 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
                 startFragmentNavDrawMenu(fragment, fragmentClass, menuItem);
                 break;
             case R.id.nav_add_celebration:
-                 stopLastFragment();
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                stopLastFragment();
                 ((MainActivity) getActivity()).setFragment(BaseFragments.ADD_CELEBR_FRAGMENT, new Bundle());
                 break;
             case R.id.nav_list_birthday:
@@ -146,7 +146,7 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
         FragmentManager fragmentManager = ((AppCompatActivity) getActivity()).getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.content_frame, fragment,fragmentClass.toString())
+                .replace(R.id.content_frame, fragment, fragmentClass.toString())
                 .addToBackStack(fragmentClass.toString())
                 .commit();
 
@@ -158,9 +158,9 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
 
     private void stopLastFragment() {
 
-        FragmentManager  fragmentManager = ((AppCompatActivity) getActivity()).getSupportFragmentManager();
+        FragmentManager fragmentManager = ((AppCompatActivity) getActivity()).getSupportFragmentManager();
 
-        int index = fragmentManager.getBackStackEntryCount() -1;
+        int index = fragmentManager.getBackStackEntryCount() - 1;
 
         FragmentManager.BackStackEntry backEntry = fragmentManager.getBackStackEntryAt(index);
 

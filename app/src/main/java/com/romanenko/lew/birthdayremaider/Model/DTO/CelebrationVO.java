@@ -9,12 +9,23 @@ public class CelebrationVO {
     private String lastName;
 
     private String fotoPath;
+
+    private int idAlarm;
+
     private long idUser;
     private String typeCelebration;
-    private int day,month,year;
+    private int day, month, year;
 
     public int getDay() {
         return day;
+    }
+
+    public int getIdAlarm() {
+        return idAlarm;
+    }
+
+    public void setIdAlarm(int idAlarm) {
+        this.idAlarm = idAlarm;
     }
 
     public void setDay(int day) {
@@ -45,6 +56,7 @@ public class CelebrationVO {
     public void setTypeCelebration(String typeCelebration) {
         this.typeCelebration = typeCelebration;
     }
+
     public void setIdUser(long idUser) {
         this.idUser = idUser;
     }

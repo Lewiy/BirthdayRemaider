@@ -40,6 +40,10 @@
     <string name="years_other">Лет</string>
 
 
+    <string name="string_overflow">Лимит превышен</string>
+    <string name="strng_empty">Обязательная строка</string>
+    <string name="date_empty">Установите дату</string>
+
     <string-array name="spin_type_celebr">
         <item>@string/birthday</item>
         <item>@string/anniversary</item>

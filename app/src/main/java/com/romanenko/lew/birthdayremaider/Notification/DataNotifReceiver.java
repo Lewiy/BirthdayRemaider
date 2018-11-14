@@ -92,4 +92,8 @@ public class DataNotifReceiver implements NotificationContract.ViewNotif {
     }
 
 
+    @Override
+    public void showView(String error) {
+
+    }
 }

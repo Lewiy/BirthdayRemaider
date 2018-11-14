@@ -28,10 +28,9 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
 
     Context context;
 
-   public  PresenterAddRemainder(Context context) {
+    public PresenterAddRemainder(Context context) {
         this.context = context;
     }
-
 
 
     private DateCelebrationVO createDateCelebration() {
@@ -40,8 +39,8 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
         dateCelebrationVO.setMonth(getView().getMonth());
         dateCelebrationVO.setYear(getView().getYear());
 
-        if(getView().getUserId()>0)
-        dateCelebrationVO.setDateId(getView().getDateId());
+        if (getView().getUserId() > 0)
+            dateCelebrationVO.setDateId(getView().getDateId());
 
         return dateCelebrationVO;
     }
@@ -53,23 +52,24 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
         celebrationVO.setFotoPath(getView().getPathImage());
         celebrationVO.setTypeCelebration(getView().getTypeCelebration());
         celebrationVO.setComment(getView().getComment());
-        if(getView().getUserId()>0)
-        celebrationVO.setIdUser(getView().getUserId());
+        celebrationVO.setIdAlarm(getView().getNumberOfRows());
+        if (getView().getUserId() > 0)
+            celebrationVO.setIdUser(getView().getUserId());
         return celebrationVO;
     }
 
-    private String createDateCelebrForIdentification(CelebrationVO celebrationVO,DateCelebrationVO dateCelebrationVO){
+    private String createDateCelebrForIdentification(CelebrationVO celebrationVO, DateCelebrationVO dateCelebrationVO) {
         Calendar myCalendar = new GregorianCalendar(dateCelebrationVO.getYear(), dateCelebrationVO.getMonth(), dateCelebrationVO.getDay());
-       return myCalendar.toString();
+        return myCalendar.toString();
     }
 
     @Override
     public void getNumberOfRows() {
-                 getModel()
+        getModel()
                 .getNumberOfRows()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer <Integer> () {
+                .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer numberOfRows) throws Exception {
                         getView().setNumberOfRows(numberOfRows);
@@ -82,8 +82,12 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
         DateCelebrationVO dateCelebrationVO = createDateCelebration();
         CelebrationVO celebrationVO = createCelebration();
 
+
+        MyDate date = new MyDate(dateCelebrationVO.getYear()
+                , dateCelebrationVO.getMonth()
+                , dateCelebrationVO.getDay());
         AlarmCreator alarmCreator = new AlarmCreator(context);
-        alarmCreator.createAlarm(dateCelebrationVO);
+        alarmCreator.createAlarm(celebrationVO.getIdAlarm(), date);
 
 
         //celebrationAlarmManager.setDateRepeating(myDate);
@@ -121,7 +125,7 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
 
 
         getModel().upDateCelebration(CelebrationMapper
-                .constructDateEntity(createCelebration()),CelebrationMapper
+                .constructDateEntity(createCelebration()), CelebrationMapper
                 .constructDateEntity(createDateCelebration()))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -179,7 +183,7 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
                 .subscribe(new Consumer<PersonalPageAllInformation>() {
                     @Override
                     public void accept(PersonalPageAllInformation personalPageAllInformation) throws Exception {
-                      //  personalPageAllInfo = personalPageAllInformation;
+                        //  personalPageAllInfo = personalPageAllInformation;
                         //getView().loadListCelebration(new CelebrationMapper().getVOObjects(datumCelebrationForLists));
                         getView().setName(personalPageAllInformation.firstName);
                         getView().setSurname(personalPageAllInformation.lastName);
@@ -194,8 +198,8 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
                         getView().setYear(Integer.parseInt(personalPageAllInformation.year));
 
                         getView().setPathImage(personalPageAllInformation.fotoPath);
-                        getView().setIdUser((int)personalPageAllInformation.userId);
-                        getView().setIdDate((int)personalPageAllInformation.dateId);
+                        getView().setIdUser((int) personalPageAllInformation.userId);
+                        getView().setIdDate((int) personalPageAllInformation.dateId);
                     }
                 });
     }

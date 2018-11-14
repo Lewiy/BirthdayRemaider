@@ -15,21 +15,5 @@ public class AlarmReceiver extends BroadcastReceiver {
         String dateStr = extras.getString(CelebrationAlarmManager.ID_ALARM);
 
         DataNotifReceiver dataNotifReceiver = new DataNotifReceiver(context, DateParser.parseDate(dateStr));
-       // Toast.makeText(context, date, Toast.LENGTH_LONG).show();
-       // 0 Time2018 10 26 15 40
-       /* NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(context,"com.remainder.romanenko")
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("Title")
-                        .setContentText("Notification text");
-
-        Notification notification = builder.build();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationManager notificationManager =
-                    (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-            NotificationChannel mChannel = new NotificationChannel("com.remainder.romanenko","ssddf",NotificationManager.IMPORTANCE_HIGH);
-            notificationManager.createNotificationChannel(mChannel);
-            notificationManager.notify(1, notification);
-        }*/
     }
 }

@@ -58,6 +58,7 @@ public class CelebrationAdapterGridView extends BaseAdapter {
             viewHolder.imageView = (ImageView) view.findViewById(R.id.gridViewImagePerson);
             viewHolder.name = (TextView) view.findViewById(R.id.gridViewNamePerson);
             viewHolder.timeToCelebration = (TextView) view.findViewById(R.id.gridViewTimeToCelebrationPerson);
+            viewHolder.imageViewSmall = (ImageView) view.findViewById(R.id.grid_view_image_person_litle);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -68,22 +69,26 @@ public class CelebrationAdapterGridView extends BaseAdapter {
         String days = String.valueOf(countTimeToCelebration(listPersons.get(i).day, listPersons.get(i).month, listPersons.get(i).year));
 
         viewHolder.timeToCelebration.setText(DaysYearsSignAdapter.adapterSignLeftDays(mContext,
-                (int)countTimeToCelebration(listPersons.get(i).day, listPersons.get(i).month, listPersons.get(i).year)));
+                (int) countTimeToCelebration(listPersons.get(i).day, listPersons.get(i).month, listPersons.get(i).year)));
 
-        if (listPersons.get(i).fotoPath != null)
+        if (listPersons.get(i).fotoPath != null) {
             viewHolder.imageView.setImageURI(Uri.parse(new File(listPersons.get(i).fotoPath).toString()));
+            viewHolder.imageViewSmall.setVisibility(View.GONE);
+        }
+
         return view;
     }
 
     private long countTimeToCelebration(int day, int month, int year) {
         LocalDate dateNow = new LocalDate();
-        LocalDate celebrDate = new LocalDate(dateNow.getYear(),month,day);
-        Days days = Days.daysBetween(dateNow,celebrDate);
+        LocalDate celebrDate = new LocalDate(dateNow.getYear(), month, day);
+        Days days = Days.daysBetween(dateNow, celebrDate);
         return days.getDays();
     }
 
     static class ViewHolder {
         ImageView imageView;
+        ImageView imageViewSmall;
         TextView name;
         TextView timeToCelebration;
     }

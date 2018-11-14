@@ -185,4 +185,8 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
         }
     }
 
+    @Override
+    public void showView(String error) {
+
+    }
 }

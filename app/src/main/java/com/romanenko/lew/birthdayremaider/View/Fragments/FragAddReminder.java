@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -32,6 +33,8 @@ import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPMAddRemainder;
 import com.romanenko.lew.birthdayremaider.Model.ModelAddRemainder;
 import com.romanenko.lew.birthdayremaider.Presenter.PresenterAddRemainder;
 import com.romanenko.lew.birthdayremaider.R;
+import com.romanenko.lew.birthdayremaider.View.validation.Validation;
+import com.romanenko.lew.birthdayremaider.View.validation.ValidationWatcher;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
@@ -75,6 +78,8 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
 
     private int userId = -1, dateId = -1, userIdForUpdate = -1;
 
+    private int weightImageContact, heightImageContact;
+
     private Integer numberOfRows;
 
     @Inject
@@ -116,6 +121,28 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
         else
             actionForAddCelebr();
 
+
+
+       /* view.getViewTreeObserver().addOnWindowFocusChangeListener(new ViewTreeObserver.OnWindowFocusChangeListener() {
+            @Override
+            public void onWindowFocusChanged(final boolean hasFocus) {
+                // do your stuff here
+                weightImageContact = contactPicture.getWidth();
+                heightImageContact = contactPicture.getHeight();
+            }
+        });*/
+
+      /*  final ViewTreeObserver observer = contactPicture.getViewTreeObserver();
+        observer.addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        //  Log.d("Log", "Height: " + layout.getHeight());
+                        weightImageContact = contactPicture.getWidth();
+                        heightImageContact = contactPicture.getHeight();
+                    }
+                });*/
+
         return view;
     }
 
@@ -132,6 +159,11 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
 
     private boolean init(View view) {
         ButterKnife.bind(this, view);
+        //validationInputField();
+
+        weightImageContact = contactPicture.getWidth();
+        heightImageContact = contactPicture.getHeight();
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.spin_type_celebr, R.layout.support_simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinTypeCelebr.setAdapter(adapter);
@@ -148,11 +180,13 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
 
     @OnClick(R.id.add_frag_done_button)
     public void onCklickDone() {
-        if (flagUpdateCelebr == true) {
-            presenter.editCelebration();
-        } else
-            presenter.addRemainder();
-        getFragmentManager().popBackStack();
+        if (validateFragment()) {
+            if (flagUpdateCelebr == true) {
+                presenter.editCelebration();
+            } else
+                presenter.addRemainder();
+            getFragmentManager().popBackStack();
+        }
     }
 
     @OnClick(R.id.add_frag_back_button)
@@ -160,6 +194,10 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
         getFragmentManager().popBackStack();
     }
 
+
+    public int getNumberOfRows() {
+        return numberOfRows;
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -186,7 +224,7 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
 
     @OnClick(R.id.frag_add_set_date)
     public void OnClickDatePicker() {
-        new DatePickerDialog(getContext(),R.style.DialogTheme,d,
+        new DatePickerDialog(getContext(), R.style.DialogTheme, d,
                 dateAndTime.get(Calendar.YEAR),
                 dateAndTime.get(Calendar.MONTH),
                 dateAndTime.get(Calendar.DAY_OF_MONTH))
@@ -234,7 +272,7 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
 
     private void beginCrop(Uri source) {
         Uri destination = Uri.fromFile(new File(getActivity().getCacheDir(), TAG_CELEBR_IMAGE + numberOfRows));
-        Crop.of(source, destination).asSquare().start(getActivity(), this);
+        Crop.of(source, destination).withAspect(weightImageContact, heightImageContact).start(getActivity(), this);
     }
 
     private void handleCrop(int resultCode, Intent result) {
@@ -264,6 +302,24 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
             contactPicture.setBackground(d);
             addFotoButton.setBackgroundColor(Color.TRANSPARENT);
         }
+    }
+
+    private boolean validateFragment() {
+
+        boolean validation = false;
+        validation = Validation.checkDateNotSet(getContext(), dateView) &
+
+                Validation.checkEmptyField(getContext(), name) &
+                Validation.checkOverflowText(getContext(), name) &
+
+                Validation.checkOverflowText(getContext(), surName);
+
+        return validation;
+    }
+
+    @Override
+    public void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
+        super.onMultiWindowModeChanged(isInMultiWindowMode);
     }
 
     @Override
@@ -381,6 +437,10 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
         }
     }
 
+    @Override
+    public void showView(String error) {
+
+    }
 }
 
 

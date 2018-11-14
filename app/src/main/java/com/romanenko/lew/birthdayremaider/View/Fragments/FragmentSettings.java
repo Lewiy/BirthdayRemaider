@@ -15,6 +15,7 @@ import android.widget.TimePicker;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.romanenko.lew.birthdayremaider.AlarmingSystem.AlarmCreator;
 import com.romanenko.lew.birthdayremaider.R;
 import com.romanenko.lew.birthdayremaider.SettingsContract;
 import com.romanenko.lew.birthdayremaider.util.PreferencesManager;
@@ -177,13 +178,19 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
 
     @Override
     public void onPause() {
-
         super.onPause();
     }
 
     @Override
     public void onStop() {
         setNewSettings();
+        AlarmCreator alarmCreator = new AlarmCreator(getContext());
+        alarmCreator.resetAlarmsSettings();
         super.onStop();
+    }
+
+    @Override
+    public void showView(String error) {
+
     }
 }

@@ -204,4 +204,9 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
     public void setIdDate(int dateId) {
         updatBundle.putInt(FragAddReminder.TAG_DATEID, dateId);
     }
+
+    @Override
+    public void showView(String error) {
+
+    }
 }

@@ -73,4 +73,8 @@ public class FragHomeScreen extends android.support.v4.app.Fragment implements H
         gridViewHomeScreen.setAdapter(celebrationAdapterGridView);
     }
 
+    @Override
+    public void showView(String error) {
+
+    }
 }

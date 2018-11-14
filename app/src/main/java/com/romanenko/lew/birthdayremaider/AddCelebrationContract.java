@@ -39,6 +39,8 @@ public interface AddCelebrationContract {
 
         int getDateId();
 
+        int getNumberOfRows();
+
 
         void setName(String name);
 
@@ -61,6 +63,8 @@ public interface AddCelebrationContract {
         void setIdDate(int dateId);
 
         void setNumberOfRows(Integer numberOfRows);
+
+
     }
 
     interface PresenterAddRemainder extends MvpPresenter<ViewAddRemainder, ModelAddRemainder> {

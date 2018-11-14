@@ -86,7 +86,7 @@ public class CelebrationAlarmManager implements IalarmManager {
     private PendingIntent pendingBuilder(int id, String time) {
         Intent i = new Intent(context, AlarmReceiver.class);
         i.putExtra(ID_ALARM,  time);
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
+        PendingIntent pi = PendingIntent.getBroadcast(context, id, i, 0);
         return pi;
     }
 

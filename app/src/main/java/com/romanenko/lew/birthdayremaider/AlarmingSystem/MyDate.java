@@ -11,8 +11,6 @@ public class MyDate {
     private int day;
     private int hrs = 0;
     private int min = 0;
-    private int reapiting;
-    private int countReapiting;
 
     public int getYear() {
         return year;
@@ -24,23 +22,6 @@ public class MyDate {
 
     public int getDay() {
         return day;
-    }
-
-    public void setReapiting(int reapiting) {
-        this.reapiting = reapiting;
-    }
-
-    public void setCountReapiting(int countReapiting) {
-        this.countReapiting = countReapiting;
-    }
-
-
-    public int getReapiting() {
-        return reapiting;
-    }
-
-    public int getCountReapiting() {
-        return countReapiting;
     }
 
     public MyDate(int year, int month, int day, int hrs, int min) {
