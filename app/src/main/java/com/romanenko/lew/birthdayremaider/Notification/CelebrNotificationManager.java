@@ -11,8 +11,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
-import com.romanenko.lew.birthdayremaider.AlarmingSystem.IalarmManager;
-import com.romanenko.lew.birthdayremaider.EditProfileCelebration;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.NotifyDTO;
 import com.romanenko.lew.birthdayremaider.R;
 import com.romanenko.lew.birthdayremaider.View.Activities.MainActivity;
@@ -20,7 +18,6 @@ import com.romanenko.lew.birthdayremaider.View.Activities.MainActivity;
 import java.io.File;
 import java.util.List;
 
-import static android.content.Context.ALARM_SERVICE;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class CelebrNotificationManager {
@@ -46,8 +43,6 @@ public class CelebrNotificationManager {
 
 
             Intent resultIntent = new Intent(context, MainActivity.class);
-            //  resultIntent.putExtra("idUser",notif.userId);
-            //  resultIntent.putExtra("FragmentType","EditFragment");
 
             resultIntent.putExtras(bundle);
 

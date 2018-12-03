@@ -3,22 +3,15 @@ package com.romanenko.lew.birthdayremaider.Presenter;
 import android.content.Context;
 
 import com.romanenko.lew.birthdayremaider.AddCelebrationContract;
-import com.romanenko.lew.birthdayremaider.AlarmingSystem.AlarmCreator;
-import com.romanenko.lew.birthdayremaider.AlarmingSystem.CelebrationAlarmManager;
-import com.romanenko.lew.birthdayremaider.AlarmingSystem.MyDate;
 import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationMapper;
 import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationVO;
 import com.romanenko.lew.birthdayremaider.Model.DTO.DateCelebrationVO;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.DataCelebrationForListDTO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageAllInformation;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import io.reactivex.CompletableObserver;
-import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -52,7 +45,7 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
         celebrationVO.setFotoPath(getView().getPathImage());
         celebrationVO.setTypeCelebration(getView().getTypeCelebration());
         celebrationVO.setComment(getView().getComment());
-        celebrationVO.setIdAlarm(getView().getNumberOfRows());
+        celebrationVO.setIdTemporary(getView().getNumberOfRows());
         if (getView().getUserId() > 0)
             celebrationVO.setIdUser(getView().getUserId());
         return celebrationVO;
@@ -83,14 +76,13 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
         CelebrationVO celebrationVO = createCelebration();
 
 
-        MyDate date = new MyDate(dateCelebrationVO.getYear()
+       /* MyDate date = new MyDate(dateCelebrationVO.getYear()
                 , dateCelebrationVO.getMonth()
                 , dateCelebrationVO.getDay());
         AlarmCreator alarmCreator = new AlarmCreator(context);
-        alarmCreator.createAlarm(celebrationVO.getIdAlarm(), date);
+        alarmCreator.createAlarm(celebrationVO.getIdTemporary(), date);*/
 
 
-        //celebrationAlarmManager.setDateRepeating(myDate);
         getModel().addCelebration(CelebrationMapper
                 .constructDateEntity(celebrationVO), CelebrationMapper
                 .constructDateEntity(dateCelebrationVO))

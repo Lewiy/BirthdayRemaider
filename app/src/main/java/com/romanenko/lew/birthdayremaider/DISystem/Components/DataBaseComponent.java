@@ -1,7 +1,7 @@
 package com.romanenko.lew.birthdayremaider.DISystem.Components;
 
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.DataBaseModule;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.CelebrationPersonEntity;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.Tables.CelebrationPersonEntity;
 import com.romanenko.lew.birthdayremaider.Model.ModelAddRemainder;
 import com.romanenko.lew.birthdayremaider.Model.ModelEditCelebration;
 import com.romanenko.lew.birthdayremaider.Model.ModelHomeScreen;

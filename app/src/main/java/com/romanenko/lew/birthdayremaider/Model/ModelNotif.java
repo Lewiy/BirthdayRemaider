@@ -6,6 +6,7 @@ import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerDataBaseComp
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DataBaseComponent;
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.DataBaseModule;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.AppDataBase;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.DataCelebrationForListDTO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.NotifyDTO;
 import com.romanenko.lew.birthdayremaider.MyApp;
 import com.romanenko.lew.birthdayremaider.NotificationContract;
@@ -37,5 +38,12 @@ public class ModelNotif implements NotificationContract.ModelNotif{
     @Override
     public Flowable<List<NotifyDTO>> loadCelebrs(int day,int month,int year) {
         return  appDataBase.celebrationPersonEntityDao().getCelebrsDate(day,month,year);
+    }
+
+    @Override
+    public Flowable<List<DataCelebrationForListDTO>> pullListCelebration() {
+        return appDataBase.celebrationPersonEntityDao()
+                .getListCelebration();
+
     }
 }

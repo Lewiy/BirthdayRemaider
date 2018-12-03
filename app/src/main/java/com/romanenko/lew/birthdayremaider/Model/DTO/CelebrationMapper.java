@@ -1,7 +1,7 @@
 package com.romanenko.lew.birthdayremaider.Model.DTO;
 
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.CelebrationPersonEntity;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.DateEntity;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.Tables.CelebrationPersonEntity;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.Tables.DateEntity;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.DataCelebrationForListDTO;
 
 import java.util.ArrayList;
@@ -103,6 +103,7 @@ public  class  CelebrationMapper {
         celebrationPersonEntity.comment = celebrationVO.getComment();
         celebrationPersonEntity.typeCelebration = celebrationVO.getTypeCelebration();
         celebrationPersonEntity._id = celebrationVO.getIdUser();
+        celebrationPersonEntity.idTemporary = celebrationVO.getIdTemporary();
 
         return celebrationPersonEntity;
     }

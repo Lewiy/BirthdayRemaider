@@ -6,13 +6,8 @@ import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerDataBaseComp
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DataBaseComponent;
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.DataBaseModule;
 import com.romanenko.lew.birthdayremaider.EditProfileCelebration;
-import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationMapper;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.AppDataBase;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.CelebrationPersonEntity;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.DateEntity;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.DataCelebrationForListDTO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageAllInformation;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageRequirementDataDTO;
 import com.romanenko.lew.birthdayremaider.MyApp;
 
 import javax.inject.Inject;

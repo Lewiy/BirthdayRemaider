@@ -2,6 +2,7 @@ package com.romanenko.lew.birthdayremaider;
 
 import android.content.Context;
 
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.DataCelebrationForListDTO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.NotifyDTO;
 import com.romanenko.lew.birthdayremaider.Model.IModel;
 import com.romanenko.lew.birthdayremaider.Presenter.MvpPresenter;
@@ -27,11 +28,12 @@ public interface NotificationContract {
 
     interface PresenterNotif extends MvpPresenter<NotificationContract.ViewNotif, NotificationContract.ModelNotif> {
 
-        void loadDataNotif(int day,int month,int year);
+        void loadDataNotif();
     }
 
     interface ModelNotif extends IModel {
         void initLocalReposetory(Context context);
         Flowable<List<NotifyDTO>> loadCelebrs(int day,int month,int yaer);
+        Flowable<List<DataCelebrationForListDTO>> pullListCelebration();
     }
 }

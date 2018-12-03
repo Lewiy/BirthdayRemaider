@@ -11,9 +11,11 @@ import com.romanenko.lew.birthdayremaider.util.DateParser;
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Bundle extras = intent.getExtras();
-        String dateStr = extras.getString(CelebrationAlarmManager.ID_ALARM);
+        //Bundle extras = intent.getExtras();
+      //  String dateStr = extras.getString(CelebrationAlarmManager.ID_ALARM);
 
-        DataNotifReceiver dataNotifReceiver = new DataNotifReceiver(context, DateParser.parseDate(dateStr));
+        DataNotifReceiver dataNotifReceiver = new DataNotifReceiver(context);
+
+
     }
 }

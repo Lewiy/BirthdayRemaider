@@ -123,14 +123,14 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
 
 
 
-       /* view.getViewTreeObserver().addOnWindowFocusChangeListener(new ViewTreeObserver.OnWindowFocusChangeListener() {
+        view.getViewTreeObserver().addOnWindowFocusChangeListener(new ViewTreeObserver.OnWindowFocusChangeListener() {
             @Override
             public void onWindowFocusChanged(final boolean hasFocus) {
                 // do your stuff here
                 weightImageContact = contactPicture.getWidth();
                 heightImageContact = contactPicture.getHeight();
             }
-        });*/
+        });
 
       /*  final ViewTreeObserver observer = contactPicture.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(

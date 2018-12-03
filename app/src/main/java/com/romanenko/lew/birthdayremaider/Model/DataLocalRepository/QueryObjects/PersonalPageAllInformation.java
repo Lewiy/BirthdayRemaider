@@ -10,6 +10,9 @@ public class PersonalPageAllInformation {
     @ColumnInfo(name = "dateId")
     public long dateId;
 
+    @ColumnInfo(name = "idTemporary")
+    public int idTemporary;
+
     @ColumnInfo(name = "first_name")
     public String firstName;
 

@@ -72,5 +72,4 @@ public class PresenterListCelebration extends Presenter<ListCelebrationContract.
                 });
     }
 
-
 }

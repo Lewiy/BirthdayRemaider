@@ -20,11 +20,11 @@ public class CelebrationVO {
         return day;
     }
 
-    public int getIdAlarm() {
+    public int getIdTemporary() {
         return idAlarm;
     }
 
-    public void setIdAlarm(int idAlarm) {
+    public void setIdTemporary(int idAlarm) {
         this.idAlarm = idAlarm;
     }
 

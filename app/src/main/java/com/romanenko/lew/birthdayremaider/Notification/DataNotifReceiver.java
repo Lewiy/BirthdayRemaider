@@ -31,19 +31,9 @@ public class DataNotifReceiver implements NotificationContract.ViewNotif {
     @Inject
     public NotificationContract.PresenterNotif presenter;
 
-    public DataNotifReceiver(Context context, MyDate date) {
+    public DataNotifReceiver(Context context) {
 
         this.context = context;
-       /* dataBaseComponent = DaggerDataBaseComponent.builder().appComponent(MyApp.get(context).component())
-                .dataBaseModule(new DataBaseModule())
-                //.contextModule(new ContextModule(context))
-                .build();
-
-        dataBaseComponent.inject(this);
-
-        appComponent = DaggerAppComponent.builder().appModule()*/
-        //     DaggerMVPCompAddRemain
-
         DaggerMVPCompNotification
                 .builder()
                 .mVPMNotification(new MVPMNotification(this, new PresenterNotyf(context)))
@@ -53,7 +43,7 @@ public class DataNotifReceiver implements NotificationContract.ViewNotif {
         presenter.attachView(this);
         presenter.attachModel(new ModelNotif());
         presenter.viewIsReady();
-        presenter.loadDataNotif(date.getDay(), date.getMonth(), date.getYear());
+        presenter.loadDataNotif();
     }
 
     public void setCelebrNotificationManager(CelebrNotificationManager celebrNotificationManager) {

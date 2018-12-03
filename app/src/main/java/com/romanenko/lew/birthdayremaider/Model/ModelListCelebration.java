@@ -6,22 +6,15 @@ import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerDataBaseComp
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DataBaseComponent;
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.DataBaseModule;
 import com.romanenko.lew.birthdayremaider.ListCelebrationContract;
-import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationMapper;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.AppDataBase;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.CelebrationPersonEntity;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.DataCelebrationForListDTO;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageRequirementDataDTO;
 import com.romanenko.lew.birthdayremaider.MyApp;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Completable;
-
 import io.reactivex.Flowable;
-
-import io.reactivex.functions.Action;
 
 public class ModelListCelebration implements ListCelebrationContract.ModelListBirthday {
 
@@ -41,8 +34,6 @@ public class ModelListCelebration implements ListCelebrationContract.ModelListBi
         dataBaseComponent.inject(this);
 
     }
-
-
 
     @Override
     public Flowable<List<DataCelebrationForListDTO>> pullListCelebration() {

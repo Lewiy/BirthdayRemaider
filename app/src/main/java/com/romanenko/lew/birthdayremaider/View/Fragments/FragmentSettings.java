@@ -1,5 +1,6 @@
 package com.romanenko.lew.birthdayremaider.View.Fragments;
 
+import android.app.AlarmManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,18 +14,13 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.romanenko.lew.birthdayremaider.AlarmingSystem.AlarmCreator;
+import com.romanenko.lew.birthdayremaider.AlarmingSystem.CelebrAlarmManager;
 import com.romanenko.lew.birthdayremaider.R;
 import com.romanenko.lew.birthdayremaider.SettingsContract;
 import com.romanenko.lew.birthdayremaider.util.PreferencesManager;
 
-import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -54,7 +50,7 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
     public static final String APP_PREFERENCES_ALARM_DAY = "Alarm_day";
     public static final String APP_PREFERENCES_ALARM_TIME = "Alarm_time";
 
-    public static final int INDEX_1 = 1, INDEX_2 = 2, INDEX_3 = 3;
+    private static final int INDEX_1 = 1, INDEX_2 = 2, INDEX_3 = 7;
 
     @Nullable
     @Override
@@ -74,14 +70,14 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
     @OnClick(R.id.time_picker_text_view)
     public void onClickTimePicker() {
         //Toast.makeText(getContext(), "lol", Toast.LENGTH_LONG).show();
-        new TimePickerDialog(getContext(), R.style.DialogTheme,myCallBack, myHour, myMinute, true).show();
+        new TimePickerDialog(getContext(), R.style.DialogTheme, myCallBack, myHour, myMinute, true).show();
     }
 
     TimePickerDialog.OnTimeSetListener myCallBack = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             myHour = hourOfDay;
             myMinute = minute;
-            timeShower.setText(correctTimeForShow(myHour,myMinute));
+            timeShower.setText(correctTimeForShow(myHour, myMinute));
         }
     };
 
@@ -97,9 +93,9 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
         myHour = 8;
         myMinute = 00;
 
-        timeShower.setText(correctTimeForShow(myHour,myMinute));
+        timeShower.setText(correctTimeForShow(myHour, myMinute));
 
-        setNewSettings();
+        //   setNewSettings();
 
     }
 
@@ -117,7 +113,10 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
         listTime.put(INDEX_1, myHour);
         listTime.put(INDEX_2, myMinute);
 
-        setSettingsPref(listChekBox, listTime);
+        // setSettingsPref(listChekBox, listTime);
+        PreferencesManager.setSettingsPref(listChekBox, listTime, mSettings);
+
+
     }
 
 
@@ -133,27 +132,10 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
         myHour = listTime.get(INDEX_1);
         myMinute = listTime.get(INDEX_2);
 
-        timeShower.setText(correctTimeForShow(myHour,myMinute));
-       // correctTimeForShow(myHour,myMinute);
+        timeShower.setText(correctTimeForShow(myHour, myMinute));
+        // correctTimeForShow(myHour,myMinute);
 
     }
-
-
-    private void setSettingsPref(HashMap<Integer, Boolean> listChekBox, HashMap<Integer, Boolean> listTime) {
-
-        SharedPreferences.Editor editor = mSettings.edit();
-
-        Gson gson = new Gson();
-        String jsonChekBox = gson.toJson(listChekBox);
-        String jsonTime = gson.toJson(listTime);
-
-        editor.putString(APP_PREFERENCES_ALARM_DAY, jsonChekBox);
-        editor.putString(APP_PREFERENCES_ALARM_TIME, jsonTime);
-
-        editor.apply();
-
-    }
-
 
 
     private void firstSettingsSet() {
@@ -166,13 +148,13 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
         return mSettings.getBoolean("hasVisited", false);
     }
 
-    private String correctTimeForShow(int myHour,int myMinute){
+    private String correctTimeForShow(int myHour, int myMinute) {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY,myHour);
-        calendar.set(Calendar.MINUTE,myMinute);
-      //  System.out.println("Date : " + sdf.format(calendar.getTime()));
+        calendar.set(Calendar.HOUR_OF_DAY, myHour);
+        calendar.set(Calendar.MINUTE, myMinute);
+        //  System.out.println("Date : " + sdf.format(calendar.getTime()));
         return sdf.format(calendar.getTime());
     }
 
@@ -184,8 +166,12 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
     @Override
     public void onStop() {
         setNewSettings();
-        AlarmCreator alarmCreator = new AlarmCreator(getContext());
-        alarmCreator.resetAlarmsSettings();
+        SharedPreferences settings = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        HashMap<Integer, Integer> listTime = PreferencesManager.getSettingsPrefTime(settings);
+        CelebrAlarmManager celebrAlarmManager = new CelebrAlarmManager(getContext()
+                , listTime.get(PreferencesManager.INDEX_1)
+                , listTime.get(PreferencesManager.INDEX_2));
+        celebrAlarmManager.resetAlarmRepeatingDay();
         super.onStop();
     }
 

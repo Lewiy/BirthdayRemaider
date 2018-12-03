@@ -2,11 +2,7 @@ package com.romanenko.lew.birthdayremaider;
 
 import android.content.Context;
 
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.CelebrationPersonEntity;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.DateEntity;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.DataCelebrationForListDTO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageAllInformation;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageRequirementDataDTO;
 import com.romanenko.lew.birthdayremaider.Model.IModel;
 import com.romanenko.lew.birthdayremaider.Presenter.MvpPresenter;
 import com.romanenko.lew.birthdayremaider.View.IView;

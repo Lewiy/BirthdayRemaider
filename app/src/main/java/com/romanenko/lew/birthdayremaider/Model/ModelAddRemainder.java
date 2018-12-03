@@ -6,11 +6,9 @@ import com.romanenko.lew.birthdayremaider.AddCelebrationContract;
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerDataBaseComponent;
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DataBaseComponent;
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.DataBaseModule;
-import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationVO;
-import com.romanenko.lew.birthdayremaider.Model.DTO.DateCelebrationVO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.AppDataBase;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.CelebrationPersonEntity;
-import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.DateEntity;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.Tables.CelebrationPersonEntity;
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.Tables.DateEntity;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageAllInformation;
 import com.romanenko.lew.birthdayremaider.MyApp;
 
@@ -25,9 +23,6 @@ public class ModelAddRemainder implements AddCelebrationContract.ModelAddRemaind
     @Inject
     AppDataBase appDataBase;
     DataBaseComponent dataBaseComponent;
-
-
-
 
     @Override
     public Completable addCelebration(CelebrationPersonEntity celebrationPersonEntity, DateEntity dateEntity) {
@@ -56,11 +51,6 @@ public class ModelAddRemainder implements AddCelebrationContract.ModelAddRemaind
                 .getPersonalPageAll(id);
     }
 
-
-   /* @Override
-    public Flowable<PersonalPageAllInformation> upDateCelebrationAndShow(CelebrationPersonEntity celebrationPersonEntity, DateEntity dateEntity) {
-        return appDataBase.celebrationPersonEntityDao().updateAndShowCelebrationAndDate(celebrationPersonEntity,dateEntity);
-    }*/
 
 
     @Override

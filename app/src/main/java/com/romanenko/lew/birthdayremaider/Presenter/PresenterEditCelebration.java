@@ -1,9 +1,7 @@
 package com.romanenko.lew.birthdayremaider.Presenter;
 
 import android.content.Context;
-import android.widget.Toast;
 
-import com.romanenko.lew.birthdayremaider.AlarmingSystem.AlarmCreator;
 import com.romanenko.lew.birthdayremaider.EditProfileCelebration;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.PersonalPageAllInformation;
 
@@ -36,8 +34,8 @@ public class PresenterEditCelebration extends Presenter<EditProfileCelebration.V
     @Override
     public void deleteCelebration() {
 
-        AlarmCreator alarmCreator = new AlarmCreator(context);
-        alarmCreator.deleteAccaunt((int) personalPageAllInfo.userId);
+       // AlarmCreator alarmCreator = new AlarmCreator(context);
+     //   alarmCreator.deleteAccaunt((int) personalPageAllInfo.idTemporary);
         getModel().deleteCelebration((int) personalPageAllInfo.userId, (int) personalPageAllInfo.dateId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
