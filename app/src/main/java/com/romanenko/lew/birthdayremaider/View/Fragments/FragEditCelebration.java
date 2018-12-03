@@ -109,25 +109,26 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
     @OnClick(R.id.frag_edit_celebr_done)
     public void onClickDone() {
         goToListCelebration();
+
     }
 
 
     private void goToListCelebration() {
-        Fragment fragment = null;
-        try {
-            fragment = FragListCelebration.class.newInstance();
-        } catch (java.lang.InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        getActivity().getSupportFragmentManager().popBackStack();
     }
 
     public void openFragAddRemainder() {
         updatBundle.putInt("idUser", idUser);
         ((MainActivity) getActivity()).setFragment(BaseFragments.ADD_CELEBR_FRAGMENT, updatBundle);
+
+
+        /*FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.content_frame_main_activity, new FragAddReminder())
+                .addToBackStack(null)
+                .commit();*/
+
     }
 
     @Override

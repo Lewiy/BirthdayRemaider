@@ -185,13 +185,15 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
                         getView().setComment(personalPageAllInformation.comment);
                         getView().setTypeCelebration(personalPageAllInformation.typeCelebration);
 
-                        getView().setDay(Integer.parseInt(personalPageAllInformation.day));
-                        getView().setMonth(Integer.parseInt(personalPageAllInformation.month));
-                        getView().setYear(Integer.parseInt(personalPageAllInformation.year));
+                        getView().setDate(Integer.parseInt(personalPageAllInformation.year)
+                                ,Integer.parseInt(personalPageAllInformation.month)
+                        ,Integer.parseInt(personalPageAllInformation.day));
+
 
                         getView().setPathImage(personalPageAllInformation.fotoPath);
                         getView().setIdUser((int) personalPageAllInformation.userId);
                         getView().setIdDate((int) personalPageAllInformation.dateId);
+                        getView().setNumberOfRows(personalPageAllInformation.idTemporary);
                     }
                 });
     }

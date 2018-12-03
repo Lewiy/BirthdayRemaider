@@ -101,7 +101,11 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
                 bundle.putInt("idUser", (int) celebrationVO.getIdUser());
                 fragment.setArguments(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.content_frame, fragment,FragEditCelebration.class.toString())
+                        .addToBackStack(FragEditCelebration.class.toString())
+                        .commit();
             }
         };
 
@@ -130,7 +134,7 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.content_frame_main_activity, new FragAddReminder(), "FragAddReminder")
+                .replace(R.id.content_frame_main_activity, new FragAddReminder())
                 .addToBackStack(null)
                 .commit();
     }

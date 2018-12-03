@@ -46,11 +46,7 @@ public interface AddCelebrationContract {
 
         void setSurname(String surName);
 
-        void setYear(int year);
-
-        void setDay(int day);
-
-        void setMonth(int month);
+        void setDate(int year,int month,int day);
 
         void setPathImage(String pathName);
 

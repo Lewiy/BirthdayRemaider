@@ -5,38 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_add_celebration"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorGrayL"
-        android:elevation="4dp">
-
-        <ImageButton
-            android:id="@+id/add_frag_done_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="15dp"
-            android:background="@drawable/ic_done_black_24dp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/nav_menu_item_add_celebration"
-            android:layout_toRightOf="@+id/add_frag_back_button"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"/>
-
-        <ImageButton
-            android:id="@+id/add_frag_back_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="15dp"
-            android:background="@drawable/ic_arrow_back_black_24dp" />
-
-    </RelativeLayout>
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:menu="@menu/tool_bar_add_reminder" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -48,11 +24,11 @@
             android:id="@+id/frag_add_remainder_add_foto_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
+            android:layout_centerInParent="true"
             android:layout_marginBottom="5dp"
-            android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            android:layout_centerInParent="true" />
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp" />
 
         <ImageButton
             android:id="@+id/frag_add_remainder_add_foto"
@@ -67,18 +43,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-      >
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/frag_add_remainder_name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:hint="@string/name"
             android:textColorHint="@color/colorGrayL"
-            android:theme="@style/MyEditTextTheme"
-            android:layout_marginBottom="5dp"/>
+            android:theme="@style/MyEditTextTheme" />
 
         <EditText
             android:id="@+id/frag_add_remainder_sur_name"

@@ -41,6 +41,7 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
     NavigationView mNavigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
+    public static final String FRAGMENT_NAME  = "FRAGMENT_NAME";
 
 
     @NonNull
@@ -51,6 +52,19 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.navigation_drawer_main, null);
         initInterfaceComponent(view);
 
+        Bundle bundle = getArguments();
+
+       if( bundle != null){
+           String className = bundle.getString(FRAGMENT_NAME,null);
+           try {
+               Class<?> classType = Class.forName(className);
+               setDefaultFragment(classType);
+           } catch (ClassNotFoundException e) {
+               e.printStackTrace();
+           }
+
+       }
+       else setDefaultFragment(FragHomeScreen.class);
 
         return view;
     }
@@ -86,12 +100,12 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
             selectDrawerItem(menuItem);
             return true;
         });
-        setDefaultFragment();
+
     }
 
-    private void setDefaultFragment() {
+    private void setDefaultFragment(Class fragmentClass) {
         Fragment fragment = null;
-        Class fragmentClass = FragHomeScreen.class;
+       // Class fragmentClass = FragHomeScreen.class;
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {

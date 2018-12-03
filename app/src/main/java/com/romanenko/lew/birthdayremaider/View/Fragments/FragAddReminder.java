@@ -10,6 +10,12 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ListFragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,7 +40,6 @@ import com.romanenko.lew.birthdayremaider.Model.ModelAddRemainder;
 import com.romanenko.lew.birthdayremaider.Presenter.PresenterAddRemainder;
 import com.romanenko.lew.birthdayremaider.R;
 import com.romanenko.lew.birthdayremaider.View.validation.Validation;
-import com.romanenko.lew.birthdayremaider.View.validation.ValidationWatcher;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
@@ -66,10 +71,12 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
     ImageView contactPicture;
     @BindView(R.id.frag_add_remainder_add_foto)
     ImageButton addFotoButton;
-    @BindView(R.id.add_frag_done_button)
-    ImageButton doneButton;
-    @BindView(R.id.add_frag_back_button)
-    ImageButton backButton;
+    /*  @BindView(R.id.add_frag_done_button)
+      ImageButton doneButton;
+      @BindView(R.id.add_frag_back_button)
+      ImageButton backButton;*/
+    @BindView(R.id.toolbar_add_celebration)
+    Toolbar mToolbar;
 
     private String pathPictureContact = null;
 
@@ -103,7 +110,7 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-        View view = inflater.inflate(R.layout.fragment_add_remainder, null);
+        View view = inflater.inflate(R.layout.fragment_add_reminder, null);
 
 
         DaggerMVPCompAddRemain.builder()
@@ -122,7 +129,6 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
             actionForAddCelebr();
 
 
-
         view.getViewTreeObserver().addOnWindowFocusChangeListener(new ViewTreeObserver.OnWindowFocusChangeListener() {
             @Override
             public void onWindowFocusChanged(final boolean hasFocus) {
@@ -132,16 +138,6 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
             }
         });
 
-      /*  final ViewTreeObserver observer = contactPicture.getViewTreeObserver();
-        observer.addOnGlobalLayoutListener(
-                new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        //  Log.d("Log", "Height: " + layout.getHeight());
-                        weightImageContact = contactPicture.getWidth();
-                        heightImageContact = contactPicture.getHeight();
-                    }
-                });*/
 
         return view;
     }
@@ -164,6 +160,18 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
         weightImageContact = contactPicture.getWidth();
         heightImageContact = contactPicture.getHeight();
 
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+
+        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+        actionbar.setDisplayHomeAsUpEnabled(true);
+
+        actionbar.setTitle(R.string.nav_menu_item_add_celebration);
+
+
+        // actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.spin_type_celebr, R.layout.support_simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinTypeCelebr.setAdapter(adapter);
@@ -178,7 +186,7 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
             return false;
     }
 
-    @OnClick(R.id.add_frag_done_button)
+    /*@OnClick(R.id.add_frag_done_button)
     public void onCklickDone() {
         if (validateFragment()) {
             if (flagUpdateCelebr == true) {
@@ -187,12 +195,12 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
                 presenter.addRemainder();
             getFragmentManager().popBackStack();
         }
-    }
+    }*/
 
-    @OnClick(R.id.add_frag_back_button)
+   /* @OnClick(R.id.add_frag_back_button)
     public void onClickBack() {
         getFragmentManager().popBackStack();
-    }
+    }*/
 
 
     public int getNumberOfRows() {
@@ -202,6 +210,8 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.tool_bar_add_reminder, menu);
     }
 
 
@@ -217,10 +227,43 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
         switch (item.getItemId()) {
             case android.R.id.home:
                 // mDrawerLayout.openDrawer(GravityCompat.START);
+                //getActivity().onBackPressed();
+                //  getFragmentManager().popBackStack();
+                backClick();
+                return true;
+            case R.id.action_done:
+                if (validateFragment()) {
+                    if (flagUpdateCelebr == true) {
+                        presenter.editCelebration();
+                    } else
+                        presenter.addRemainder();
+                    getFragmentManager().popBackStack();
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void backClick() {
+        Fragment fragment = null;
+        Class fragmentClass = FragNavDraw.class;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FragNavDraw.FRAGMENT_NAME, FragListCelebration.class.getName());
+
+        fragment.setArguments(bundle);
+        FragmentManager fragmentManager = ((AppCompatActivity) getActivity()).getSupportFragmentManager();
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.content_frame_main_activity, fragment)
+                .commit();
+    }
+
 
     @OnClick(R.id.frag_add_set_date)
     public void OnClickDatePicker() {
@@ -234,21 +277,24 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
     // установка обработчика выбора даты
     DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int month, int day) {
-
-            yearOfAge = year;
-            monthOfYear = month;
-            dayOfMonth = day;
-
-            dateCelebrate = day + "/" + ++month + "/" + year;
-            dateAndTime.set(Calendar.YEAR, year);
-            dateAndTime.set(Calendar.MONTH, monthOfYear);
-            dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            dateView.setText(dateCelebrate);
-            datePicture.setVisibility(View.GONE);
-            dateView.setVisibility(View.VISIBLE);
-
+            setDateView(year, month + 1, day);
         }
     };
+
+    private void setDateView( int year, int month, int day) {
+        yearOfAge = year;
+        monthOfYear = month;
+        dayOfMonth = day;
+
+        dateCelebrate = day + "/" + month + "/" + year;
+       /* dateAndTime.set(Calendar.YEAR, year);
+        dateAndTime.set(Calendar.MONTH, monthOfYear);
+        dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);*/
+        dateView.setText(dateCelebrate);
+        datePicture.setVisibility(View.GONE);
+        dateView.setVisibility(View.VISIBLE);
+    }
+
 
     @OnClick(R.id.frag_add_remainder_add_foto)
     public void OnClickAddFoto() {
@@ -383,19 +429,13 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
     }
 
     @Override
-    public void setYear(int year) {
+    public void setDate(int year, int month, int day) {
         this.yearOfAge = year;
-    }
-
-    @Override
-    public void setDay(int day) {
         this.dayOfMonth = day;
+        this.monthOfYear = month;
+        setDateView(year,month,day);
     }
 
-    @Override
-    public void setMonth(int month) {
-        this.monthOfYear = month;
-    }
 
     @Override
     public void setPathImage(String path) {
