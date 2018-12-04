@@ -11,140 +11,143 @@
         android:layout_height="50dp"
         android:background="@color/colorGrayL"
         android:elevation="4dp"
+        app:layout_collapseMode="pin"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:menu="@menu/tool_bar_add_reminder" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.5"
-        android:background="@color/colorGrayLight">
-
-        <ImageView
-            android:id="@+id/frag_add_remainder_add_foto_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp" />
-
-        <ImageButton
-            android:id="@+id/frag_add_remainder_add_foto"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/round_button_add_foto"
-            android:src="@drawable/ic_add_a_photo_black_24dp" />
-    </RelativeLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/frag_add_remainder_name"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="5dp"
-            android:layout_weight="1"
-            android:hint="@string/name"
-            android:textColorHint="@color/colorGrayL"
-            android:theme="@style/MyEditTextTheme" />
-
-        <EditText
-            android:id="@+id/frag_add_remainder_sur_name"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:hint="@string/surname"
-            android:textColorHint="@color/colorGrayL"
-            android:theme="@style/MyEditTextTheme" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
             <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.4">
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
+                android:background="@color/colorGrayLight">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_cake_black_24dp" />
-            </RelativeLayout>
-
-
-            <Spinner
-                android:id="@+id/frag_add_remainder_spin_type"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="2" />
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/frag_add_remainder_date_text"
+                    android:id="@+id/frag_add_remainder_add_foto_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_centerInParent="true"
-                    android:textColor="@color/colorGrayL"
-                    android:textSize="17dp"
-                    android:visibility="gone" />
-
-                <ImageView
-                    android:id="@+id/frag_add_remainder_date"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_date_range_black_24dp" />
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.6">
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp" />
 
                 <ImageButton
-                    android:id="@+id/frag_add_set_date"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:id="@+id/frag_add_remainder_add_foto"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/round_button_add_foto_primary_dark"
-                    android:src="@drawable/ic_add_black_24dp" />
+                    android:background="@drawable/round_button_add_foto"
+                    android:src="@drawable/ic_add_a_photo_black_24dp" />
             </RelativeLayout>
 
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/frag_add_remainder_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:hint="@string/name"
+                    android:textColorHint="@color/colorGrayL"
+                    android:theme="@style/MyEditTextTheme" />
+
+                <EditText
+                    android:id="@+id/frag_add_remainder_sur_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:hint="@string/surname"
+                    android:textColorHint="@color/colorGrayL"
+                    android:theme="@style/MyEditTextTheme" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_cake_black_24dp" />
+                    </RelativeLayout>
 
 
-        <EditText
-            android:id="@+id/frag_add_remainder_comment"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:ems="10"
-            android:hint="@string/comment"
-            android:inputType="textPersonName"
-            android:textColorHint="@color/colorGrayL"
-            android:theme="@style/MyEditTextTheme" />
-    </LinearLayout>
+                    <Spinner
+                        android:id="@+id/frag_add_remainder_spin_type"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="2" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/frag_add_remainder_date_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/colorGrayL"
+                            android:textSize="17dp"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/frag_add_remainder_date"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_date_range_black_24dp" />
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6">
+
+                        <ImageButton
+                            android:id="@+id/frag_add_set_date"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/round_button_add_foto_primary_dark"
+                            android:src="@drawable/ic_add_black_24dp" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+
+                <EditText
+                    android:id="@+id/frag_add_remainder_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:ems="10"
+                    android:hint="@string/comment"
+                    android:inputType="textPersonName"
+                    android:textColorHint="@color/colorGrayL"
+                    android:theme="@style/MyEditTextTheme" />
+            </LinearLayout>
+
 </android.support.v7.widget.LinearLayoutCompat>

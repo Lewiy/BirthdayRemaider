@@ -15,6 +15,8 @@
     <string name="year">Год</string>
     <string name="search">Поиск</string>
     <string name="done">Готово</string>
+    <string name="no_nearest_celebrations">Нет ближайших торжеств</string>
+    <string name="date_out_of_range">Дата должна быть в прошлом</string>
 
     <string name="day_1">1 День</string>
     <string name="day_2">2 День</string>
@@ -35,7 +37,7 @@
     <string name="notify">Оповестить за</string>
 
 
-    <string name="in_this_year">До года</string>
+    <string name="in_this_year">Меньше года</string>
     <string name="year_1">Год</string>
     <string name="year_2_3_4_44">Года</string>
     <string name="years_other">Лет</string>

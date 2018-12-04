@@ -281,7 +281,7 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
         }
     };
 
-    private void setDateView( int year, int month, int day) {
+    private void setDateView(int year, int month, int day) {
         yearOfAge = year;
         monthOfYear = month;
         dayOfMonth = day;
@@ -360,6 +360,10 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
 
                 Validation.checkOverflowText(getContext(), surName);
 
+        if (validation == false) return false;
+
+        validation = Validation.checkDateOutOfRange(getContext(), dateView);
+
         return validation;
     }
 
@@ -433,7 +437,7 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
         this.yearOfAge = year;
         this.dayOfMonth = day;
         this.monthOfYear = month;
-        setDateView(year,month,day);
+        setDateView(year, month, day);
     }
 
 

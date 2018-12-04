@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPHomeScreen;
@@ -34,16 +35,18 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FragHomeScreen extends android.support.v4.app.Fragment implements HomeScreenContract.ViewCelebrations{
+public class FragHomeScreen extends android.support.v4.app.Fragment implements HomeScreenContract.ViewCelebrations {
 
     @BindView(R.id.gridViewHomeScreen)
     GridView gridViewHomeScreen;
+    @BindView(R.id.empty_grid_message)
+    TextView emptyTextView;
 
     @Inject
     HomeScreenContract.PresenterCelebrations presenter;
 
-    private static final int REQUEST_CODE_READ_CONTACTS=1;
-    private static boolean READ_CONTACTS_GRANTED =false;
+    private static final int REQUEST_CODE_READ_CONTACTS = 1;
+    private static boolean READ_CONTACTS_GRANTED = false;
     private int hasReadContactPermission;
 
     @Nullable
@@ -69,8 +72,14 @@ public class FragHomeScreen extends android.support.v4.app.Fragment implements H
 
     @Override
     public void showCelebrations(List<CelebrListNameDateFotoDTO> datumCelebrationForLists) {
-        CelebrationAdapterGridView celebrationAdapterGridView = new  CelebrationAdapterGridView(getContext(),datumCelebrationForLists);
+        CelebrationAdapterGridView celebrationAdapterGridView = new CelebrationAdapterGridView(getContext(), datumCelebrationForLists);
         gridViewHomeScreen.setAdapter(celebrationAdapterGridView);
+        isEmptyGridView(gridViewHomeScreen);
+    }
+
+    private void isEmptyGridView(GridView gridViewHomeScreen) {
+        emptyTextView.setText(R.string.no_nearest_celebrations);
+        gridViewHomeScreen.setEmptyView(emptyTextView);
     }
 
     @Override

@@ -11,4 +11,12 @@ public class DateParser {
                 ,Integer.parseInt(splitedDate[1])
                 ,Integer.parseInt(splitedDate[2]));
     }
+
+    public static MyDate parseDateReverse(String date){
+        int day,month,year;
+        String [] splitedDate = date.split("/");
+        return new MyDate(Integer.parseInt(splitedDate[2])
+                ,Integer.parseInt(splitedDate[1])
+                ,Integer.parseInt(splitedDate[0]));
+    }
 }

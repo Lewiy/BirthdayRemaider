@@ -22,7 +22,8 @@
         <activity
             android:name=".View.Activities.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.TransparentTheme">
+            android:theme="@style/AppTheme.TransparentTheme"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
