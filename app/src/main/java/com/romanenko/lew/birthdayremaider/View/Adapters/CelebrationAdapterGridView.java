@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.romanenko.lew.birthdayremaider.Model.DTO.HomeCelebrationVO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.CelebrListNameDateFotoDTO;
 import com.romanenko.lew.birthdayremaider.R;
 
@@ -16,19 +17,26 @@ import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CelebrationAdapterGridView extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater layoutInflater;
-    private List<CelebrListNameDateFotoDTO> listPersons;
+    private List<HomeCelebrationVO> listPersons = new LinkedList<>();
 
-    public CelebrationAdapterGridView(Context mContext, List<CelebrListNameDateFotoDTO> listPersons) {
+    public CelebrationAdapterGridView(Context mContext) {
         this.mContext = mContext;
         this.layoutInflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
         this.listPersons = listPersons;
     }
+
+    public List<HomeCelebrationVO> getListPersons() {
+        return listPersons;
+    }
+
 
     @Override
     public int getCount() {
@@ -43,6 +51,11 @@ public class CelebrationAdapterGridView extends BaseAdapter {
     @Override
     public long getItemId(int i) {
         return i;
+    }
+
+    public void addItem(HomeCelebrationVO homeCelebrationVO) {
+        listPersons.add(homeCelebrationVO);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -65,14 +78,15 @@ public class CelebrationAdapterGridView extends BaseAdapter {
         }
 
 
-        viewHolder.name.setText(listPersons.get(i).firstName + " " + listPersons.get(i).lastName);
-        String days = String.valueOf(countTimeToCelebration(listPersons.get(i).day, listPersons.get(i).month, listPersons.get(i).year));
+        viewHolder.name.setText(listPersons.get(i).getFirstName() + " " + listPersons.get(i).getLastName());
+        String days = String.valueOf(countTimeToCelebration(listPersons.get(i).getDay(), listPersons.get(i).getMonth(), listPersons.get(i).getYear()));
 
         viewHolder.timeToCelebration.setText(DaysYearsSignAdapter.adapterSignLeftDays(mContext,
-                (int) countTimeToCelebration(listPersons.get(i).day, listPersons.get(i).month, listPersons.get(i).year)));
+                (int) countTimeToCelebration(listPersons.get(i).getDay(), listPersons.get(i).getMonth(), listPersons.get(i).getYear())));
 
-        if (listPersons.get(i).fotoPath != null) {
-            viewHolder.imageView.setImageURI(Uri.parse(new File(listPersons.get(i).fotoPath).toString()));
+        if (listPersons.get(i).getBitmap() != null) {
+            // viewHolder.imageView.setImageURI(Uri.parse(new File(listPersons.get(i).fotoPath).toString()));
+            viewHolder.imageView.setImageBitmap(listPersons.get(i).getBitmap());
             viewHolder.imageViewSmall.setVisibility(View.GONE);
         }
 

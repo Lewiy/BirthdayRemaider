@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.NotificationCompat;
 
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.NotifyDTO;
@@ -39,14 +40,14 @@ public class CelebrNotificationManager {
 
             Bundle bundle = new Bundle();
             bundle.putInt("idUser", (int) notif.userId);
-            bundle.putString("FragmentType", "EditFragment");
+            bundle.putString("FragmentType", "EditFragmentFromNotif");
 
 
             Intent resultIntent = new Intent(context, MainActivity.class);
 
             resultIntent.putExtras(bundle);
 
-            PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent,
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(context, (int) notif.userId, resultIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {

@@ -9,18 +9,20 @@
     <string name="comment">Комментарий</string>
     <string name="anniversary">Годовщина свадьбы</string>
     <string name="birthday">День Рождение</string>
-    <string name="other">Другое</string>
+    <string name="other">Праздник</string>
     <string name="day">Дней</string>
     <string name="year_celebration">Исполняеться </string>
     <string name="year">Год</string>
     <string name="search">Поиск</string>
     <string name="done">Готово</string>
     <string name="no_nearest_celebrations">Нет ближайших торжеств</string>
+    <string name="no_celebration">Нет торжеств</string>
     <string name="date_out_of_range">Дата должна быть в прошлом</string>
+    <string name="nearest_celebration">Ближайшее праздники</string>
 
     <string name="day_1">1 День</string>
-    <string name="day_2">2 День</string>
-    <string name="day_7">7 День</string>
+    <string name="day_2">2 Дня</string>
+    <string name="day_7">7 Деней</string>
     <string name="time_alarm">Время оповещения</string>
 
 
@@ -37,7 +39,7 @@
     <string name="notify">Оповестить за</string>
 
 
-    <string name="in_this_year">Меньше года</string>
+    <string name="will_be">Будет</string>
     <string name="year_1">Год</string>
     <string name="year_2_3_4_44">Года</string>
     <string name="years_other">Лет</string>

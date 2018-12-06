@@ -1,6 +1,9 @@
 package com.romanenko.lew.birthdayremaider.View.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,8 +32,10 @@ public class CelebrationAdapterList extends RecyclerView.Adapter<CelebrationAdap
         this.context = context;
         //  this.listBirthdayItems = listBirthdayItems;
         this.mListener = listener;
-     /*   lInflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);*/
+    }
+
+    public List<CelebrationVO> getListBirthdayItems() {
+        return listBirthdayItems;
     }
 
     @Override
@@ -53,6 +58,13 @@ public class CelebrationAdapterList extends RecyclerView.Adapter<CelebrationAdap
     public void setItems(Collection<CelebrationVO> Birthdays) {
         listBirthdayItems.addAll(Birthdays);
         notifyDataSetChanged();
+
+    }
+
+    public void setItem(CelebrationVO celebrationVOS) {
+        listBirthdayItems.add(celebrationVOS);
+        notifyDataSetChanged();
+
     }
 
     public void clearItems() {
@@ -68,7 +80,6 @@ public class CelebrationAdapterList extends RecyclerView.Adapter<CelebrationAdap
 
         private ImageView birthdayListImageView;
         private TextView name_surname;
-        private TextView date;
         private TextView type_celebration;
         private TextView years_old;
         private RecyclerViewClickListener recyclerViewClickListener;
@@ -80,15 +91,18 @@ public class CelebrationAdapterList extends RecyclerView.Adapter<CelebrationAdap
             this.recyclerViewClickListener = recyclerViewClickListener;
             name_surname.setText(celebrationVO.getFirstName() + "  " + celebrationVO.getLastName());
             type_celebration.setText(celebrationVO.getTypeCelebration());
-            years_old.setText(DaysYearsSignAdapter.adapterSignLeftYears(context,countYearCelebr(celebrationVO.getYear())));
+            years_old.setText(DaysYearsSignAdapter.adapterSignLeftYears(context, countYearCelebr(celebrationVO.getYear())));
 
-            if (celebrationVO.getFotoPath() != null) {
-                File f = new File(celebrationVO.getFotoPath());
-               // Drawable d = Drawable.createFromPath(f.getAbsolutePath());
-                //birthdayListImageView.setBackground(d);
+            if (celebrationVO.getImage() != null) {
+                // File f = new File(celebrationVO.getFotoPath());
+                // Drawable d = Drawable.createFromPath(f.getAbsolutePath());
+                // birthdayListImageView.setBackground(d);
 
-                birthdayListImageView.setImageURI(Uri.fromFile(f));
-            }else{
+                // birthdayListImageView.setImageURI(Uri.fromFile(f));
+
+                birthdayListImageView.setImageBitmap(celebrationVO.getImage());
+
+            } else {
                 birthdayListImageView.setImageResource(R.drawable.ic_person_black_24dp);
             }
 
@@ -119,7 +133,7 @@ public class CelebrationAdapterList extends RecyclerView.Adapter<CelebrationAdap
 
     private int countYearCelebr(int year) {
 
-        return(Calendar.getInstance().get(Calendar.YEAR) - year);
+        return (Calendar.getInstance().get(Calendar.YEAR) - year);
 
     }
 

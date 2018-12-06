@@ -71,16 +71,8 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
     }
 
     public void addRemainder() {
-        //appDataBase.celebrationPersonEntityDao();
         DateCelebrationVO dateCelebrationVO = createDateCelebration();
         CelebrationVO celebrationVO = createCelebration();
-
-
-       /* MyDate date = new MyDate(dateCelebrationVO.getYear()
-                , dateCelebrationVO.getMonth()
-                , dateCelebrationVO.getDay());
-        AlarmCreator alarmCreator = new AlarmCreator(context);
-        alarmCreator.createAlarm(celebrationVO.getIdTemporary(), date);*/
 
 
         getModel().addCelebration(CelebrationMapper

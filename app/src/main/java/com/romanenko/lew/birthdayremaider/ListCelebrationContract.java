@@ -13,11 +13,13 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 public interface ListCelebrationContract {
 
     interface ViewListBirthday extends IView {
         void loadListCelebration(List<CelebrationVO> items);
+        void loadItemCelebration(CelebrationVO item);
 
         void loadListCelebrationSearch(List<CelebrationVO> items);
     }

@@ -1,6 +1,8 @@
 package com.romanenko.lew.birthdayremaider.Model.DTO;
 
 
+import android.graphics.Bitmap;
+
 import java.util.Date;
 
 public class CelebrationVO {
@@ -15,6 +17,24 @@ public class CelebrationVO {
     private long idUser;
     private String typeCelebration;
     private int day, month, year;
+    private Bitmap image;
+
+    public int getIdAlarm() {
+        return idAlarm;
+    }
+
+    public void setIdAlarm(int idAlarm) {
+        this.idAlarm = idAlarm;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
+    }
+
 
     public int getDay() {
         return day;
@@ -103,6 +123,5 @@ public class CelebrationVO {
     public String getFotoPath() {
         return fotoPath;
     }
-
 
 }

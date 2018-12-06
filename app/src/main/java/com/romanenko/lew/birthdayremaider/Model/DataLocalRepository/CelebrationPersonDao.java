@@ -17,6 +17,7 @@ import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.Tables.DateE
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 @Dao
 public abstract class CelebrationPersonDao {

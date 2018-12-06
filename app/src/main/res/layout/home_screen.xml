@@ -9,7 +9,8 @@
         android:id="@+id/empty_grid_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:text="@string/no_nearest_celebrations"/>
 
     <GridView
         android:id="@+id/gridViewHomeScreen"

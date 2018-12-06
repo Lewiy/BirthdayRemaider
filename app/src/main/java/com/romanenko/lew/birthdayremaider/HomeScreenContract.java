@@ -3,6 +3,7 @@ package com.romanenko.lew.birthdayremaider;
 import android.content.Context;
 
 import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationVO;
+import com.romanenko.lew.birthdayremaider.Model.DTO.HomeCelebrationVO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.CelebrListNameDateFotoDTO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.DataCelebrationForListDTO;
 import com.romanenko.lew.birthdayremaider.Model.IModel;
@@ -18,6 +19,7 @@ public interface HomeScreenContract {
     interface ViewCelebrations extends IView {
 
        void  showCelebrations(List<CelebrListNameDateFotoDTO> datumCelebrationForLists);
+       void showItemCelebrHome(HomeCelebrationVO homeCelebrationVO);
     }
 
     interface PresenterCelebrations extends MvpPresenter<HomeScreenContract.ViewCelebrations,HomeScreenContract.ModelCelebrations> {

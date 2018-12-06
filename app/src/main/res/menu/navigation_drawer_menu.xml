@@ -4,7 +4,7 @@
         <item
             android:id="@+id/nav_home_screen"
             android:icon="@drawable/ic_home_black_24dp"
-            android:title="@string/nav_home_screen"/>
+            android:title="@string/nearest_celebration"/>
         <item
             android:id="@+id/nav_add_celebration"
             android:icon="@drawable/ic_add_black_24dp"

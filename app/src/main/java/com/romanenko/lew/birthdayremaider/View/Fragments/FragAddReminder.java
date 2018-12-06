@@ -17,6 +17,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -71,10 +72,6 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
     ImageView contactPicture;
     @BindView(R.id.frag_add_remainder_add_foto)
     ImageButton addFotoButton;
-    /*  @BindView(R.id.add_frag_done_button)
-      ImageButton doneButton;
-      @BindView(R.id.add_frag_back_button)
-      ImageButton backButton;*/
     @BindView(R.id.toolbar_add_celebration)
     Toolbar mToolbar;
 
@@ -129,12 +126,14 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
             actionForAddCelebr();
 
 
-        view.getViewTreeObserver().addOnWindowFocusChangeListener(new ViewTreeObserver.OnWindowFocusChangeListener() {
-            @Override
-            public void onWindowFocusChanged(final boolean hasFocus) {
-                // do your stuff here
-                weightImageContact = contactPicture.getWidth();
-                heightImageContact = contactPicture.getHeight();
+
+        ViewTreeObserver vto = contactPicture.getViewTreeObserver();
+        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                contactPicture.getViewTreeObserver().removeOnPreDrawListener(this);
+                heightImageContact =  contactPicture.getMeasuredHeight();
+                weightImageContact =  contactPicture.getMeasuredWidth();
+                return true;
             }
         });
 
@@ -155,10 +154,6 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
 
     private boolean init(View view) {
         ButterKnife.bind(this, view);
-        //validationInputField();
-
-        weightImageContact = contactPicture.getWidth();
-        heightImageContact = contactPicture.getHeight();
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
 
@@ -167,9 +162,6 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
         actionbar.setDisplayHomeAsUpEnabled(true);
 
         actionbar.setTitle(R.string.nav_menu_item_add_celebration);
-
-
-        // actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.spin_type_celebr, R.layout.support_simple_spinner_dropdown_item);
@@ -185,22 +177,6 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
         } else
             return false;
     }
-
-    /*@OnClick(R.id.add_frag_done_button)
-    public void onCklickDone() {
-        if (validateFragment()) {
-            if (flagUpdateCelebr == true) {
-                presenter.editCelebration();
-            } else
-                presenter.addRemainder();
-            getFragmentManager().popBackStack();
-        }
-    }*/
-
-   /* @OnClick(R.id.add_frag_back_button)
-    public void onClickBack() {
-        getFragmentManager().popBackStack();
-    }*/
 
 
     public int getNumberOfRows() {
@@ -228,8 +204,8 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
             case android.R.id.home:
                 // mDrawerLayout.openDrawer(GravityCompat.START);
                 //getActivity().onBackPressed();
-                //  getFragmentManager().popBackStack();
-                backClick();
+                  getFragmentManager().popBackStack();
+               // backClick();
                 return true;
             case R.id.action_done:
                 if (validateFragment()) {
@@ -237,7 +213,7 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
                         presenter.editCelebration();
                     } else
                         presenter.addRemainder();
-                    getFragmentManager().popBackStack();
+                    backClick();
                 }
                 return true;
         }
@@ -485,6 +461,7 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
     public void showView(String error) {
 
     }
+
 }
 
 

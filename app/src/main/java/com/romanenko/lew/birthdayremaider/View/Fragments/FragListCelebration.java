@@ -22,8 +22,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.romanenko.lew.birthdayremaider.DISystem.Components.DaggerMVPCompListCelebr;
 import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPMListCelebration;
@@ -51,8 +53,8 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
 
     @BindView(R.id.lv_main)
     RecyclerView recyclerViewMain;
-   /* @BindView((R.id.lv_prog_bar))
-    ProgressBar progressBar;*/
+    @BindView((R.id.empty_recycle_message))
+    TextView emptyTextView;
 
     private SearchView searchView;
     private CelebrationAdapterList celebrationAdapterList;
@@ -68,6 +70,8 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
         View view = inflater.inflate(R.layout.fragment_list_birthday, null);
         ButterKnife.bind(this, view);
         setHasOptionsMenu(true);
+
+
         // presenter = new PresenterListCelebration(this);
         DaggerMVPCompListCelebr.builder()
                 .mVPMListCelebration(new MVPMListCelebration(this, new PresenterListCelebration(getContext())))
@@ -103,7 +107,7 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager
                         .beginTransaction()
-                        .replace(R.id.content_frame, fragment,FragEditCelebration.class.toString())
+                        .replace(R.id.content_frame, fragment, FragEditCelebration.class.toString())
                         .addToBackStack(FragEditCelebration.class.toString())
                         .commit();
             }
@@ -127,6 +131,7 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
 
     //TODO ArrayList Mock
     public void loadData() {
+        // progressBar.setVisibility(View.VISIBLE);
         presenter.pullListCelebration();
     }
 
@@ -146,7 +151,26 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
 
 
     @Override
+    public void loadItemCelebration(CelebrationVO item) {
+        celebrationAdapterList.setItem(item);
+        emptyTextView.setVisibility(View.GONE);
+
+    }
+
+    private void isEmptyGridView(RecyclerView recyclerView) {
+
+        if (celebrationAdapterList.getListBirthdayItems().isEmpty()) {
+            emptyTextView.setText(R.string.no_nearest_celebrations);
+            recyclerView.setVisibility(View.GONE);
+            emptyTextView.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+
+    @Override
     public void loadListCelebrationSearch(List<CelebrationVO> items) {
+
         celebrationAdapterList.clearItems();
         celebrationAdapterList.setItems(items);
     }
@@ -154,7 +178,7 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.tool_bar_menu, menu);
-        // Associate searchable configuration with the SearchView
+
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.action_search)
                 .getActionView();

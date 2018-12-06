@@ -45,8 +45,6 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
     TextView name;
     @BindView(R.id.frag_edit_celebr_type)
     TextView typeCelebration;
-    //@BindView(R.id.frag_edit_celebr_time_to_alarm)
-    //TextView timeToAlarm;
     @BindView(R.id.frag_edit_celebr_date)
     TextView date;
     @BindView(R.id.frag_edit_celebr_comment)
@@ -90,13 +88,10 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
 
         presenter.pullPersonalPage(idUser);
         return view;
-
-
     }
 
     @OnClick(R.id.frag_edit_celebr_delete_but)
     public void onClickDelete() {
-
         goToListCelebration();
         presenter.deleteCelebration();
     }
@@ -114,20 +109,12 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
 
 
     private void goToListCelebration() {
-        getActivity().getSupportFragmentManager().popBackStack();
+        ((MainActivity) getActivity()).setFragment(BaseFragments.NAV_DRAW_FRAGMENT, null);
     }
 
     public void openFragAddRemainder() {
         updatBundle.putInt("idUser", idUser);
         ((MainActivity) getActivity()).setFragment(BaseFragments.ADD_CELEBR_FRAGMENT, updatBundle);
-
-
-        /*FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        fragmentManager
-                .beginTransaction()
-                .replace(R.id.content_frame_main_activity, new FragAddReminder())
-                .addToBackStack(null)
-                .commit();*/
 
     }
 
@@ -137,14 +124,11 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_WEIGHT:
-                    //int weight = data.getIntExtra(WeightDialogFragment.TAG_WEIGHT_SELECTED, -1)
-                    //используем полученные результаты
                     //...
                     break;
                 case REQUEST_ANOTHER_ONE:
                     //...
                     break;
-                //обработка других requestCode
             }
 
             presenter.pullPersonalPage(idUser);
@@ -154,7 +138,7 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
 
     @Override
     public void setName(String name, String surName) {
-        this.name.setText(name);
+        this.name.setText(name +" "+surName);
         updatBundle.putString(FragAddReminder.TAG_NAME, name);
         updatBundle.putString(FragAddReminder.TAG_SUR_NAME, surName);
     }

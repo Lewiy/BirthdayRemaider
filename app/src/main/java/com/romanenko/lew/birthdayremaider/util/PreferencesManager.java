@@ -43,21 +43,6 @@ public class PreferencesManager {
         return gson.fromJson(jsonTime, type);
     }
 
-   /* public static  void saveArrayList(List<AlarmEntity> list, String key, SharedPreferences prefs){
-        SharedPreferences.Editor editor = prefs.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(list);
-        editor.putString(key, json);
-        editor.apply();
-    }
-
-    public static List<AlarmEntity> getArrayList(String key, SharedPreferences prefs){
-        Gson gson = new Gson();
-        String json = prefs.getString(key, null);
-        Type type = new TypeToken<ArrayList<AlarmEntity>>() {}.getType();
-        return gson.fromJson(json, type);
-    }*/
-
     public static void clearPreference(SharedPreferences prefs){
         prefs.edit().clear().apply();
     }

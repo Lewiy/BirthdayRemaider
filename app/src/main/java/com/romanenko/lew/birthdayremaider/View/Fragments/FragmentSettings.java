@@ -67,9 +67,14 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
         return view;
     }
 
-    @OnClick(R.id.time_picker_text_view)
+    @OnClick(R.id.time_viewer_text_view)
     public void onClickTimePicker() {
-        //Toast.makeText(getContext(), "lol", Toast.LENGTH_LONG).show();
+
+        new TimePickerDialog(getContext(), R.style.DialogTheme, myCallBack, myHour, myMinute, true).show();
+    }
+    @OnClick(R.id.time_picker_text_view)
+    public void onClickTimePickerT() {
+
         new TimePickerDialog(getContext(), R.style.DialogTheme, myCallBack, myHour, myMinute, true).show();
     }
 

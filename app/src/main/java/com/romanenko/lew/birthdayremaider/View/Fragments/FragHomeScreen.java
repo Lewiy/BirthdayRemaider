@@ -22,8 +22,10 @@ import com.romanenko.lew.birthdayremaider.DISystem.Modules.MVPMHomeScreen;
 import com.romanenko.lew.birthdayremaider.HomeScreenContract;
 import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationVO;
 import com.romanenko.lew.birthdayremaider.Model.DTO.DateCelebrationVO;
+import com.romanenko.lew.birthdayremaider.Model.DTO.HomeCelebrationVO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.CelebrListNameDateFotoDTO;
 import com.romanenko.lew.birthdayremaider.Model.ModelHomeScreen;
+import com.romanenko.lew.birthdayremaider.Notification.DataNotifReceiver;
 import com.romanenko.lew.birthdayremaider.Presenter.PresenterHomeScreen;
 import com.romanenko.lew.birthdayremaider.R;
 import com.romanenko.lew.birthdayremaider.View.Adapters.CelebrationAdapterGridView;
@@ -48,6 +50,7 @@ public class FragHomeScreen extends android.support.v4.app.Fragment implements H
     private static final int REQUEST_CODE_READ_CONTACTS = 1;
     private static boolean READ_CONTACTS_GRANTED = false;
     private int hasReadContactPermission;
+    private CelebrationAdapterGridView celebrationAdapterGridView;
 
     @Nullable
     @Override
@@ -67,15 +70,26 @@ public class FragHomeScreen extends android.support.v4.app.Fragment implements H
         presenter.viewIsReady();
         presenter.loadCelebrations();
 
+        DataNotifReceiver dataNotifReceiver = new DataNotifReceiver(getActivity());
+
+        celebrationAdapterGridView = new CelebrationAdapterGridView(getContext());
+        gridViewHomeScreen.setAdapter(celebrationAdapterGridView);
         return view;
     }
 
     @Override
     public void showCelebrations(List<CelebrListNameDateFotoDTO> datumCelebrationForLists) {
-        CelebrationAdapterGridView celebrationAdapterGridView = new CelebrationAdapterGridView(getContext(), datumCelebrationForLists);
-        gridViewHomeScreen.setAdapter(celebrationAdapterGridView);
-        isEmptyGridView(gridViewHomeScreen);
+
     }
+
+    @Override
+    public void showItemCelebrHome(HomeCelebrationVO homeCelebrationVO) {
+        celebrationAdapterGridView.addItem(homeCelebrationVO);
+        emptyTextView.setVisibility(View.GONE);
+        //if(celebrationAdapterGridView.getListPersons().isEmpty())
+        //   isEmptyGridView(gridViewHomeScreen);
+    }
+
 
     private void isEmptyGridView(GridView gridViewHomeScreen) {
         emptyTextView.setText(R.string.no_nearest_celebrations);

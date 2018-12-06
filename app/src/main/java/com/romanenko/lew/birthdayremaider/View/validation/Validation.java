@@ -14,7 +14,7 @@ import java.util.Date;
 public class Validation {
 
     public static int EMPTY_STRING = 0;
-    public static int OVERFLOW_STRING = 16;
+    public static int OVERFLOW_STRING = 14;
 
     public static boolean checkEmptyField(Context context, TextView textView) {
         boolean valid = true;

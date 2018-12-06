@@ -28,12 +28,12 @@ public class CelebrAlarmManager {
     }
 
     public void setAlarmDateRepeatingDay() {
-        am.setRepeating(android.app.AlarmManager.RTC_WAKEUP, setTimeAlarming(), android.app.AlarmManager.INTERVAL_DAY, pendingBuilder(CELEBRATION_ALARM_CODE));
+        am.setRepeating(android.app.AlarmManager.RTC_WAKEUP,  /*new DateTime().getMillis()*/ setTimeAlarming(), 3600000/*android.app.AlarmManager.INTERVAL_DAY*/, pendingBuilder(CELEBRATION_ALARM_CODE));
     }
 
     public void resetAlarmRepeatingDay() {
         am.cancel(pendingBuilder(CELEBRATION_ALARM_CODE));
-        am.setRepeating(android.app.AlarmManager.RTC_WAKEUP, setTimeAlarming(), android.app.AlarmManager.INTERVAL_DAY, pendingBuilder(CELEBRATION_ALARM_CODE));
+        am.setRepeating(android.app.AlarmManager.RTC_WAKEUP, /*new DateTime().getMillis()*/ setTimeAlarming(),3600000/*android.app.AlarmManager.INTERVAL_DAY*/, pendingBuilder(CELEBRATION_ALARM_CODE));
     }
 
     private long setTimeAlarming(){

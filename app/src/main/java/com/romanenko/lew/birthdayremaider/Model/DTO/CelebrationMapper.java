@@ -1,5 +1,9 @@
 package com.romanenko.lew.birthdayremaider.Model.DTO;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.CelebrListNameDateFotoDTO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.Tables.CelebrationPersonEntity;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.Tables.DateEntity;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.DataCelebrationForListDTO;
@@ -7,7 +11,7 @@ import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects
 import java.util.ArrayList;
 import java.util.List;
 
-public  class  CelebrationMapper {
+public class CelebrationMapper {
 
     public CelebrationMapper() {
 
@@ -24,7 +28,8 @@ public  class  CelebrationMapper {
         return celebrationVOS;
     }
 
-    private static CelebrationVO constructCelebrationVO(DataCelebrationForListDTO dataCelebrationForListsDTO) {
+    public static CelebrationVO constructCelebrationVO(DataCelebrationForListDTO dataCelebrationForListsDTO) {
+
         CelebrationVO celebrationVO = new CelebrationVO();
         celebrationVO.setFirstName(dataCelebrationForListsDTO.firstName);
         celebrationVO.setLastName(dataCelebrationForListsDTO.lastName);
@@ -35,8 +40,22 @@ public  class  CelebrationMapper {
         celebrationVO.setIdUser(dataCelebrationForListsDTO.userId);
         celebrationVO.setTypeCelebration(dataCelebrationForListsDTO.typeCelebration);
 
+        if (dataCelebrationForListsDTO.fotoPath != null) {
+            Bitmap scaled = scaleImage(dataCelebrationForListsDTO.fotoPath);
+            celebrationVO.setImage(scaled);
+        }
+
         return celebrationVO;
     }
+
+    private static Bitmap scaleImage(String imgPath) {
+
+        Bitmap bitmapImage = BitmapFactory.decodeFile(imgPath);
+        int nh = (int) (bitmapImage.getHeight() * (512.0 / bitmapImage.getWidth()));
+        Bitmap scaled = Bitmap.createScaledBitmap(bitmapImage, 512, nh, true);
+        return scaled;
+    }
+
 
     public static List<DataCelebrationForListDTO> getDTOObjects(List<CelebrationVO> celebrationVOS) {
 
@@ -49,7 +68,7 @@ public  class  CelebrationMapper {
         return celebrationForListDTOS;
     }
 
-    private  static DataCelebrationForListDTO constructCelebrationDTO(CelebrationVO celebrationVO) {
+    private static DataCelebrationForListDTO constructCelebrationDTO(CelebrationVO celebrationVO) {
 
         DataCelebrationForListDTO dataCelebrationForListDTO = new DataCelebrationForListDTO();
         dataCelebrationForListDTO.firstName = celebrationVO.getFirstName();
@@ -95,7 +114,7 @@ public  class  CelebrationMapper {
 
     public static CelebrationPersonEntity constructDateEntity(CelebrationVO celebrationVO) {
 
-        CelebrationPersonEntity celebrationPersonEntity = new  CelebrationPersonEntity();
+        CelebrationPersonEntity celebrationPersonEntity = new CelebrationPersonEntity();
 
         celebrationPersonEntity.firstName = celebrationVO.getFirstName();
         celebrationPersonEntity.lastName = celebrationVO.getLastName();
@@ -107,4 +126,39 @@ public  class  CelebrationMapper {
 
         return celebrationPersonEntity;
     }
+
+    public static HomeCelebrationVO constructHomeCelebrVO(CelebrListNameDateFotoDTO celebrListNameDateFotoDTO) {
+        HomeCelebrationVO homeCelebrationVO = new HomeCelebrationVO();
+
+        homeCelebrationVO.setFirstName(celebrListNameDateFotoDTO.firstName);
+        homeCelebrationVO.setLastName(celebrListNameDateFotoDTO.lastName);
+        homeCelebrationVO.setYear(celebrListNameDateFotoDTO.year);
+        homeCelebrationVO.setMonth(celebrListNameDateFotoDTO.month);
+        homeCelebrationVO.setDay(celebrListNameDateFotoDTO.day);
+        homeCelebrationVO.setFotoPath(celebrListNameDateFotoDTO.fotoPath);
+
+        if (homeCelebrationVO.getFotoPath() != null) {
+            Bitmap bitmap = scaleImage(celebrListNameDateFotoDTO.fotoPath);
+            Bitmap dst = cropToSquare(bitmap);
+            homeCelebrationVO.setBitmap(dst);
+        }
+
+        return homeCelebrationVO;
+    }
+
+
+    private static Bitmap cropToSquare(Bitmap bitmap) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        int newWidth = (height > width) ? width : height;
+        int newHeight = (height > width) ? height - (height - width) : height;
+        int cropW = (width - height) / 2;
+        cropW = (cropW < 0) ? 0 : cropW;
+        int cropH = (height - width) / 2;
+        cropH = (cropH < 0) ? 0 : cropH;
+        Bitmap cropImg = Bitmap.createBitmap(bitmap, cropW, cropH, newWidth, newHeight);
+
+        return cropImg;
+    }
+
 }

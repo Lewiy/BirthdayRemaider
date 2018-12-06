@@ -34,8 +34,6 @@ public class PresenterEditCelebration extends Presenter<EditProfileCelebration.V
     @Override
     public void deleteCelebration() {
 
-       // AlarmCreator alarmCreator = new AlarmCreator(context);
-     //   alarmCreator.deleteAccaunt((int) personalPageAllInfo.idTemporary);
         getModel().deleteCelebration((int) personalPageAllInfo.userId, (int) personalPageAllInfo.dateId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
@@ -65,11 +63,7 @@ public class PresenterEditCelebration extends Presenter<EditProfileCelebration.V
                     @Override
                     public void accept(PersonalPageAllInformation personalPageAllInformation) throws Exception {
                         personalPageAllInfo = personalPageAllInformation;
-                        //getView().loadListCelebration(new CelebrationMapper().getVOObjects(datumCelebrationForLists));
                         getView().setName(personalPageAllInformation.firstName,personalPageAllInformation.lastName);
-                       /* Toast toast = Toast.makeText(context,
-                                personalPageAllInformation.firstName, Toast.LENGTH_SHORT);
-                        toast.show();*/
                         getView().setComment(personalPageAllInformation.comment);
                         getView().setTypeCelebration(personalPageAllInformation.typeCelebration);
                         getView().setDate(personalPageAllInformation.day + "/" +
@@ -84,27 +78,6 @@ public class PresenterEditCelebration extends Presenter<EditProfileCelebration.V
 
     @Override
     public void updatePageSync(int idUser) {
-       /* getModel().pullPersonalPage(String.valueOf(idUser))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<PersonalPageAllInformation>() {
-                    @Override
-                    public void accept(PersonalPageAllInformation personalPageAllInformation) throws Exception {
-                        personalPageAllInfo = personalPageAllInformation;
-                        //getView().loadListCelebration(new CelebrationMapper().getVOObjects(datumCelebrationForLists));
-                        getView().setName(personalPageAllInformation.firstName,personalPageAllInformation.lastName);
-                        Toast toast = Toast.makeText(context,
-                                personalPageAllInformation.firstName, Toast.LENGTH_SHORT);
-                        toast.show();
-                        getView().setComment(personalPageAllInformation.comment);
-                        getView().setTypeCelebration(personalPageAllInformation.typeCelebration);
-                        getView().setDate(personalPageAllInformation.day + "/" +
-                                personalPageAllInformation.month + "/" +
-                                personalPageAllInformation.year);
-                        getView().setPictureContact(personalPageAllInformation.fotoPath);
-                        getView().setIdUser((int)personalPageAllInformation.userId);
-                        getView().setIdDate((int)personalPageAllInformation.dateId);
-                    }
-                });*/
+
     }
 }

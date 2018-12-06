@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 public interface NotificationContract {
 
