@@ -14,7 +14,8 @@ import java.util.Date;
 public class Validation {
 
     public static int EMPTY_STRING = 0;
-    public static int OVERFLOW_STRING = 14;
+    public static int OVERFLOW_STRING_14 = 14;
+    public static int OVERFLOW_STRING_45 = 75;
 
     public static boolean checkEmptyField(Context context, TextView textView) {
         boolean valid = true;
@@ -27,9 +28,9 @@ public class Validation {
         return valid;
     }
 
-    public static boolean checkOverflowText(Context context, TextView textView) {
+    public static boolean checkOverflowText(Context context, TextView textView, int countOverFlowedChar) {
         boolean valid = true;
-        if (textView.getText().toString().length() >= OVERFLOW_STRING) {
+        if (textView.getText().toString().length() >= countOverFlowedChar) {
             valid = false;
             textView.setError(context.getResources().getString(R.string.string_overflow));
             return valid;

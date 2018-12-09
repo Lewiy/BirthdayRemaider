@@ -25,6 +25,7 @@
         android:fontFamily="@font/roboto_thin"
         android:text="TextView"
         android:textSize="17sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.028"
         app:layout_constraintStart_toEndOf="@+id/birthday_list_image_view"

@@ -29,10 +29,6 @@ public class MVPMEditCelebration  {
 
     @Provides
     EditProfileCelebration.PresenterEditCelebration providePresenterListBirthday() {
-
-        //  presenter.attachView(view);
-        //   presenter.attachModel(model);
-
         return presenter;
     }
 

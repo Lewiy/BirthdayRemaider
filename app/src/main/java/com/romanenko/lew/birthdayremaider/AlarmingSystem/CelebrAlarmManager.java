@@ -1,18 +1,10 @@
 package com.romanenko.lew.birthdayremaider.AlarmingSystem;
 
-import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.util.Log;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import org.joda.time.DateTime;
-import org.joda.time.Duration;
-import org.joda.time.LocalDate;
 
 public class CelebrAlarmManager {
     private android.app.AlarmManager am;
@@ -28,12 +20,12 @@ public class CelebrAlarmManager {
     }
 
     public void setAlarmDateRepeatingDay() {
-        am.setRepeating(android.app.AlarmManager.RTC_WAKEUP,  /*new DateTime().getMillis()*/ setTimeAlarming(), 3600000/*android.app.AlarmManager.INTERVAL_DAY*/, pendingBuilder(CELEBRATION_ALARM_CODE));
+        am.setRepeating(android.app.AlarmManager.RTC,  setTimeAlarming(), /*3600000*/android.app.AlarmManager.INTERVAL_DAY, pendingBuilder(CELEBRATION_ALARM_CODE));
     }
 
     public void resetAlarmRepeatingDay() {
         am.cancel(pendingBuilder(CELEBRATION_ALARM_CODE));
-        am.setRepeating(android.app.AlarmManager.RTC_WAKEUP, /*new DateTime().getMillis()*/ setTimeAlarming(),3600000/*android.app.AlarmManager.INTERVAL_DAY*/, pendingBuilder(CELEBRATION_ALARM_CODE));
+        am.setRepeating(android.app.AlarmManager.RTC, setTimeAlarming(),/*3600000*/android.app.AlarmManager.INTERVAL_DAY, pendingBuilder(CELEBRATION_ALARM_CODE));
     }
 
     private long setTimeAlarming(){
@@ -46,7 +38,6 @@ public class CelebrAlarmManager {
 
     private PendingIntent pendingBuilder(int id) {
         Intent i = new Intent(context, AlarmReceiver.class);
-        //  i.putExtra(ID_ALARM, time);
         PendingIntent pi = PendingIntent.getBroadcast(context, id, i, 0);
         return pi;
     }

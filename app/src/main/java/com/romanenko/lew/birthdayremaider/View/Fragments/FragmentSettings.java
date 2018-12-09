@@ -100,8 +100,6 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
 
         timeShower.setText(correctTimeForShow(myHour, myMinute));
 
-        //   setNewSettings();
-
     }
 
     public void setNewSettings() {
@@ -118,7 +116,6 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
         listTime.put(INDEX_1, myHour);
         listTime.put(INDEX_2, myMinute);
 
-        // setSettingsPref(listChekBox, listTime);
         PreferencesManager.setSettingsPref(listChekBox, listTime, mSettings);
 
 
@@ -138,7 +135,6 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
         myMinute = listTime.get(INDEX_2);
 
         timeShower.setText(correctTimeForShow(myHour, myMinute));
-        // correctTimeForShow(myHour,myMinute);
 
     }
 
@@ -159,7 +155,6 @@ public class FragmentSettings extends android.support.v4.app.Fragment implements
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, myHour);
         calendar.set(Calendar.MINUTE, myMinute);
-        //  System.out.println("Date : " + sdf.format(calendar.getTime()));
         return sdf.format(calendar.getTime());
     }
 

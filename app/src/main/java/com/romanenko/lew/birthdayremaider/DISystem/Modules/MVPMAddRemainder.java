@@ -29,15 +29,7 @@ public class MVPMAddRemainder {
 
     @Provides
     AddCelebrationContract.PresenterAddRemainder providePresenterAddRemainder() {
-
-        //  presenter.attachView(view);
-        //   presenter.attachModel(model);
-
         return presenter;
     }
 
-   /* @Provides
-    ListCelebrationContract.ModelListBirthday provideModel(){
-        return model;
-    }*/
 }

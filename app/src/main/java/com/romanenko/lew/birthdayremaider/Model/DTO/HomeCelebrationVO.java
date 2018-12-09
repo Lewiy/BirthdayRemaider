@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 
 public class HomeCelebrationVO {
 
+
+    private int id;
     private int year;
 
     private int month;
@@ -16,6 +18,14 @@ public class HomeCelebrationVO {
 
     private String fotoPath;
     private Bitmap bitmap;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Bitmap getBitmap() {
         return bitmap;

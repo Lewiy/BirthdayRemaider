@@ -71,8 +71,6 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
         ButterKnife.bind(this, view);
         setHasOptionsMenu(true);
 
-
-        // presenter = new PresenterListCelebration(this);
         DaggerMVPCompListCelebr.builder()
                 .mVPMListCelebration(new MVPMListCelebration(this, new PresenterListCelebration(getContext())))
                 .build()
@@ -131,7 +129,6 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
 
     //TODO ArrayList Mock
     public void loadData() {
-        // progressBar.setVisibility(View.VISIBLE);
         presenter.pullListCelebration();
     }
 
@@ -157,16 +154,6 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
 
     }
 
-    private void isEmptyGridView(RecyclerView recyclerView) {
-
-        if (celebrationAdapterList.getListBirthdayItems().isEmpty()) {
-            emptyTextView.setText(R.string.no_nearest_celebrations);
-            recyclerView.setVisibility(View.GONE);
-            emptyTextView.setVisibility(View.VISIBLE);
-        }
-
-    }
-
 
     @Override
     public void loadListCelebrationSearch(List<CelebrationVO> items) {
@@ -182,11 +169,10 @@ public class FragListCelebration extends android.support.v4.app.Fragment impleme
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.action_search)
                 .getActionView();
-        searchView.setSearchableInfo(searchManager
-                .getSearchableInfo(getActivity().getComponentName()));
+      //  searchView.setSearchableInfo(searchManager
+     //           .getSearchableInfo(getActivity().getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
-        // listening to search query text change
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

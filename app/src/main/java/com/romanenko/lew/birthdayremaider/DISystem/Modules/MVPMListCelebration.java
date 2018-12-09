@@ -32,10 +32,6 @@ public class MVPMListCelebration {
 
     @Provides
     ListCelebrationContract.PresenterListBirthday providePresenterListBirthday() {
-
-      //  presenter.attachView(view);
-     //   presenter.attachModel(model);
-
         return presenter;
     }
 

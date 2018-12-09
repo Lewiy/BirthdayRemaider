@@ -51,7 +51,7 @@ public class MyDate {
         }
 
         return dateStr;
-        //  return
+
     }
 
     public Date getDate() {
@@ -65,7 +65,7 @@ public class MyDate {
         }
 
         return dateStr;
-        //  return
+
     }
 
     @Override

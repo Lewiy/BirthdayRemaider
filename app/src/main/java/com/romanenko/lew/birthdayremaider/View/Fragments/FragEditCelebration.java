@@ -2,7 +2,11 @@ package com.romanenko.lew.birthdayremaider.View.Fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,11 +14,16 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,14 +60,17 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
     TextView comment;
     @BindView(R.id.frag_edit_celebr_image)
     ImageView picture;
-    @BindView(R.id.frag_edit_celebr_done)
-    ImageButton imgButton;
+    @BindView(R.id.frag_edit_celebr_done_but)
+    ImageButton doneBut;
+   @BindView(R.id.picture_container)
+    RelativeLayout pictureContainer;
 
     @BindView(R.id.frag_edit_celebr_mok)
     ImageView pictureMock;
     private static final int REQUEST_WEIGHT = 1;
     private static final int REQUEST_ANOTHER_ONE = 2;
     private int idUser;
+    private int   heightImageContact,  weightImageContact;
 
     @Inject
     public EditProfileCelebration.PresenterEditCelebration presenter;
@@ -70,6 +82,8 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
 
         View view = inflater.inflate(R.layout.fragment_personal_page, null);
         ButterKnife.bind(this, view);
+
+
         updatBundle = new Bundle();
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -87,6 +101,19 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
         presenter.viewIsReady();
 
         presenter.pullPersonalPage(idUser);
+
+
+        ViewTreeObserver vto = picture.getViewTreeObserver();
+        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                picture.getViewTreeObserver().removeOnPreDrawListener(this);
+                heightImageContact = picture.getMeasuredHeight();
+                weightImageContact = picture.getMeasuredWidth();
+                return true;
+            }
+        });
+
+
         return view;
     }
 
@@ -101,10 +128,15 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
         openFragAddRemainder();
     }
 
-    @OnClick(R.id.frag_edit_celebr_done)
+    @OnClick(R.id.frag_edit_celebr_done_but)
     public void onClickDone() {
         goToListCelebration();
+    }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
 
@@ -171,14 +203,14 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
     public void setPictureContact(String path) {
         if (path != null) {
             pictureMock.setVisibility(View.GONE);
-            imgButton.setBackground(getActivity().getResources().getDrawable(R.drawable.ic_done_white_24dp));
-            File f = new File(path);
-            Drawable d = Drawable.createFromPath(f.getAbsolutePath());
-            picture.setBackground(d);
-            updatBundle.putString(FragAddReminder.TAG_PICTURE_CONTACT, path);
+           picture.setImageURI(Uri.fromFile(new File(path)));
+           updatBundle.putString(FragAddReminder.TAG_PICTURE_CONTACT, path);
+           pictureContainer.setBackgroundColor(Color.TRANSPARENT);
         }
 
     }
+
+
 
     @Override
     public void setIdUser(int userId) {
@@ -194,4 +226,5 @@ public class FragEditCelebration extends android.support.v4.app.Fragment impleme
     public void showView(String error) {
 
     }
+
 }

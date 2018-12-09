@@ -4,6 +4,8 @@ import android.arch.persistence.room.ColumnInfo;
 
 public class CelebrListNameDateFotoDTO {
 
+    @ColumnInfo(name = "_id")
+    public int id;
     @ColumnInfo(name = "year")
     public int year;
     @ColumnInfo(name = "month")

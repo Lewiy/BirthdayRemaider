@@ -131,33 +131,6 @@ public class PresenterAddRemainder extends Presenter<AddCelebrationContract.View
                 });
     }
 
-   /* @Override
-    public void editCelebrationAndShow() {
-        getModel().upDateCelebrationAndShow(CelebrationMapper
-                .constructDateEntity(createCelebration()),CelebrationMapper
-                .constructDateEntity(createDateCelebration()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<PersonalPageAllInformation>() {
-                    @Override
-                    public void accept(PersonalPageAllInformation personalPageAllInformation) throws Exception {
-                        personalPageAllInfo = personalPageAllInformation;
-                        //getView().loadListCelebration(new CelebrationMapper().getVOObjects(datumCelebrationForLists));
-                        getView().setName(personalPageAllInformation.firstName,personalPageAllInformation.lastName);
-                        Toast toast = Toast.makeText(context,
-                                personalPageAllInformation.firstName, Toast.LENGTH_SHORT);
-                        toast.show();
-                        getView().setComment(personalPageAllInformation.comment);
-                        getView().setTypeCelebration(personalPageAllInformation.typeCelebration);
-                        getView().setDate(personalPageAllInformation.day + "/" +
-                                personalPageAllInformation.month + "/" +
-                                personalPageAllInformation.year);
-                        getView().setPictureContact(personalPageAllInformation.fotoPath);
-                        getView().setIdUser((int)personalPageAllInformation.userId);
-                        getView().setIdDate((int)personalPageAllInformation.dateId);
-                    }
-                });
-    }*/
 
     @Override
     public void pullPersonalPage(int idUser) {

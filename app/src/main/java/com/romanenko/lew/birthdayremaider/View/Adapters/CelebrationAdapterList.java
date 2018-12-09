@@ -30,7 +30,6 @@ public class CelebrationAdapterList extends RecyclerView.Adapter<CelebrationAdap
 
     public CelebrationAdapterList(Context context, RecyclerViewClickListener listener) {
         this.context = context;
-        //  this.listBirthdayItems = listBirthdayItems;
         this.mListener = listener;
     }
 
@@ -86,7 +85,6 @@ public class CelebrationAdapterList extends RecyclerView.Adapter<CelebrationAdap
 
 
         public void bind(CelebrationVO celebrationVO, RecyclerViewClickListener recyclerViewClickListener) {
-            //birthdayListImageView.setText(listCelebrationItem.getMainText());
 
             this.recyclerViewClickListener = recyclerViewClickListener;
             name_surname.setText(celebrationVO.getFirstName() + "  " + celebrationVO.getLastName());
@@ -94,12 +92,6 @@ public class CelebrationAdapterList extends RecyclerView.Adapter<CelebrationAdap
             years_old.setText(DaysYearsSignAdapter.adapterSignLeftYears(context, countYearCelebr(celebrationVO.getYear())));
 
             if (celebrationVO.getImage() != null) {
-                // File f = new File(celebrationVO.getFotoPath());
-                // Drawable d = Drawable.createFromPath(f.getAbsolutePath());
-                // birthdayListImageView.setBackground(d);
-
-                // birthdayListImageView.setImageURI(Uri.fromFile(f));
-
                 birthdayListImageView.setImageBitmap(celebrationVO.getImage());
 
             } else {
@@ -113,7 +105,6 @@ public class CelebrationAdapterList extends RecyclerView.Adapter<CelebrationAdap
             this.recyclerViewClickListener = recyclerViewClickListener;
             birthdayListImageView = itemView.findViewById(R.id.birthday_list_image_view);
             name_surname = itemView.findViewById(R.id.name_surname);
-            // date = itemView.findViewById(R.id.date);
             type_celebration = itemView.findViewById(R.id.type_celebration);
             years_old = itemView.findViewById(R.id.years_old);
             itemView.setOnClickListener(this);

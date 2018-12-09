@@ -22,8 +22,12 @@ import java.util.List;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class CelebrNotificationManager {
+    private static final String ID_USER = "idUser";
+    private static final String FRAGMENT_TYPE = "FragmentType";
+    private static final String EDIT_FRAGMENT_FROM_NOTIF = "EditFragmentFromNotif";
+    private static final String NAME_CHANEL = "nameChanel";
 
-    public static void notifyCelebr(Context context, String subject, String channel, List<NotifyDTO> notifDatas) {
+    public static void notifyCelebr(Context context, String channel, List<NotifyDTO> notifDatas) {
         int idNotif = 0;
 
         NotificationManager notificationManager =
@@ -39,8 +43,8 @@ public class CelebrNotificationManager {
 
 
             Bundle bundle = new Bundle();
-            bundle.putInt("idUser", (int) notif.userId);
-            bundle.putString("FragmentType", "EditFragmentFromNotif");
+            bundle.putInt(ID_USER, (int) notif.userId);
+            bundle.putString(FRAGMENT_TYPE, EDIT_FRAGMENT_FROM_NOTIF);
 
 
             Intent resultIntent = new Intent(context, MainActivity.class);
@@ -59,7 +63,7 @@ public class CelebrNotificationManager {
                         .setContentIntent(resultPendingIntent)
                         .build();
 
-                NotificationChannel mChannel = new NotificationChannel(NotificationChannels.ANDROID_CHANNEL_ID, "ssddf", NotificationManager.IMPORTANCE_HIGH);
+                NotificationChannel mChannel = new NotificationChannel(NotificationChannels.ANDROID_CHANNEL_ID, NAME_CHANEL, NotificationManager.IMPORTANCE_HIGH);
                 notificationManager.createNotificationChannel(mChannel);
             } else {
                 NotificationCompat.Builder builder =
@@ -82,7 +86,7 @@ public class CelebrNotificationManager {
 
         if (notif.fotoPath != null) {
             File image = new File(notif.fotoPath);
-             birthdayGirlImage = BitmapFactory.decodeFile(image.getAbsolutePath());
+            birthdayGirlImage = BitmapFactory.decodeFile(image.getAbsolutePath());
         } else
             birthdayGirlImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.balloonred);
         return birthdayGirlImage;

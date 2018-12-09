@@ -9,7 +9,7 @@
     <string name="comment">Комментарий</string>
     <string name="anniversary">Годовщина свадьбы</string>
     <string name="birthday">День Рождение</string>
-    <string name="other">Праздник</string>
+    <string name="other">Свой тип торжества</string>
     <string name="day">Дней</string>
     <string name="year_celebration">Исполняеться </string>
     <string name="year">Год</string>
@@ -23,7 +23,7 @@
     <string name="day_1">1 День</string>
     <string name="day_2">2 Дня</string>
     <string name="day_7">7 Деней</string>
-    <string name="time_alarm">Время оповещения</string>
+    <string name="time_alarm">Примерное время оповещения</string>
 
 
     <string name="left_1_day">Остался </string>
@@ -45,7 +45,7 @@
     <string name="years_other">Лет</string>
 
 
-    <string name="string_overflow">Лимит превышен</string>
+    <string name="string_overflow">Лимит символов превышен</string>
     <string name="strng_empty">Обязательная строка</string>
     <string name="date_empty">Установите дату</string>
 

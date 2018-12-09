@@ -25,17 +25,12 @@ public class PresenterListCelebration extends Presenter<ListCelebrationContract.
 
 
     private Context context;
-    private int start = 0, end = 7;
-    //  private final static  int NUMBER_ROW_IN_PAGE = 7;
 
 
     public PresenterListCelebration(Context context) {
         this.context = context;
     }
 
-    public PresenterListCelebration() {
-
-    }
 
     @Override
     public void viewIsReady() {
@@ -62,7 +57,7 @@ public class PresenterListCelebration extends Presenter<ListCelebrationContract.
                 .map(new Function<DataCelebrationForListDTO, CelebrationVO>() {
                     @Override
                     public CelebrationVO apply(DataCelebrationForListDTO dataCelebrationForListDTOS) throws Exception {
-                        // return  CelebrationMapper.constructCelebrationVO(dataCelebrationForListDTOS);
+
                         return CelebrationMapper.constructCelebrationVO(dataCelebrationForListDTOS);
                     }
                 })

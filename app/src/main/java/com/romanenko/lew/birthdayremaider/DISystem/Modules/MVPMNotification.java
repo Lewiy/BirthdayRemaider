@@ -27,10 +27,6 @@ public class MVPMNotification {
 
     @Provides
     NotificationContract.PresenterNotif providePresenterListBirthday() {
-
-        //  presenter.attachView(view);
-        //   presenter.attachModel(model);
-
         return presenter;
     }
 

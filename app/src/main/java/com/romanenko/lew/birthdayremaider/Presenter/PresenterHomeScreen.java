@@ -37,14 +37,13 @@ public class PresenterHomeScreen extends
                 .flatMap(new Function<List<CelebrListNameDateFotoDTO>, Flowable<CelebrListNameDateFotoDTO>>() {
                     @Override
                     public Flowable<CelebrListNameDateFotoDTO> apply(List<CelebrListNameDateFotoDTO> dataCelebrationForListDTOS) throws Exception {
-                        // return Observable.from(dataCelebrationForListDTOS);
+
                         return Flowable.fromIterable(dataCelebrationForListDTOS);
                     }
                 })
                 .map(new Function<CelebrListNameDateFotoDTO, HomeCelebrationVO>() {
                     @Override
                     public HomeCelebrationVO apply(CelebrListNameDateFotoDTO dataCelebrationForListDTOS) throws Exception {
-                        // return  CelebrationMapper.constructCelebrationVO(dataCelebrationForListDTOS);
                         return CelebrationMapper.constructHomeCelebrVO(dataCelebrationForListDTOS);
                     }
                 })

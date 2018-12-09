@@ -136,6 +136,8 @@ public class CelebrationMapper {
         homeCelebrationVO.setMonth(celebrListNameDateFotoDTO.month);
         homeCelebrationVO.setDay(celebrListNameDateFotoDTO.day);
         homeCelebrationVO.setFotoPath(celebrListNameDateFotoDTO.fotoPath);
+        homeCelebrationVO.setId(celebrListNameDateFotoDTO.id);
+
 
         if (homeCelebrationVO.getFotoPath() != null) {
             Bitmap bitmap = scaleImage(celebrListNameDateFotoDTO.fotoPath);

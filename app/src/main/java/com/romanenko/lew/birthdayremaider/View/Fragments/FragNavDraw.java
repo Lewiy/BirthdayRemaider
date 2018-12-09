@@ -47,7 +47,6 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
     @NonNull
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //  super.onCreate(savedInstanceState);
 
         View view = inflater.inflate(R.layout.navigation_drawer_main, null);
         initInterfaceComponent(view);
@@ -91,7 +90,6 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
 
     private void setDefaultFragment(Class fragmentClass) {
         Fragment fragment = null;
-       // Class fragmentClass = FragHomeScreen.class;
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
@@ -169,20 +167,6 @@ public class FragNavDraw extends android.support.v4.app.Fragment {
         Fragment fragment = fragmentManager.findFragmentByTag(tag);
 
         fragment.onStop();
-    }
-
-    private void startFragmentSeparated(Fragment fragment, Class fragmentClass) {
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        FragmentManager fragmentManager = ((AppCompatActivity) getActivity()).getSupportFragmentManager();
-        fragmentManager
-                .beginTransaction()
-                .add(R.id.content_frame_main_activity, fragment, fragmentClass.toString())
-                .addToBackStack(null)
-                .commit();
     }
 
     @Override

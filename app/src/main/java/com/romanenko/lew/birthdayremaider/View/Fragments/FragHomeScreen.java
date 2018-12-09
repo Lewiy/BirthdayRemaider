@@ -9,9 +9,13 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -47,9 +51,6 @@ public class FragHomeScreen extends android.support.v4.app.Fragment implements H
     @Inject
     HomeScreenContract.PresenterCelebrations presenter;
 
-    private static final int REQUEST_CODE_READ_CONTACTS = 1;
-    private static boolean READ_CONTACTS_GRANTED = false;
-    private int hasReadContactPermission;
     private CelebrationAdapterGridView celebrationAdapterGridView;
 
     @Nullable
@@ -71,9 +72,12 @@ public class FragHomeScreen extends android.support.v4.app.Fragment implements H
         presenter.loadCelebrations();
 
         DataNotifReceiver dataNotifReceiver = new DataNotifReceiver(getActivity());
+        dataNotifReceiver.runNotification();
 
         celebrationAdapterGridView = new CelebrationAdapterGridView(getContext());
         gridViewHomeScreen.setAdapter(celebrationAdapterGridView);
+
+        onClickGridView(gridViewHomeScreen);
         return view;
     }
 
@@ -86,18 +90,40 @@ public class FragHomeScreen extends android.support.v4.app.Fragment implements H
     public void showItemCelebrHome(HomeCelebrationVO homeCelebrationVO) {
         celebrationAdapterGridView.addItem(homeCelebrationVO);
         emptyTextView.setVisibility(View.GONE);
-        //if(celebrationAdapterGridView.getListPersons().isEmpty())
-        //   isEmptyGridView(gridViewHomeScreen);
     }
 
-
-    private void isEmptyGridView(GridView gridViewHomeScreen) {
-        emptyTextView.setText(R.string.no_nearest_celebrations);
-        gridViewHomeScreen.setEmptyView(emptyTextView);
-    }
 
     @Override
     public void showView(String error) {
 
     }
+
+    private void onClickGridView(GridView gridViewHomeScreen) {
+        gridViewHomeScreen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                HomeCelebrationVO homeCelebrationVO = celebrationAdapterGridView.getItem(i);
+
+                Fragment fragment = null;
+                try {
+                    fragment = FragEditCelebration.class.newInstance();
+                } catch (java.lang.InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("idUser", (int) homeCelebrationVO.getId());
+                fragment.setArguments(bundle);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.content_frame, fragment, FragEditCelebration.class.toString())
+                        .addToBackStack(FragEditCelebration.class.toString())
+                        .commit();
+            }
+        });
+    }
+
 }

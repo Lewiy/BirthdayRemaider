@@ -5,10 +5,13 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.romanenko.lew.birthdayremaider.Model.DTO.CelebrationVO;
 import com.romanenko.lew.birthdayremaider.Model.DTO.HomeCelebrationVO;
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.CelebrListNameDateFotoDTO;
 import com.romanenko.lew.birthdayremaider.R;
@@ -26,11 +29,12 @@ public class CelebrationAdapterGridView extends BaseAdapter {
     private Context mContext;
     private LayoutInflater layoutInflater;
     private List<HomeCelebrationVO> listPersons = new LinkedList<>();
+    private GridViewClickListener onClickListener;
 
     public CelebrationAdapterGridView(Context mContext) {
         this.mContext = mContext;
         this.layoutInflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
-        this.listPersons = listPersons;
+        this.onClickListener = onClickListener;
     }
 
     public List<HomeCelebrationVO> getListPersons() {
@@ -44,8 +48,8 @@ public class CelebrationAdapterGridView extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) {
-        return i;
+    public HomeCelebrationVO getItem(int i) {
+        return listPersons.get(i);
     }
 
     @Override
@@ -60,12 +64,10 @@ public class CelebrationAdapterGridView extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        //ImageButton imageButton;
 
         ViewHolder viewHolder;
 
         if (view == null) {
-            // if it's not recycled, initialize some attributes
             viewHolder = new ViewHolder();
             view = layoutInflater.inflate(R.layout.fragment_grid_view_item, viewGroup, false);
             viewHolder.imageView = (ImageView) view.findViewById(R.id.gridViewImagePerson);
@@ -79,13 +81,11 @@ public class CelebrationAdapterGridView extends BaseAdapter {
 
 
         viewHolder.name.setText(listPersons.get(i).getFirstName() + " " + listPersons.get(i).getLastName());
-        String days = String.valueOf(countTimeToCelebration(listPersons.get(i).getDay(), listPersons.get(i).getMonth(), listPersons.get(i).getYear()));
 
         viewHolder.timeToCelebration.setText(DaysYearsSignAdapter.adapterSignLeftDays(mContext,
                 (int) countTimeToCelebration(listPersons.get(i).getDay(), listPersons.get(i).getMonth(), listPersons.get(i).getYear())));
 
         if (listPersons.get(i).getBitmap() != null) {
-            // viewHolder.imageView.setImageURI(Uri.parse(new File(listPersons.get(i).fotoPath).toString()));
             viewHolder.imageView.setImageBitmap(listPersons.get(i).getBitmap());
             viewHolder.imageViewSmall.setVisibility(View.GONE);
         }
@@ -100,10 +100,16 @@ public class CelebrationAdapterGridView extends BaseAdapter {
         return days.getDays();
     }
 
+
     static class ViewHolder {
         ImageView imageView;
         ImageView imageViewSmall;
         TextView name;
         TextView timeToCelebration;
+
+    }
+
+    public interface GridViewClickListener {
+        void onClick(View view, int position, HomeCelebrationVO homeCelebrationVO);
     }
 }

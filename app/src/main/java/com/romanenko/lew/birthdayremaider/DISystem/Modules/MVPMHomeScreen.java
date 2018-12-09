@@ -28,10 +28,6 @@ public class MVPMHomeScreen {
 
     @Provides
     HomeScreenContract.PresenterCelebrations providePresenterListBirthday() {
-
-        //  presenter.attachView(view);
-        //   presenter.attachModel(model);
-
         return presenter;
     }
 

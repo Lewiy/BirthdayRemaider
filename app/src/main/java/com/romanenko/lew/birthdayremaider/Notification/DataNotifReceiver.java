@@ -24,15 +24,12 @@ public class DataNotifReceiver implements NotificationContract.ViewNotif {
     }
 
     private List<NotifyDTO> notifData;
-    private AppComponent appComponent;
     private Context context;
-    private CelebrNotificationManager celebrNotificationManager;
 
     @Inject
     public NotificationContract.PresenterNotif presenter;
 
     public DataNotifReceiver(Context context) {
-
         this.context = context;
         DaggerMVPCompNotification
                 .builder()
@@ -43,42 +40,17 @@ public class DataNotifReceiver implements NotificationContract.ViewNotif {
         presenter.attachView(this);
         presenter.attachModel(new ModelNotif());
         presenter.viewIsReady();
+    }
+
+    public void runNotification() {
         presenter.loadDataNotif();
     }
 
-    public void setCelebrNotificationManager(CelebrNotificationManager celebrNotificationManager) {
-        this.celebrNotificationManager = celebrNotificationManager;
-    }
-
-    @Override
-    public void setName(String name) {
-
-    }
-
-    @Override
-    public void setSurname(String surname) {
-
-    }
-
-    @Override
-    public void setPhoto(String photo) {
-
-    }
-
-    @Override
-    public void setTypeCelebr(String typeCelebr) {
-
-    }
-
-    @Override
-    public void setDate(String date) {
-
-    }
 
     @Override
     public void setNotifData(List<NotifyDTO> notifData) {
         this.notifData = notifData;
-        CelebrNotificationManager.notifyCelebr(context, "Test", NotificationChannels.ANDROID_CHANNEL_ID, notifData);
+        CelebrNotificationManager.notifyCelebr(context, NotificationChannels.ANDROID_CHANNEL_ID, notifData);
     }
 
 

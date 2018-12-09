@@ -18,12 +18,6 @@ public interface NotificationContract {
 
     interface ViewNotif extends IView {
 
-        void setName(String name);
-        void setSurname(String surname);
-        void setPhoto(String photo);
-        void setTypeCelebr(String typeCelebr);
-        void setDate(String date);
-
         void setNotifData(List<NotifyDTO> notifData);
     }
 

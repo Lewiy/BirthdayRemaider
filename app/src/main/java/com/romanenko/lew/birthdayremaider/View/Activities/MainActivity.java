@@ -19,10 +19,6 @@ import com.romanenko.lew.birthdayremaider.View.Fragments.FragNavDraw;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    //private Bundle bundleInform;
-    private int dfg = 0;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,8 +99,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        //String str = fragmentClass.toString();
-
         fragment.setArguments(bundleInform);
 
 
@@ -119,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(item);
+        //super.onOptionsItemSelected(item);
         return false;
     }
 }

@@ -13,7 +13,6 @@ import dagger.Component;
 @DataBaseSingleScope
 @Component(dependencies = AppComponent.class, modules = DataBaseModule.class)
 public interface DataBaseComponent {
-   // AppDataBase getAppDataBase();
     void inject(ModelListCelebration modelListCelebration);
     void inject(ModelAddRemainder modelAddRemainder);
     void inject(ModelEditCelebration modelEditCelebration);

@@ -1,23 +1,26 @@
 package com.romanenko.lew.birthdayremaider.View.Fragments;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -44,6 +48,7 @@ import com.romanenko.lew.birthdayremaider.View.validation.Validation;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 
 import javax.inject.Inject;
@@ -53,6 +58,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.ContentValues.TAG;
 
 public class FragAddReminder extends android.support.v4.app.Fragment implements AddCelebrationContract.ViewAddRemainder {
 
@@ -74,6 +80,8 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
     ImageButton addFotoButton;
     @BindView(R.id.toolbar_add_celebration)
     Toolbar mToolbar;
+    @BindView(R.id.frag_add_remainder_custom_type_celebr)
+    EditText customCelebrType;
 
     private String pathPictureContact = null;
 
@@ -126,13 +134,12 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
             actionForAddCelebr();
 
 
-
         ViewTreeObserver vto = contactPicture.getViewTreeObserver();
         vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             public boolean onPreDraw() {
                 contactPicture.getViewTreeObserver().removeOnPreDrawListener(this);
-                heightImageContact =  contactPicture.getMeasuredHeight();
-                weightImageContact =  contactPicture.getMeasuredWidth();
+                heightImageContact = contactPicture.getMeasuredHeight();
+                weightImageContact = contactPicture.getMeasuredWidth();
                 return true;
             }
         });
@@ -155,9 +162,11 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
     private boolean init(View view) {
         ButterKnife.bind(this, view);
 
+        onClickSpinnerTypeCelebr();
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
 
         ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
 
         actionbar.setDisplayHomeAsUpEnabled(true);
 
@@ -178,6 +187,22 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
             return false;
     }
 
+    private void onClickSpinnerTypeCelebr() {
+        spinTypeCelebr.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (adapterView.getItemAtPosition(i).toString().toString().equals(getResources().getString(R.string.other)))
+                    customCelebrType.setVisibility(View.VISIBLE);
+                else customCelebrType.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
 
     public int getNumberOfRows() {
         return numberOfRows;
@@ -190,7 +215,6 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
         inflater.inflate(R.menu.tool_bar_add_reminder, menu);
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -202,10 +226,7 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // mDrawerLayout.openDrawer(GravityCompat.START);
-                //getActivity().onBackPressed();
-                  getFragmentManager().popBackStack();
-               // backClick();
+                getFragmentManager().popBackStack();
                 return true;
             case R.id.action_done:
                 if (validateFragment()) {
@@ -217,7 +238,7 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
                 }
                 return true;
         }
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     private void backClick() {
@@ -250,7 +271,6 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
                 .show();
     }
 
-    // установка обработчика выбора даты
     DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int month, int day) {
             setDateView(year, month + 1, day);
@@ -263,20 +283,16 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
         dayOfMonth = day;
 
         dateCelebrate = day + "/" + month + "/" + year;
-       /* dateAndTime.set(Calendar.YEAR, year);
-        dateAndTime.set(Calendar.MONTH, monthOfYear);
-        dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);*/
+
         dateView.setText(dateCelebrate);
         datePicture.setVisibility(View.GONE);
         dateView.setVisibility(View.VISIBLE);
     }
 
-
     @OnClick(R.id.frag_add_remainder_add_foto)
     public void OnClickAddFoto() {
-        Crop.pickImage(this.getActivity(), this);
+        isStoragePermissionGranted();
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -292,9 +308,19 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
         }
     }
 
-    private void beginCrop(Uri source) {
+    private void beginCrop(Uri imageUri) {
+       /* try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),imageUri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(){
+
+        }*/
+
         Uri destination = Uri.fromFile(new File(getActivity().getCacheDir(), TAG_CELEBR_IMAGE + numberOfRows));
-        Crop.of(source, destination).withAspect(weightImageContact, heightImageContact).start(getActivity(), this);
+        Crop.of(imageUri, destination).withAspect(weightImageContact, heightImageContact).start(getActivity(), this);
     }
 
     private void handleCrop(int resultCode, Intent result) {
@@ -306,9 +332,40 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
         }
     }
 
+    private  boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (getActivity().checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG,"Permission is granted");
+                Crop.pickImage(this.getActivity(), this);
+                return true;
+            } else {
+
+                Log.v(TAG,"Permission is revoked");
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(TAG,"Permission is granted");
+            Crop.pickImage(this.getActivity(), this);
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
+            Log.v(TAG,"Permission: "+permissions[0]+ "was "+grantResults[0]);
+            //resume tasks needing this permission
+            Crop.pickImage(this.getActivity(), this);
+        }
+    }
+
     private String getRealPathFromURI(Uri contentURI) {
         Cursor cursor = getActivity().getContentResolver().query(contentURI, null, null, null, null);
-        if (cursor == null) { // Source is Dropbox or other similar local file path
+        if (cursor == null) {
             return contentURI.getPath();
         } else {
             cursor.moveToFirst();
@@ -332,11 +389,18 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
         validation = Validation.checkDateNotSet(getContext(), dateView) &
 
                 Validation.checkEmptyField(getContext(), name) &
-                Validation.checkOverflowText(getContext(), name) &
-
-                Validation.checkOverflowText(getContext(), surName);
+                Validation.checkOverflowText(getContext(), name, Validation.OVERFLOW_STRING_14) &
+                Validation.checkOverflowText(getContext(), surName, Validation.OVERFLOW_STRING_14) &
+                Validation.checkOverflowText(getContext(), comment, Validation.OVERFLOW_STRING_45);
 
         if (validation == false) return false;
+
+        if (customCelebrType.getVisibility() == View.VISIBLE) {
+            validation = Validation.checkEmptyField(getContext(), customCelebrType) &
+                    Validation.checkOverflowText(getContext(), customCelebrType, Validation.OVERFLOW_STRING_14);
+            if (validation == false) return false;
+        }
+
 
         validation = Validation.checkDateOutOfRange(getContext(), dateView);
 
@@ -380,7 +444,10 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
 
     @Override
     public String getTypeCelebration() {
-        return spinTypeCelebr.getSelectedItem().toString();
+        String typeCelebr = spinTypeCelebr.getSelectedItem().toString();
+        if (typeCelebr.equals(getResources().getString(R.string.other))) {
+            return customCelebrType.getText().toString();
+        } else return typeCelebr;
     }
 
     @Override
@@ -450,11 +517,16 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
     }
 
     private void setSpinner(String typeCelebration) {
+
         for (int i = 0; i < spinTypeCelebr.getAdapter().getCount(); i++) {
             if (spinTypeCelebr.getAdapter().getItem(i).toString().contains(typeCelebration)) {
                 spinTypeCelebr.setSelection(i);
+                return;
             }
         }
+
+        spinTypeCelebr.setSelection(spinTypeCelebr.getAdapter().getCount() - 1);
+        customCelebrType.setText(typeCelebration);
     }
 
     @Override
