@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Поздравька</string>
+    <string name="app_name">Праздники</string>
     <string name="nav_menu_item_listBirthday">Список праздников</string>
     <string name="nav_menu_item_settings">Настройки</string>
     <string name="nav_menu_item_add_celebration">Добавить праздник</string>
@@ -8,7 +8,7 @@
     <string name="surname">Фамилия</string>
     <string name="comment">Комментарий</string>
     <string name="anniversary">Годовщина свадьбы</string>
-    <string name="birthday">День Рождение</string>
+    <string name="birthday">День Рождения</string>
     <string name="other">Свой тип торжества</string>
     <string name="day">Дней</string>
     <string name="year_celebration">Исполняеться </string>
@@ -18,11 +18,11 @@
     <string name="no_nearest_celebrations">Нет ближайших торжеств</string>
     <string name="no_celebration">Нет торжеств</string>
     <string name="date_out_of_range">Дата должна быть в прошлом</string>
-    <string name="nearest_celebration">Ближайшее праздники</string>
+    <string name="nearest_celebration">Ближайшие праздники</string>
 
     <string name="day_1">1 День</string>
     <string name="day_2">2 Дня</string>
-    <string name="day_7">7 Деней</string>
+    <string name="day_7">7 Дней</string>
     <string name="time_alarm">Примерное время оповещения</string>
 
 

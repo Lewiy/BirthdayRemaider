@@ -309,16 +309,6 @@ public class FragAddReminder extends android.support.v4.app.Fragment implements 
     }
 
     private void beginCrop(Uri imageUri) {
-       /* try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),imageUri);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if(){
-
-        }*/
-
         Uri destination = Uri.fromFile(new File(getActivity().getCacheDir(), TAG_CELEBR_IMAGE + numberOfRows));
         Crop.of(imageUri, destination).withAspect(weightImageContact, heightImageContact).start(getActivity(), this);
     }

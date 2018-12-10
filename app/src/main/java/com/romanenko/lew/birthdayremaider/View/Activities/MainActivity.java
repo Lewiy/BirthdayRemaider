@@ -116,4 +116,9 @@ public class MainActivity extends AppCompatActivity {
         //super.onOptionsItemSelected(item);
         return false;
     }
+
+    @Override
+    public void onBackPressed() {
+      //  super.onBackPressed();
+    }
 }

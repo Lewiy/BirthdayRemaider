@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.NotificationCompat;
 
 import com.romanenko.lew.birthdayremaider.Model.DataLocalRepository.QueryObjects.NotifyDTO;
@@ -83,12 +82,11 @@ public class CelebrNotificationManager {
 
     private static Bitmap setPhoto(NotifyDTO notif, Context context) {
         Bitmap birthdayGirlImage;
-
         if (notif.fotoPath != null) {
             File image = new File(notif.fotoPath);
             birthdayGirlImage = BitmapFactory.decodeFile(image.getAbsolutePath());
         } else
-            birthdayGirlImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.balloonred);
+            birthdayGirlImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.balloonred_n_s);
         return birthdayGirlImage;
     }
 }

@@ -15,7 +15,7 @@ public class Validation {
 
     public static int EMPTY_STRING = 0;
     public static int OVERFLOW_STRING_14 = 14;
-    public static int OVERFLOW_STRING_45 = 75;
+    public static int OVERFLOW_STRING_45 = 95;
 
     public static boolean checkEmptyField(Context context, TextView textView) {
         boolean valid = true;
