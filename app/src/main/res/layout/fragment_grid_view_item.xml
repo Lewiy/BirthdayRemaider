@@ -32,6 +32,7 @@
             android:layout_above="@+id/gridViewTimeToCelebrationPerson"
             android:layout_marginStart="10dp"
             android:text="@string/birthday"
+            android:textStyle="bold|italic"
             android:textColor="@color/colorGrayLight" />
 
         <TextView
@@ -42,6 +43,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="10dp"
             android:text="2sdfsdf"
+            android:textStyle="bold|italic"
             android:textColor="@color/colorGrayLight" />
     </RelativeLayout>
 

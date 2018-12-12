@@ -71,8 +71,8 @@ public class FragHomeScreen extends android.support.v4.app.Fragment implements H
         presenter.viewIsReady();
         presenter.loadCelebrations();
 
-        DataNotifReceiver dataNotifReceiver = new DataNotifReceiver(getActivity());
-        dataNotifReceiver.runNotification();
+       /* DataNotifReceiver dataNotifReceiver = new DataNotifReceiver(getActivity());
+        dataNotifReceiver.runNotification();*/
 
         celebrationAdapterGridView = new CelebrationAdapterGridView(getContext());
         gridViewHomeScreen.setAdapter(celebrationAdapterGridView);
